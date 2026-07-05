@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ScreenShell } from "@/features/screens/screen-shell";
 
+/** Renders the journal foundation screen. */
 export function JournalScreen() {
   return (
     <ScreenShell
