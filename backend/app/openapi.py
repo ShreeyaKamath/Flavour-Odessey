@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
-from pydantic import BaseModel
 from pydantic.json_schema import models_json_schema
 
 from app.schemas.contracts import CONTRACT_MODELS
