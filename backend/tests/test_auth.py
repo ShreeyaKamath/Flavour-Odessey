@@ -199,6 +199,34 @@ async def test_logout_invalidates_refresh_token(client: TestClient) -> None:
 
 
 @pytest.mark.asyncio
+async def test_logout_without_token_invalidates_all_user_sessions(
+    client: TestClient,
+) -> None:
+    payload = _register_payload()
+    first_session = client.post("/api/auth/register", json=payload).json()
+    second_session = client.post(
+        "/api/auth/login",
+        json={"email": payload["email"], "password": payload["password"]},
+    ).json()
+
+    response = client.post(
+        "/api/auth/logout",
+        headers={"Authorization": f"Bearer {second_session['access_token']}"},
+    )
+
+    assert response.status_code == 200
+    for refresh_token in (
+        first_session["refresh_token"],
+        second_session["refresh_token"],
+    ):
+        refresh_response = client.post(
+            "/api/auth/refresh",
+            json={"refresh_token": refresh_token},
+        )
+        assert refresh_response.status_code == 401
+
+
+@pytest.mark.asyncio
 async def test_me_returns_current_user_for_access_token(client: TestClient) -> None:
     session = await _register_user(client)
 
