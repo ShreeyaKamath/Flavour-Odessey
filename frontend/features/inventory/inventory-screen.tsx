@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ScreenShell } from "@/features/screens/screen-shell";
 
+/** Renders the inventory foundation screen. */
 export function InventoryScreen() {
   return (
     <ScreenShell
