@@ -79,7 +79,9 @@ class GameplayService:
 
     async def start_game(self, user_id: UUID, island_key: str) -> GameStateResponse:
         self._ensure_joy_meadow(island_key)
-        profile = await self._get_profile(user_id)
+        profile = await self._get_profile(user_id, for_update=True)
+        if profile.progress.get("joy_meadow_started"):
+            return await self.get_state(user_id)
         island = await self._get_joy_meadow()
 
         profile.current_island_id = island.id
@@ -169,6 +171,11 @@ class GameplayService:
         profile = await self._get_started_profile(user_id)
         quest = await self._get_first_quest()
         progress = await self._quest_progress(profile.id, quest.id)
+        if progress and progress.status in {
+            QuestStatus.ACTIVE,
+            QuestStatus.COMPLETED,
+        }:
+            return await self.get_state(user_id)
         if progress is None:
             progress = QuestProgress(
                 player_profile_id=profile.id,
@@ -213,6 +220,8 @@ class GameplayService:
         self._ensure_first_quest(quest_key)
         profile = await self._get_started_profile(user_id)
         progress = await self._require_active_quest(profile.id, allow_completed=True)
+        if progress.status == QuestStatus.COMPLETED:
+            return await self.get_state(user_id)
         crafted = await self._crafted_recipe(profile.id)
         if crafted is None:
             raise AppError(
@@ -501,10 +510,19 @@ class GameplayService:
     ) -> RecipeStateResponse:
         definition = await self._recipe_definition()
         crafted = await self._crafted_recipe(profile_id) is not None
+        quest = await self._get_first_quest()
+        quest_progress = await self._quest_progress(profile_id, quest.id)
+        quest_active = bool(
+            quest_progress and quest_progress.status == QuestStatus.ACTIVE
+        )
         quantities = {item.ingredient_id: item.quantity for item in inventory}
-        can_craft = not crafted and all(
-            quantities.get(key, 0) >= int(quantity)
-            for key, quantity in definition.ingredients.items()
+        can_craft = (
+            quest_active
+            and not crafted
+            and all(
+                quantities.get(key, 0) >= int(quantity)
+                for key, quantity in definition.ingredients.items()
+            )
         )
         return RecipeStateResponse(
             recipe_id=definition.key or FIRST_RECIPE,
@@ -645,20 +663,26 @@ class GameplayService:
             "recipe_crafted": await self._crafted_recipe(profile_id) is not None,
         }
 
-    async def _get_profile(self, user_id: UUID) -> PlayerProfile:
+    async def _get_profile(
+        self,
+        user_id: UUID,
+        for_update: bool = False,
+    ) -> PlayerProfile:
         statement = (
             select(PlayerProfile)
             .where(PlayerProfile.user_id == user_id)
             .order_by(PlayerProfile.created_at)
             .limit(1)
         )
+        if for_update:
+            statement = statement.with_for_update()
         profile = (await self.session.execute(statement)).scalar_one_or_none()
         if profile is None:
             raise AppError("NOT_FOUND", "Player profile not found", status_code=404)
         return profile
 
     async def _get_started_profile(self, user_id: UUID) -> PlayerProfile:
-        profile = await self._get_profile(user_id)
+        profile = await self._get_profile(user_id, for_update=True)
         if not profile.progress.get("joy_meadow_started"):
             raise AppError("CONFLICT", "Start Joy Meadow first", status_code=409)
         return profile
