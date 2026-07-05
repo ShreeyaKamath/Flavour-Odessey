@@ -8,6 +8,7 @@ type ThemeProviderProps = {
   children: ReactNode;
 };
 
+/** Mirrors the selected theme onto the document element. */
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const theme = useSettingsStore((state) => state.theme);
 
