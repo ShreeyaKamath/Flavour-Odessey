@@ -1,6 +1,7 @@
 import { GlassPanel } from "@/components/ui/glass-panel";
 import { LinkButton } from "@/components/ui/link-button";
 
+/** Displays the fallback route for unknown application paths. */
 export default function NotFoundPage() {
   return (
     <GlassPanel className="mx-auto max-w-xl">
