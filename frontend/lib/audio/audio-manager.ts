@@ -2,6 +2,7 @@ export type AudioChannel = "master" | "music" | "sfx" | "voice";
 
 export type AudioState = Record<AudioChannel, number>;
 
+/** Holds audio bus state without starting playback automatically. */
 export class AudioManager {
   private volumes: AudioState = {
     master: 1,
