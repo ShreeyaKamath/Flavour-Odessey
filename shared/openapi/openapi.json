@@ -1,6 +1,254 @@
 {
   "components": {
     "schemas": {
+      "AICompanionRespondRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "event": {
+            "enum": [
+              "hint",
+              "ingredient_collected",
+              "recipe_crafted",
+              "joy_restored"
+            ],
+            "title": "Event",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event"
+        ],
+        "title": "AICompanionRespondRequest",
+        "type": "object"
+      },
+      "AICompanionRespondResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "companion_id": {
+            "const": "lumi",
+            "title": "Companion Id",
+            "type": "string"
+          },
+          "event": {
+            "title": "Event",
+            "type": "string"
+          },
+          "fallback_used": {
+            "title": "Fallback Used",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "response": {
+            "title": "Response",
+            "type": "string"
+          }
+        },
+        "required": [
+          "companion_id",
+          "response",
+          "event",
+          "provider",
+          "fallback_used"
+        ],
+        "title": "AICompanionRespondResponse",
+        "type": "object"
+      },
+      "AIJournalStoryRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "island_id": {
+            "const": "joy_meadow",
+            "title": "Island Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "island_id"
+        ],
+        "title": "AIJournalStoryRequest",
+        "type": "object"
+      },
+      "AIJournalStoryResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "fallback_used": {
+            "title": "Fallback Used",
+            "type": "boolean"
+          },
+          "island_id": {
+            "const": "joy_meadow",
+            "title": "Island Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "story": {
+            "title": "Story",
+            "type": "string"
+          },
+          "title": {
+            "const": "The Day Joy Returned",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "island_id",
+          "title",
+          "story",
+          "provider",
+          "fallback_used"
+        ],
+        "title": "AIJournalStoryResponse",
+        "type": "object"
+      },
+      "AINpcChatRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          },
+          "npc_id": {
+            "const": "joy_meadow_keeper",
+            "title": "Npc Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "npc_id",
+          "message"
+        ],
+        "title": "AINpcChatRequest",
+        "type": "object"
+      },
+      "AINpcChatResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "fallback_used": {
+            "title": "Fallback Used",
+            "type": "boolean"
+          },
+          "importance": {
+            "maximum": 10,
+            "minimum": 0,
+            "title": "Importance",
+            "type": "integer"
+          },
+          "memory_written": {
+            "title": "Memory Written",
+            "type": "boolean"
+          },
+          "mood": {
+            "enum": [
+              "hopeful",
+              "joyful"
+            ],
+            "title": "Mood",
+            "type": "string"
+          },
+          "npc_id": {
+            "const": "joy_meadow_keeper",
+            "title": "Npc Id",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "reply": {
+            "title": "Reply",
+            "type": "string"
+          }
+        },
+        "required": [
+          "npc_id",
+          "reply",
+          "mood",
+          "memory_written",
+          "importance",
+          "provider",
+          "fallback_used"
+        ],
+        "title": "AINpcChatResponse",
+        "type": "object"
+      },
+      "AIRecipeDescribeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "recipe_id": {
+            "const": "golden_vanilla_bloom",
+            "title": "Recipe Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "recipe_id"
+        ],
+        "title": "AIRecipeDescribeRequest",
+        "type": "object"
+      },
+      "AIRecipeDescribeResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "emotion": {
+            "const": "joy",
+            "title": "Emotion",
+            "type": "string"
+          },
+          "fallback_used": {
+            "title": "Fallback Used",
+            "type": "boolean"
+          },
+          "lore": {
+            "title": "Lore",
+            "type": "string"
+          },
+          "name": {
+            "const": "Golden Vanilla Bloom",
+            "title": "Name",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "recipe_id": {
+            "const": "golden_vanilla_bloom",
+            "title": "Recipe Id",
+            "type": "string"
+          },
+          "required_ingredients": {
+            "items": {
+              "enum": [
+                "vanilla_orchid",
+                "honey_bloom"
+              ],
+              "type": "string"
+            },
+            "title": "Required Ingredients",
+            "type": "array"
+          }
+        },
+        "required": [
+          "recipe_id",
+          "name",
+          "lore",
+          "emotion",
+          "required_ingredients",
+          "provider",
+          "fallback_used"
+        ],
+        "title": "AIRecipeDescribeResponse",
+        "type": "object"
+      },
       "AmbientMetadata": {
         "additionalProperties": false,
         "properties": {
@@ -1511,6 +1759,310 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/ai/companion/respond": {
+      "post": {
+        "operationId": "ai_companion_respond",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AICompanionRespondRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AICompanionRespondResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Companion Respond",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/ai/journal/story": {
+      "post": {
+        "operationId": "ai_journal_story",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIJournalStoryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AIJournalStoryResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Journal Story",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/ai/npc/chat": {
+      "post": {
+        "operationId": "ai_npc_chat",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AINpcChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AINpcChatResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Npc Chat",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
+    "/api/ai/recipe/describe": {
+      "post": {
+        "operationId": "ai_recipe_describe",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIRecipeDescribeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AIRecipeDescribeResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Recipe Describe",
+        "tags": [
+          "ai"
+        ]
+      }
+    },
     "/api/auth/guest": {
       "post": {
         "operationId": "auth_guest",
