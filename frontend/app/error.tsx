@@ -10,6 +10,7 @@ type ErrorPageProps = {
   reset: () => void;
 };
 
+/** Displays the App Router error boundary with a retry action. */
 export default function ErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
     console.error(error);
