@@ -14,12 +14,7 @@ vi.mock("@/components/visual/foundation-scene", () => ({
 type Island = components["schemas"]["IslandSummary"];
 type WorldResponse = components["schemas"]["WorldResponse"];
 
-function island(
-  key: string,
-  name: string,
-  unlocked: boolean,
-  mapOrder: number
-): Island {
+function island(key: string, name: string, unlocked: boolean, mapOrder: number): Island {
   return {
     ambient: {
       description: "A quiet island soundscape.",
@@ -75,9 +70,7 @@ function TestQueryProvider({ children }: { children: ReactNode }) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
   });
-  return (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
 
 describe("WorldMapScreen", () => {
@@ -90,13 +83,12 @@ describe("WorldMapScreen", () => {
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
-    expect(
-      await screen.findByRole("heading", { name: "Joy Meadow" })
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Joy Meadow" })).toBeInTheDocument();
     expect(screen.getByText("Warm breeze")).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Enter Joy Meadow" })
-    ).toHaveAttribute("href", "/game?island=joy_meadow");
+    expect(screen.getByRole("link", { name: "Enter Joy Meadow" })).toHaveAttribute(
+      "href",
+      "/game?island=joy_meadow"
+    );
     expect(screen.getByText("Vanilla Windmill")).toBeInTheDocument();
   });
 
@@ -105,28 +97,18 @@ describe("WorldMapScreen", () => {
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
-    expect(
-      await screen.findByRole("heading", { name: "Wonder Woods" })
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Wonder Woods" })).toBeInTheDocument();
     expect(screen.getAllByText("Coming in Version 1")).toHaveLength(4);
-    expect(
-      screen.queryByRole("link", { name: /Wonder Woods/ })
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Wonder Woods/ })).not.toBeInTheDocument();
   });
 
   it("renders loading and error states", async () => {
-    vi.spyOn(apiClient, "getWorld").mockRejectedValueOnce(
-      new Error("World service unavailable")
-    );
+    vi.spyOn(apiClient, "getWorld").mockRejectedValueOnce(new Error("World service unavailable"));
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
     expect(screen.getByRole("status")).toHaveTextContent("Loading world map");
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "World service unavailable"
-    );
-    expect(
-      screen.getByRole("button", { name: "Try again" })
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("alert")).toHaveTextContent("World service unavailable");
+    expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
   });
 });
