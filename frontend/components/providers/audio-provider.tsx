@@ -10,6 +10,7 @@ type AudioProviderProps = {
   children: ReactNode;
 };
 
+/** Exposes the shared audio manager without starting playback. */
 export function AudioProvider({ children }: AudioProviderProps) {
   return <AudioContext.Provider value={audioManager}>{children}</AudioContext.Provider>;
 }
