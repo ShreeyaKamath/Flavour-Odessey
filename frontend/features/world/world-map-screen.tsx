@@ -14,35 +14,27 @@ type Weather = components["schemas"]["WeatherStateResponse"];
 
 function weatherLabel(weather: Weather | undefined) {
   const label = weather?.details?.label;
-  return typeof label === "string" ? label : weather?.condition ?? "Calm";
+  return typeof label === "string" ? label : (weather?.condition ?? "Calm");
 }
 
 function IslandCard({ island }: { island: Island }) {
   return (
     <Card
-      className={
-        island.unlocked
-          ? "border-accent bg-surface-raised"
-          : "border-border bg-muted/45"
-      }
+      className={island.unlocked ? "border-accent bg-surface-raised" : "border-border bg-muted/45"}
     >
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-accent">
             {island.emotion}
           </p>
-          <h2 className="mt-1 font-display text-xl font-semibold text-foreground">
-            {island.name}
-          </h2>
+          <h2 className="mt-1 font-display text-xl font-semibold text-foreground">{island.name}</h2>
         </div>
         <span className="text-xs font-semibold text-muted-foreground">
           {island.unlocked ? "Unlocked" : "Locked"}
         </span>
       </div>
 
-      <p className="mt-3 text-sm leading-6 text-muted-foreground">
-        {island.description}
-      </p>
+      <p className="mt-3 text-sm leading-6 text-muted-foreground">{island.description}</p>
 
       {island.unlocked ? (
         <>
@@ -59,10 +51,7 @@ function IslandCard({ island }: { island: Island }) {
               className="mt-2 h-2 overflow-hidden rounded-control bg-muted"
               role="progressbar"
             >
-              <div
-                className="h-full bg-accent"
-                style={{ width: `${island.restoration_level}%` }}
-              />
+              <div className="h-full bg-accent" style={{ width: `${island.restoration_level}%` }} />
             </div>
           </div>
 
@@ -77,10 +66,7 @@ function IslandCard({ island }: { island: Island }) {
             </div>
           ) : null}
 
-          <LinkButton
-            className="mt-5 w-full"
-            href={`/game?island=${island.key}`}
-          >
+          <LinkButton className="mt-5 w-full" href={`/game?island=${island.key}`}>
             Enter {island.name}
           </LinkButton>
         </>
@@ -93,6 +79,7 @@ function IslandCard({ island }: { island: Island }) {
   );
 }
 
+/** Renders server-backed island, restoration, and weather information. */
 export function WorldMapScreen() {
   const world = useWorld();
 
@@ -125,9 +112,7 @@ export function WorldMapScreen() {
     );
   }
 
-  const joyWeather = world.data.weather.find(
-    (weather) => weather.island_key === "joy_meadow"
-  );
+  const joyWeather = world.data.weather.find((weather) => weather.island_key === "joy_meadow");
 
   return (
     <ScreenShell
@@ -138,13 +123,9 @@ export function WorldMapScreen() {
     >
       <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-border py-3 text-sm">
         <span className="font-semibold text-foreground">Joy Meadow weather</span>
-        <span className="capitalize text-muted-foreground">
-          {weatherLabel(joyWeather)}
-        </span>
+        <span className="capitalize text-muted-foreground">{weatherLabel(joyWeather)}</span>
         {joyWeather ? (
-          <span className="text-muted-foreground">
-            Intensity {joyWeather.intensity}%
-          </span>
+          <span className="text-muted-foreground">Intensity {joyWeather.intensity}%</span>
         ) : null}
       </div>
 
