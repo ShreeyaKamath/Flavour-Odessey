@@ -103,7 +103,10 @@ class AuthService:
         return response
 
     async def refresh(self, refresh_token: str) -> RefreshResponse:
-        session_token = await self._get_active_session_token(refresh_token)
+        session_token = await self._get_active_session_token(
+            refresh_token,
+            for_update=True,
+        )
         if session_token is None:
             raise AppError("UNAUTHORIZED", "Invalid refresh token", status_code=401)
 
@@ -126,7 +129,11 @@ class AuthService:
 
     async def logout(self, user: User, refresh_token: str | None = None) -> None:
         if refresh_token:
-            session_token = await self._get_active_session_token(refresh_token, user.id)
+            session_token = await self._get_active_session_token(
+                refresh_token,
+                user.id,
+                for_update=True,
+            )
             if session_token is not None:
                 session_token.revoked_at = utc_now()
         else:
@@ -197,6 +204,7 @@ class AuthService:
         self,
         refresh_token: str,
         user_id: UUID | None = None,
+        for_update: bool = False,
     ) -> SessionToken | None:
         statement = select(SessionToken).where(
             SessionToken.token_hash == hash_session_token(refresh_token),
@@ -204,6 +212,8 @@ class AuthService:
         )
         if user_id is not None:
             statement = statement.where(SessionToken.user_id == user_id)
+        if for_update:
+            statement = statement.with_for_update()
 
         result = await self.session.execute(statement)
         session_token = result.scalar_one_or_none()
