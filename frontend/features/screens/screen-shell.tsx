@@ -5,11 +5,12 @@ import { ReactNode } from "react";
 
 import { AnimatedContainer } from "@/components/ui/animated-container";
 import { GlassPanel } from "@/components/ui/glass-panel";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const FoundationScene = dynamic(
   () => import("@/components/visual/foundation-scene").then((module) => module.FoundationScene),
   {
-    loading: () => <div className="h-64 rounded-panel border border-border bg-muted" />,
+    loading: () => <Skeleton className="h-64 rounded-panel border border-border" />,
     ssr: false
   }
 );
@@ -23,6 +24,7 @@ type ScreenShellProps = {
   title: string;
 };
 
+/** Provides the shared storybook layout for foundation screens. */
 export function ScreenShell({
   actions,
   children,
