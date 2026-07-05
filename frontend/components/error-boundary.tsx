@@ -13,6 +13,7 @@ type ErrorBoundaryState = {
   error: Error | null;
 };
 
+/** Catches unexpected rendering errors outside App Router boundaries. */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = {
     error: null
