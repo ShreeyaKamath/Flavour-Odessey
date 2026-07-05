@@ -10,6 +10,7 @@ type WebSocketProviderProps = {
   children: ReactNode;
 };
 
+/** Exposes the shared WebSocket client for future event consumers. */
 export function WebSocketProvider({ children }: WebSocketProviderProps) {
   return (
     <WebSocketContext.Provider value={gameWebSocketClient}>{children}</WebSocketContext.Provider>
