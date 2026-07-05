@@ -9,6 +9,7 @@ type LoadingProviderProps = {
   children: ReactNode;
 };
 
+/** Displays the global loading overlay requested by the UI store. */
 export function LoadingProvider({ children }: LoadingProviderProps) {
   const isLoading = useUiStore((state) => state.isLoading);
 
