@@ -5,6 +5,7 @@ venv/
 env/
 __pycache__/
 *.py[cod]
+*.egg-info/
 
 # Build outputs
 .next/
