@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { GameplayScreen } from "@/features/game/gameplay-screen";
 import { apiClient } from "@/lib/api/client";
@@ -81,12 +81,20 @@ function TestQueryProvider({ children }: { children: ReactNode }) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
   });
-  return (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
 
 describe("GameplayScreen", () => {
+  beforeEach(() => {
+    vi.spyOn(apiClient, "aiCompanionRespond").mockResolvedValue({
+      companion_id: "lumi",
+      event: "hint",
+      fallback_used: false,
+      provider: "mock",
+      response: "A little patience can help the meadow bloom."
+    });
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -103,12 +111,20 @@ describe("GameplayScreen", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Lumi")).toBeInTheDocument();
     expect(screen.getByText("Meadow Keeper")).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "Inventory" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "Journal of Memories" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Inventory" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Journal of Memories" })).toBeInTheDocument();
+  });
+
+  it("shows loading and state-loading errors", async () => {
+    vi.spyOn(apiClient, "getGameState").mockRejectedValueOnce(
+      new Error("Gameplay state unavailable")
+    );
+
+    render(<GameplayScreen />, { wrapper: TestQueryProvider });
+
+    expect(screen.getByRole("status")).toHaveTextContent("Loading Joy Meadow");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Gameplay state unavailable");
+    expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
   });
 
   it("collects a starter ingredient and updates the screen", async () => {
@@ -120,15 +136,11 @@ describe("GameplayScreen", () => {
       quantity: 1
     };
     vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(initial);
-    vi.spyOn(apiClient, "collectInventoryIngredient").mockResolvedValueOnce(
-      collected
-    );
+    vi.spyOn(apiClient, "collectInventoryIngredient").mockResolvedValueOnce(collected);
     const user = userEvent.setup();
 
     render(<GameplayScreen />, { wrapper: TestQueryProvider });
-    await user.click(
-      await screen.findByRole("button", { name: "Collect Vanilla Orchid" })
-    );
+    await user.click(await screen.findByRole("button", { name: "Collect Vanilla Orchid" }));
 
     expect(apiClient.collectInventoryIngredient).toHaveBeenCalledWith({
       ingredient_id: "vanilla_orchid"
@@ -137,9 +149,21 @@ describe("GameplayScreen", () => {
       name: "Collected"
     });
     expect(collectedButtons).toHaveLength(2);
-    expect(collectedButtons.every((button) => button.hasAttribute("disabled"))).toBe(
-      true
+    expect(collectedButtons.every((button) => button.hasAttribute("disabled"))).toBe(true);
+  });
+
+  it("shows action errors without discarding the loaded state", async () => {
+    vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(gameState());
+    vi.spyOn(apiClient, "collectInventoryIngredient").mockRejectedValueOnce(
+      new Error("The flower slipped away")
     );
+    const user = userEvent.setup();
+
+    render(<GameplayScreen />, { wrapper: TestQueryProvider });
+    await user.click(await screen.findByRole("button", { name: "Collect Vanilla Orchid" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("The flower slipped away");
+    expect(screen.getByText("Lumi")).toBeInTheDocument();
   });
 
   it("crafts Golden Vanilla Bloom when the ingredients are ready", async () => {
@@ -205,8 +229,60 @@ describe("GameplayScreen", () => {
     expect(
       await screen.findByRole("heading", { name: "The Day Joy Returned" })
     ).toBeInTheDocument();
+    expect(screen.getByText("The meadow remembered how to shine.")).toBeInTheDocument();
+  });
+
+  it("shows NPC chat loading and then displays generated dialogue", async () => {
+    vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(gameState());
+    let resolveChat: ((value: components["schemas"]["AINpcChatResponse"]) => void) | undefined;
+    vi.spyOn(apiClient, "aiNpcChat").mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveChat = resolve;
+        })
+    );
+    const user = userEvent.setup();
+
+    render(<GameplayScreen />, { wrapper: TestQueryProvider });
+    await user.type(
+      await screen.findByLabelText("Speak with the Meadow Keeper"),
+      "How can I help?"
+    );
+    await user.click(screen.getByRole("button", { name: "Ask" }));
+
+    expect(screen.getByRole("button", { name: "Listening..." })).toBeDisabled();
+    resolveChat?.({
+      fallback_used: false,
+      importance: 0.6,
+      memory_written: true,
+      mood: "hopeful",
+      npc_id: "joy_meadow_keeper",
+      provider: "mock",
+      reply: "Carry the golden bloom gently, and Joy will remember you."
+    });
+
     expect(
-      screen.getByText("The meadow remembered how to shine.")
+      await screen.findByText("Carry the golden bloom gently, and Joy will remember you.")
     ).toBeInTheDocument();
+  });
+
+  it("labels deterministic fallback companion text", async () => {
+    vi.mocked(apiClient.aiCompanionRespond).mockResolvedValueOnce({
+      companion_id: "lumi",
+      event: "hint",
+      fallback_used: true,
+      provider: "deterministic-fallback",
+      response: "Gather both meadow blooms before you begin."
+    });
+    vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(gameState());
+    const user = userEvent.setup();
+
+    render(<GameplayScreen />, { wrapper: TestQueryProvider });
+    await user.click(await screen.findByRole("button", { name: "Ask Lumi for a hint" }));
+
+    expect(
+      await screen.findByText("Gather both meadow blooms before you begin.")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Deterministic fallback")).toBeInTheDocument();
   });
 });
