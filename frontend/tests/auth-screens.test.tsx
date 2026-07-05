@@ -26,17 +26,13 @@ describe("auth screens", () => {
     expect(screen.getByRole("heading", { name: "Sign in" })).toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Continue as guest" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Continue as guest" })).toBeInTheDocument();
   });
 
   it("renders registration fields", () => {
     render(<RegisterScreen />);
 
-    expect(
-      screen.getByRole("heading", { name: "Create account" })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Create account" })).toBeInTheDocument();
     expect(screen.getByLabelText("Display name")).toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
