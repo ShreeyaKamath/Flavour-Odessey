@@ -20,6 +20,7 @@ const navigationItems: NavigationItem[] = [
   { href: "/auth/register", label: "Register" }
 ];
 
+/** Renders the persistent primary application navigation. */
 export function GlobalNavigation() {
   const pathname = usePathname();
 
