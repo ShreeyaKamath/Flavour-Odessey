@@ -10,6 +10,7 @@ type ProtectedRouteProps = {
   fallback?: ReactNode;
 };
 
+/** Gates route content on restored authentication state. */
 export function ProtectedRoute({ children, fallback }: ProtectedRouteProps) {
   const status = useAuthStore((state) => state.status);
 
