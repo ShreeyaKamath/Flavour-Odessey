@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useUiStore } from "@/stores/ui-store";
 
+/** Renders dismissible live-region notifications from the UI store. */
 export function Toast() {
   const toasts = useUiStore((state) => state.toasts);
   const dismissToast = useUiStore((state) => state.dismissToast);
