@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { ScreenShell } from "@/features/screens/screen-shell";
 
+/** Renders the recipe book foundation screen. */
 export function RecipeBookScreen() {
   return (
     <ScreenShell
