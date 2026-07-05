@@ -331,6 +331,66 @@ class GameStartRequest(ContractModel):
     island_id: Literal["joy_meadow"] = "joy_meadow"
 
 
+class AINpcChatRequest(ContractModel):
+    npc_id: Literal["joy_meadow_keeper"]
+    message: str = Field(min_length=1, max_length=500)
+
+
+class AINpcChatResponse(ContractModel):
+    npc_id: Literal["joy_meadow_keeper"]
+    reply: str
+    mood: Literal["hopeful", "joyful"]
+    memory_written: bool
+    importance: int = Field(ge=0, le=10)
+    provider: str
+    fallback_used: bool
+
+
+class AICompanionRespondRequest(ContractModel):
+    event: Literal[
+        "hint",
+        "ingredient_collected",
+        "recipe_crafted",
+        "joy_restored",
+    ]
+
+
+class AICompanionRespondResponse(ContractModel):
+    companion_id: Literal["lumi"]
+    response: str
+    event: str
+    provider: str
+    fallback_used: bool
+
+
+class AIRecipeDescribeRequest(ContractModel):
+    recipe_id: Literal["golden_vanilla_bloom"]
+
+
+class AIRecipeDescribeResponse(ContractModel):
+    recipe_id: Literal["golden_vanilla_bloom"]
+    name: Literal["Golden Vanilla Bloom"]
+    lore: str
+    emotion: Literal["joy"]
+    required_ingredients: list[
+        Literal["vanilla_orchid", "honey_bloom"]
+    ]
+    provider: str
+    fallback_used: bool
+
+
+class AIJournalStoryRequest(ContractModel):
+    island_id: Literal["joy_meadow"]
+
+
+class AIJournalStoryResponse(ContractModel):
+    island_id: Literal["joy_meadow"]
+    title: Literal["The Day Joy Returned"]
+    story: str
+    provider: str
+    fallback_used: bool
+
+
 class NpcChatRequest(ContractModel):
     npc_id: str
     message: str
@@ -391,6 +451,14 @@ CONTRACT_MODELS: tuple[type[BaseModel], ...] = (
     SaveStatusResponse,
     GameStateResponse,
     GameStartRequest,
+    AINpcChatRequest,
+    AINpcChatResponse,
+    AICompanionRespondRequest,
+    AICompanionRespondResponse,
+    AIRecipeDescribeRequest,
+    AIRecipeDescribeResponse,
+    AIJournalStoryRequest,
+    AIJournalStoryResponse,
     NpcChatRequest,
     NpcChatResponse,
 )
