@@ -25,12 +25,7 @@
   --shadow-glow: 0 0 2rem rgb(39 139 128 / 0.22);
 
   --motion-hover: 150ms;
-  --motion-press: 150ms;
-  --motion-panel: 300ms;
-  --motion-scene: 900ms;
-  --motion-float: 5200ms;
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
 
   --z-navigation: 30;
   --z-overlay: 50;
@@ -60,6 +55,17 @@ html[data-reduced-motion="true"] *::after {
   animation-iteration-count: 1 !important;
   scroll-behavior: auto !important;
   transition-duration: 1ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 * {
