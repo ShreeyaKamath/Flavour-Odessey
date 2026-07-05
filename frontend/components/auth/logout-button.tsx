@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth-store";
 
+/** Ends the active session and returns the player to login. */
 export function LogoutButton() {
   const logout = useAuthStore((state) => state.logout);
   const status = useAuthStore((state) => state.status);
@@ -12,11 +13,7 @@ export function LogoutButton() {
   }
 
   return (
-    <Button
-      className="ml-auto shrink-0"
-      onClick={() => void logout()}
-      variant="ghost"
-    >
+    <Button className="ml-auto shrink-0" onClick={() => void logout()} variant="ghost">
       Log out
     </Button>
   );
