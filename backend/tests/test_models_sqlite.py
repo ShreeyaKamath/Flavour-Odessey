@@ -3,14 +3,25 @@ from uuid import uuid4
 
 import pytest
 import pytest_asyncio
-from sqlalchemy import select, text
+from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
 from app.db.base import Base
 from app.db.init_db import seed_mvp_data
 from app.db.repositories.islands import IslandRepository
-from app.models import AssetManifest, Ingredient, Island, NPC, PlayerProfile, Quest, User
+from app.models import (
+    AssetManifest,
+    Ingredient,
+    Island,
+    NPC,
+    PlayerProfile,
+    Quest,
+    Recipe,
+    User,
+    WeatherState,
+    WorldEvent,
+)
 
 
 @pytest_asyncio.fixture()
@@ -92,6 +103,27 @@ async def test_sqlite_seed_data_loads(sqlite_session: AsyncSession) -> None:
     assert ingredient is not None
     assert quest is not None
     assert manifest is not None
+
+
+@pytest.mark.asyncio
+async def test_sqlite_seed_data_is_idempotent(sqlite_session: AsyncSession) -> None:
+    await seed_mvp_data(sqlite_session)
+    await sqlite_session.commit()
+    await seed_mvp_data(sqlite_session)
+    await sqlite_session.commit()
+
+    async def count(model: type) -> int:
+        return (
+            await sqlite_session.execute(select(func.count()).select_from(model))
+        ).scalar_one()
+
+    assert await count(Island) == 5
+    assert await count(NPC) == 2
+    assert await count(Ingredient) == 2
+    assert await count(Quest) == 1
+    assert await count(Recipe) == 1
+    assert await count(WeatherState) == 1
+    assert await count(WorldEvent) == 1
 
 
 @pytest.mark.asyncio
