@@ -18,7 +18,11 @@ def test_openapi_includes_shared_contract_components() -> None:
 
     assert schema["x-contract-source"] == "backend/app/schemas/contracts.py"
     assert {
-        "/api/auth/guest",
+            "/api/auth/guest",
+            "/api/ai/companion/respond",
+            "/api/ai/journal/story",
+            "/api/ai/npc/chat",
+            "/api/ai/recipe/describe",
         "/api/auth/login",
         "/api/auth/logout",
         "/api/auth/me",
@@ -49,6 +53,10 @@ def test_openapi_includes_shared_contract_components() -> None:
     component_names = set(schema["components"]["schemas"])
     assert {
         "AuthSessionResponse",
+        "AICompanionRespondResponse",
+        "AIJournalStoryResponse",
+        "AINpcChatResponse",
+        "AIRecipeDescribeResponse",
         "ErrorResponse",
         "GameEvent",
         "GameStateResponse",
