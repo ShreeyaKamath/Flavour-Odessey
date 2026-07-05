@@ -1,44 +1,35 @@
-export const colorTokens = {
-  background: "rgb(var(--color-background))",
-  foreground: "rgb(var(--color-foreground))",
-  surface: "rgb(var(--color-surface))",
-  surfaceRaised: "rgb(var(--color-surface-raised))",
-  border: "rgb(var(--color-border))",
-  primary: "rgb(var(--color-primary))",
-  accent: "rgb(var(--color-accent))",
-  muted: "rgb(var(--color-muted))",
-  danger: "rgb(var(--color-danger))"
-} as const;
-
-export const spacingTokens = {
-  page: "var(--space-page)",
-  control: "0.75rem",
-  panel: "1rem",
-  section: "2rem"
-} as const;
-
-export const animationTokens = {
-  hover: "var(--motion-hover)",
-  press: "var(--motion-press)",
-  panel: "var(--motion-panel)",
-  scene: "var(--motion-scene)",
-  float: "var(--motion-float)"
-} as const;
-
 export const motionTokens = {
-  hoverScale: 1.03,
-  pressScale: 0.98,
-  panelOffset: 12,
-  easing: [0.22, 1, 0.36, 1]
-} as const;
-
-export const responsiveTokens = {
-  contentMaxWidth: "72rem",
-  readableMaxWidth: "44rem"
-} as const;
-
-export const zIndexTokens = {
-  navigation: "var(--z-navigation)",
-  overlay: "var(--z-overlay)",
-  toast: "var(--z-toast)"
+  delay: {
+    particle: 0.06
+  },
+  distance: {
+    ambient: 6,
+    collect: 18,
+    panel: 12,
+    scene: 24
+  },
+  duration: {
+    ambient: 5.2,
+    hover: 0.15,
+    panel: 0.3,
+    particle: 0.8,
+    press: 0.15,
+    reveal: 0.45,
+    scene: 0.9,
+    skeleton: 1.4
+  },
+  easing: {
+    entrance: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    soft: [0.22, 1, 0.36, 1] as [number, number, number, number]
+  },
+  rotation: {
+    page: 8,
+    sparkle: 90
+  },
+  scale: {
+    collect: 1.04,
+    hover: 1.03,
+    press: 0.98,
+    reveal: 0.96
+  }
 } as const;
