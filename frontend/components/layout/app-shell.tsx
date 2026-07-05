@@ -1,11 +1,13 @@
 import { ReactNode } from "react";
 
+import { PageTransition } from "@/components/layout/page-transition";
 import { GlobalNavigation } from "@/components/navigation/global-navigation";
 
 type AppShellProps = {
   children: ReactNode;
 };
 
+/** Provides persistent navigation and the accessible page content region. */
 export function AppShell({ children }: AppShellProps) {
   return (
     <>
@@ -21,7 +23,7 @@ export function AppShell({ children }: AppShellProps) {
         id="main"
         tabIndex={-1}
       >
-        {children}
+        <PageTransition>{children}</PageTransition>
       </main>
     </>
   );
