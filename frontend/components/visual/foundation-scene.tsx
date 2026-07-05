@@ -15,6 +15,7 @@ function FoundationMesh() {
   );
 }
 
+/** Renders the lightweight Three.js foundation scene. */
 export function FoundationScene() {
   return (
     <Canvas
