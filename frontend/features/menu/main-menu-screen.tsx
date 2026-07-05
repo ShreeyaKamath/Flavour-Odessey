@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { ScreenShell } from "@/features/screens/screen-shell";
 
+/** Renders the primary adventure menu. */
 export function MainMenuScreen() {
   return (
     <ScreenShell
