@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ScreenShell } from "@/features/screens/screen-shell";
 import { useSettingsStore } from "@/stores/settings-store";
 
+/** Renders theme and reduced-motion controls. */
 export function SettingsScreen() {
   const reducedMotion = useSettingsStore((state) => state.reducedMotion);
   const setReducedMotion = useSettingsStore((state) => state.setReducedMotion);
