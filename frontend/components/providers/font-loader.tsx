@@ -7,6 +7,7 @@ type FontLoaderProps = {
   children: ReactNode;
 };
 
+/** Applies the configured application font classes. */
 export function FontLoader({ children }: FontLoaderProps) {
   return <div className={cn(fontLoader.bodyClassName, "min-h-screen")}>{children}</div>;
 }
