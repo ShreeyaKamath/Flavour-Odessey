@@ -18,6 +18,7 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
+/** Provides the document shell and application-wide providers. */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
