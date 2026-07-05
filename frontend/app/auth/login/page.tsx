@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Sign in"
 };
 
+/** Renders the login route. */
 export default function LoginPage() {
   return <LoginScreen />;
 }
