@@ -8,6 +8,7 @@ import {
   setAccessToken,
   setRefreshToken
 } from "@/lib/auth/token-storage";
+import { notifyAuthIdentityChanged } from "@/lib/auth/session-events";
 
 type AuthUser = components["schemas"]["AuthUser"];
 type LoginRequest = components["schemas"]["LoginRequest"];
@@ -19,6 +20,7 @@ type AuthState = {
   status: AuthStatus;
   user: AuthUser | null;
   clearError: () => void;
+  expireSession: () => void;
   login: (payload: LoginRequest) => Promise<void>;
   loginAsGuest: (displayName?: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -26,15 +28,16 @@ type AuthState = {
   restoreSession: () => Promise<void>;
 };
 
+let restoreSessionRequest: Promise<void> | null = null;
+
 function messageFrom(error: unknown) {
   return error instanceof Error ? error.message : "Authentication failed";
 }
 
-function establishSession(
-  response: components["schemas"]["AuthSessionResponse"]
-) {
+function establishSession(response: components["schemas"]["AuthSessionResponse"]) {
   setAccessToken(response.access_token);
   setRefreshToken(response.refresh_token);
+  notifyAuthIdentityChanged();
   return response.user;
 }
 
@@ -44,6 +47,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
 
   clearError: () => set({ error: null }),
+  expireSession: () => {
+    clearAuthTokens();
+    notifyAuthIdentityChanged();
+    set({ error: null, status: "anonymous", user: null });
+  },
 
   login: async (payload) => {
     set({ error: null, status: "loading" });
@@ -52,6 +60,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ status: "authenticated", user: establishSession(session) });
     } catch (error) {
       clearAuthTokens();
+      notifyAuthIdentityChanged();
       set({ error: messageFrom(error), status: "anonymous", user: null });
       throw error;
     }
@@ -66,17 +75,18 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ status: "authenticated", user: establishSession(session) });
     } catch (error) {
       clearAuthTokens();
+      notifyAuthIdentityChanged();
       set({ error: messageFrom(error), status: "anonymous", user: null });
       throw error;
     }
   },
 
   logout: async () => {
-    const refreshToken = getRefreshToken();
     try {
-      await apiClient.authLogout({ refresh_token: refreshToken });
+      await apiClient.authLogout();
     } finally {
       clearAuthTokens();
+      notifyAuthIdentityChanged();
       set({ error: null, status: "anonymous", user: null });
     }
   },
@@ -88,32 +98,44 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ status: "authenticated", user: establishSession(session) });
     } catch (error) {
       clearAuthTokens();
+      notifyAuthIdentityChanged();
       set({ error: messageFrom(error), status: "anonymous", user: null });
       throw error;
     }
   },
 
-  restoreSession: async () => {
-    const refreshToken = getRefreshToken();
-    if (!refreshToken) {
-      clearAuthTokens();
-      set({ error: null, status: "anonymous", user: null });
-      return;
+  restoreSession: () => {
+    if (restoreSessionRequest) {
+      return restoreSessionRequest;
     }
 
-    set({ error: null, status: "loading" });
-    try {
-      const refreshed = await apiClient.authRefresh({
-        refresh_token: refreshToken
-      });
-      setAccessToken(refreshed.access_token);
-      setRefreshToken(refreshed.refresh_token);
+    restoreSessionRequest = (async () => {
+      const refreshToken = getRefreshToken();
+      if (!refreshToken) {
+        clearAuthTokens();
+        set({ error: null, status: "anonymous", user: null });
+        return;
+      }
 
-      const current = await apiClient.authMe();
-      set({ status: "authenticated", user: current.user });
-    } catch {
-      clearAuthTokens();
-      set({ error: null, status: "anonymous", user: null });
-    }
+      set({ error: null, status: "loading" });
+      try {
+        const refreshed = await apiClient.authRefresh({
+          refresh_token: refreshToken
+        });
+        setAccessToken(refreshed.access_token);
+        setRefreshToken(refreshed.refresh_token);
+
+        const current = await apiClient.authMe();
+        notifyAuthIdentityChanged();
+        set({ status: "authenticated", user: current.user });
+      } catch {
+        clearAuthTokens();
+        notifyAuthIdentityChanged();
+        set({ error: null, status: "anonymous", user: null });
+      }
+    })().finally(() => {
+      restoreSessionRequest = null;
+    });
+    return restoreSessionRequest;
   }
 }));
