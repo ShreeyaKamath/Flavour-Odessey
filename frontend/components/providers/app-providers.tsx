@@ -16,6 +16,7 @@ type AppProvidersProps = {
   children: ReactNode;
 };
 
+/** Composes application-wide state, service, and error providers. */
 export function AppProviders({ children }: AppProvidersProps) {
   return (
     <ErrorBoundary>
