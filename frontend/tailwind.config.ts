@@ -45,28 +45,15 @@ const config: Config = {
         display: ["var(--font-display)", "Georgia", "serif"]
       },
       transitionDuration: {
-        hover: "var(--motion-hover)",
-        press: "var(--motion-press)",
-        panel: "var(--motion-panel)",
-        scene: "var(--motion-scene)"
+        hover: "var(--motion-hover)"
       },
       transitionTimingFunction: {
-        soft: "var(--ease-soft)",
-        entrance: "var(--ease-entrance)"
+        soft: "var(--ease-soft)"
       },
       zIndex: {
         navigation: "var(--z-navigation)",
         overlay: "var(--z-overlay)",
         toast: "var(--z-toast)"
-      },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
-          "50%": { transform: "translate3d(0, -0.5rem, 0)" }
-        }
-      },
-      animation: {
-        float: "float var(--motion-float) var(--ease-soft) infinite"
       }
     }
   },
