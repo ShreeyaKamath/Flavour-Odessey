@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Register"
 };
 
+/** Renders the account registration route. */
 export default function RegisterPage() {
   return <RegisterScreen />;
 }
