@@ -12,7 +12,14 @@ from app.db.base import Base
 from app.db.init_db import seed_mvp_data
 from app.db.session import get_async_session
 from app.main import app
-from app.models import InventoryItem, JournalEntry, PlayerProfile, QuestProgress, Recipe
+from app.models import (
+    EventLog,
+    InventoryItem,
+    JournalEntry,
+    PlayerProfile,
+    QuestProgress,
+    Recipe,
+)
 
 
 @pytest_asyncio.fixture()
@@ -297,3 +304,178 @@ async def test_island_restoration_endpoint_is_idempotent(
     assert response.status_code == 200
     assert response.json()["island"]["restoration_level"] == 100
     assert world.json()["restoration_level"] == 100
+
+
+@pytest.mark.asyncio
+async def test_recipe_availability_requires_active_quest(client: TestClient) -> None:
+    auth_session = _register(client)
+    headers = _headers(auth_session)
+    _start(client, headers)
+    _collect_starters(client, headers)
+
+    before_quest = client.get("/api/recipes", headers=headers)
+    _start_quest(client, headers)
+    after_quest = client.get("/api/recipes", headers=headers)
+
+    assert before_quest.json()["items"][0]["can_craft"] is False
+    assert after_quest.json()["items"][0]["can_craft"] is True
+
+
+@pytest.mark.asyncio
+async def test_gameplay_actions_are_idempotent(
+    client: TestClient,
+    session_factory: async_sessionmaker[AsyncSession],
+) -> None:
+    auth_session = _register(client)
+    headers = _headers(auth_session)
+
+    _start(client, headers)
+    _start(client, headers)
+    _collect_starters(client, headers)
+    _collect_starters(client, headers)
+    _start_quest(client, headers)
+    _start_quest(client, headers)
+    _craft(client, headers)
+    _craft(client, headers)
+    _complete(client, headers)
+    _complete(client, headers)
+
+    async with session_factory() as session:
+        event_counts = dict(
+            (
+                await session.execute(
+                    select(EventLog.event_type, func.count(EventLog.id))
+                    .where(
+                        EventLog.event_type.in_(
+                            (
+                                "GameStarted",
+                                "IngredientCollected",
+                                "QuestStarted",
+                                "RecipeCrafted",
+                                "QuestCompleted",
+                                "EmotionRestored",
+                                "JournalUpdated",
+                            )
+                        )
+                    )
+                    .group_by(EventLog.event_type)
+                )
+            ).all()
+        )
+        crafted_count = (
+            await session.execute(
+                select(func.count(Recipe.id)).where(
+                    Recipe.player_profile_id.is_not(None)
+                )
+            )
+        ).scalar_one()
+        journal_count = (
+            await session.execute(select(func.count(JournalEntry.id)))
+        ).scalar_one()
+
+    assert event_counts == {
+        "EmotionRestored": 1,
+        "GameStarted": 1,
+        "IngredientCollected": 2,
+        "JournalUpdated": 1,
+        "QuestCompleted": 1,
+        "QuestStarted": 1,
+        "RecipeCrafted": 1,
+    }
+    assert crafted_count == 1
+    assert journal_count == 1
+
+
+@pytest.mark.asyncio
+async def test_new_guest_has_clean_isolated_game_state(client: TestClient) -> None:
+    first_guest = client.post("/api/auth/guest", json={}).json()
+    first_headers = _headers(first_guest)
+    _start(client, first_headers)
+    client.post(
+        "/api/inventory/collect",
+        headers=first_headers,
+        json={"ingredient_id": "vanilla_orchid"},
+    )
+
+    second_guest = client.post("/api/auth/guest", json={}).json()
+    second_state = client.get(
+        "/api/game/state",
+        headers=_headers(second_guest),
+    ).json()
+
+    assert second_state["started"] is False
+    assert second_state["island"]["restoration_level"] == 0
+    assert all(item["quantity"] == 0 for item in second_state["inventory"])
+    assert second_state["quest"]["status"] == "not_started"
+    assert second_state["journal"] == []
+
+
+@pytest.mark.asyncio
+async def test_registered_progress_survives_relogin(client: TestClient) -> None:
+    payload = {
+        "email": f"persistent-{uuid4().hex}@example.com",
+        "password": "persistent-bloom-123",
+        "display_name": "Persistent Keeper",
+    }
+    registered = client.post("/api/auth/register", json=payload).json()
+    headers = _headers(registered)
+    _start(client, headers)
+    _collect_starters(client, headers)
+    _start_quest(client, headers)
+    _craft(client, headers)
+    _complete(client, headers)
+
+    relogged = client.post(
+        "/api/auth/login",
+        json={"email": payload["email"], "password": payload["password"]},
+    )
+    reloaded = client.get(
+        "/api/game/state",
+        headers=_headers(relogged.json()),
+    )
+
+    assert relogged.status_code == 200
+    assert reloaded.status_code == 200
+    assert reloaded.json()["started"] is True
+    assert reloaded.json()["island"]["restored"] is True
+    assert reloaded.json()["quest"]["status"] == "completed"
+    assert reloaded.json()["journal"][0]["title"] == "The Day Joy Returned"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("method", "path", "json_body"),
+    [
+        ("GET", "/api/game/state", None),
+        ("POST", "/api/game/start", {"island_id": "joy_meadow"}),
+        ("GET", "/api/inventory", None),
+        (
+            "POST",
+            "/api/inventory/collect",
+            {"ingredient_id": "vanilla_orchid"},
+        ),
+        ("GET", "/api/quests", None),
+        ("POST", "/api/quests/start", {"quest_id": "joy_first_recipe"}),
+        ("POST", "/api/quests/progress", {"quest_id": "joy_first_recipe"}),
+        ("POST", "/api/quests/complete", {"quest_id": "joy_first_recipe"}),
+        ("GET", "/api/recipes", None),
+        (
+            "POST",
+            "/api/recipes/craft",
+            {"recipe_id": "golden_vanilla_bloom"},
+        ),
+        ("GET", "/api/journal", None),
+        ("POST", "/api/journal/create", {"island_id": "joy_meadow"}),
+        ("POST", "/api/world/islands/joy_meadow/restore", None),
+    ],
+)
+async def test_gameplay_endpoints_require_authentication(
+    client: TestClient,
+    method: str,
+    path: str,
+    json_body: dict | None,
+) -> None:
+    response = client.request(method, path, json=json_body)
+
+    assert response.status_code == 401
+    assert response.json()["error"]["code"] == "UNAUTHORIZED"
