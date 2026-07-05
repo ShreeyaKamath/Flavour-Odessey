@@ -1,0 +1,340 @@
+{
+  "islands": [
+    {
+      "key": "joy_meadow",
+      "name": "Joy Meadow",
+      "emotion": "joy",
+      "description": "A sunlit meadow where warm breezes carry birdsong and distant laughter.",
+      "is_unlocked_by_default": true,
+      "extra": {
+        "scope": "mvp",
+        "biome": "meadow",
+        "map_order": 0,
+        "map_position": {
+          "x": 48,
+          "y": 54
+        },
+        "landmarks": [
+          {
+            "key": "vanilla_windmill",
+            "name": "Vanilla Windmill",
+            "description": "A pastel windmill turning slowly above the meadow."
+          },
+          {
+            "key": "crystal_orchard",
+            "name": "Crystal Orchard",
+            "description": "Fruit trees shimmer with bright, glasslike leaves."
+          },
+          {
+            "key": "caramel_falls",
+            "name": "Caramel Falls",
+            "description": "Golden water tumbles into a quiet meadow pool."
+          }
+        ],
+        "ambient": {
+          "description": "Warm breeze moving through flowers and wind chimes.",
+          "palette": ["sunny_yellow", "blossom_pink", "fresh_mint"],
+          "sounds": ["sprinkle_birds", "distant_laughter", "wind_chimes"]
+        },
+        "manifest_keys": [
+          "island.joy_meadow.map",
+          "audio.joy_meadow.ambience"
+        ]
+      }
+    },
+    {
+      "key": "wonder_woods",
+      "name": "Wonder Woods",
+      "emotion": "curiosity",
+      "description": "An emerald woodland of glowing mushrooms, moving trees, and hidden passages.",
+      "is_unlocked_by_default": false,
+      "extra": {
+        "scope": "version_1_placeholder",
+        "biome": "enchanted_woods",
+        "map_order": 1,
+        "map_position": {
+          "x": 24,
+          "y": 28
+        },
+        "landmarks": [],
+        "ambient": {
+          "description": "Quiet leaves and curious woodland echoes.",
+          "palette": ["emerald", "teal"],
+          "sounds": []
+        },
+        "manifest_keys": ["island.wonder_woods.map"]
+      }
+    },
+    {
+      "key": "courage_cliffs",
+      "name": "Courage Cliffs",
+      "emotion": "courage",
+      "description": "High cliffs, crystal caves, waterfalls, and steady ocean winds.",
+      "is_unlocked_by_default": false,
+      "extra": {
+        "scope": "version_1_placeholder",
+        "biome": "cliffs",
+        "map_order": 2,
+        "map_position": {
+          "x": 76,
+          "y": 26
+        },
+        "landmarks": [],
+        "ambient": {
+          "description": "Strong winds crossing distant waterfalls.",
+          "palette": ["sky_blue", "crystal_white"],
+          "sounds": []
+        },
+        "manifest_keys": ["island.courage_cliffs.map"]
+      }
+    },
+    {
+      "key": "hope_harbor",
+      "name": "Hope Harbor",
+      "emotion": "hope",
+      "description": "An ocean village of glowing lighthouses and floating docks.",
+      "is_unlocked_by_default": false,
+      "extra": {
+        "scope": "version_1_placeholder",
+        "biome": "ocean_harbor",
+        "map_order": 3,
+        "map_position": {
+          "x": 18,
+          "y": 76
+        },
+        "landmarks": [],
+        "ambient": {
+          "description": "Soft waves beneath distant lighthouse bells.",
+          "palette": ["ocean_blue", "lantern_gold"],
+          "sounds": []
+        },
+        "manifest_keys": ["island.hope_harbor.map"]
+      }
+    },
+    {
+      "key": "home_valley",
+      "name": "Home Valley",
+      "emotion": "belonging",
+      "description": "A cozy valley of cottages, orchards, gardens, and bakeries.",
+      "is_unlocked_by_default": false,
+      "extra": {
+        "scope": "version_1_placeholder",
+        "biome": "cozy_valley",
+        "map_order": 4,
+        "map_position": {
+          "x": 80,
+          "y": 78
+        },
+        "landmarks": [],
+        "ambient": {
+          "description": "Garden paths, bakery windows, and orchard leaves.",
+          "palette": ["garden_green", "berry_red"],
+          "sounds": []
+        },
+        "manifest_keys": ["island.home_valley.map"]
+      }
+    }
+  ],
+  "companions": [
+    {
+      "key": "lumi",
+      "name": "Lumi",
+      "role": "companion",
+      "extra": {
+        "definition_only": true
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "key": "lumi",
+      "island_key": "joy_meadow",
+      "name": "Lumi",
+      "role": "companion",
+      "profile": {
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "The meadow still remembers joy. Let us gather what it needs.",
+          "after_restoration": "You did it! Joy is singing through every flower again."
+        }
+      }
+    },
+    {
+      "key": "joy_meadow_keeper",
+      "island_key": "joy_meadow",
+      "name": "Meadow Keeper",
+      "role": "joy_meadow_npc",
+      "profile": {
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "Vanilla Orchid and Honey Bloom once made the meadow shine.",
+          "after_restoration": "The first scoop has returned, and with it our brightest memories."
+        }
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "key": "vanilla_orchid",
+      "name": "Vanilla Orchid",
+      "rarity": "common",
+      "extra": {
+        "is_starter": true
+      }
+    },
+    {
+      "key": "honey_bloom",
+      "name": "Honey Bloom",
+      "rarity": "common",
+      "extra": {
+        "is_starter": true
+      }
+    }
+  ],
+  "quests": [
+    {
+      "key": "joy_first_recipe",
+      "island_key": "joy_meadow",
+      "title": "Restore the First Scoop",
+      "description": "Gather the meadow's first blooms, craft its remembered flavor, and restore Joy.",
+      "requirements": {
+        "required_ingredients": ["vanilla_orchid", "honey_bloom"],
+        "recipe_key": "golden_vanilla_bloom"
+      },
+      "reward": {
+        "emotion": "joy",
+        "restoration_level": 100,
+        "journal": {
+          "title": "The Day Joy Returned",
+          "story": "Vanilla Orchid and Honey Bloom became a golden first scoop. As its warmth crossed Joy Meadow, laughter returned to the wind and every flower remembered how to shine."
+        }
+      }
+    }
+  ],
+  "recipes": [
+    {
+      "key": "golden_vanilla_bloom",
+      "name": "Golden Vanilla Bloom",
+      "emotion": "joy",
+      "ingredients": {
+        "vanilla_orchid": 1,
+        "honey_bloom": 1
+      },
+      "lore": "A golden scoop that remembers sunlight, shared laughter, and the first warm day of spring.",
+      "ability": "joy_restoration",
+      "extra": {
+        "scope": "mvp",
+        "deterministic": true
+      }
+    }
+  ],
+  "asset_manifests": [
+    {
+      "manifest_type": "asset",
+      "asset_key": "companion.lumi.definition",
+      "path": "assets/placeholders/lumi_definition.json",
+      "extra": {
+        "source": "mvp_seed",
+        "companion_key": "lumi"
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.joy_meadow.placeholder",
+      "path": "assets/placeholders/joy_meadow_placeholder.webp",
+      "extra": {
+        "source": "mvp_seed"
+      }
+    },
+    {
+      "manifest_type": "audio",
+      "asset_key": "audio.joy_meadow.placeholder",
+      "path": "audio/placeholders/joy_meadow_placeholder.ogg",
+      "extra": {
+        "source": "mvp_seed"
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.joy_meadow.map",
+      "path": "assets/placeholders/joy_meadow_map.webp",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "joy_meadow"
+      }
+    },
+    {
+      "manifest_type": "audio",
+      "asset_key": "audio.joy_meadow.ambience",
+      "path": "audio/placeholders/joy_meadow_ambience.ogg",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "joy_meadow"
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.wonder_woods.map",
+      "path": "assets/placeholders/wonder_woods_map.webp",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "wonder_woods",
+        "locked": true
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.courage_cliffs.map",
+      "path": "assets/placeholders/courage_cliffs_map.webp",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "courage_cliffs",
+        "locked": true
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.hope_harbor.map",
+      "path": "assets/placeholders/hope_harbor_map.webp",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "hope_harbor",
+        "locked": true
+      }
+    },
+    {
+      "manifest_type": "asset",
+      "asset_key": "island.home_valley.map",
+      "path": "assets/placeholders/home_valley_map.webp",
+      "extra": {
+        "source": "phase_6_world",
+        "island_key": "home_valley",
+        "locked": true
+      }
+    }
+  ],
+  "weather_states": [
+    {
+      "island_key": "joy_meadow",
+      "weather_type": "sunny",
+      "intensity": 25,
+      "state": {
+        "label": "Warm breeze",
+        "temperature": "mild",
+        "visual_effect": "drifting_flower_petals",
+        "audio_cue": "audio.joy_meadow.ambience"
+      }
+    }
+  ],
+  "world_events": [
+    {
+      "event_type": "WeatherChanged",
+      "payload": {
+        "event_key": "joy_meadow_warm_breeze",
+        "island_key": "joy_meadow",
+        "headline": "A warm breeze crosses the meadow.",
+        "active": true
+      }
+    }
+  ]
+}
