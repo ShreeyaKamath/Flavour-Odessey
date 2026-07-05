@@ -2,6 +2,51 @@
 
 export type components = {
   schemas: {
+    "AICompanionRespondRequest": {
+  event: "hint" | "ingredient_collected" | "recipe_crafted" | "joy_restored";
+};
+    "AICompanionRespondResponse": {
+  companion_id: "lumi";
+  event: string;
+  fallback_used: boolean;
+  provider: string;
+  response: string;
+};
+    "AIJournalStoryRequest": {
+  island_id: "joy_meadow";
+};
+    "AIJournalStoryResponse": {
+  fallback_used: boolean;
+  island_id: "joy_meadow";
+  provider: string;
+  story: string;
+  title: "The Day Joy Returned";
+};
+    "AINpcChatRequest": {
+  message: string;
+  npc_id: "joy_meadow_keeper";
+};
+    "AINpcChatResponse": {
+  fallback_used: boolean;
+  importance: number;
+  memory_written: boolean;
+  mood: "hopeful" | "joyful";
+  npc_id: "joy_meadow_keeper";
+  provider: string;
+  reply: string;
+};
+    "AIRecipeDescribeRequest": {
+  recipe_id: "golden_vanilla_bloom";
+};
+    "AIRecipeDescribeResponse": {
+  emotion: "joy";
+  fallback_used: boolean;
+  lore: string;
+  name: "Golden Vanilla Bloom";
+  provider: string;
+  recipe_id: "golden_vanilla_bloom";
+  required_ingredients: Array<"vanilla_orchid" | "honey_bloom">;
+};
     "AmbientMetadata": {
   description: string;
   palette: Array<string>;
@@ -265,6 +310,158 @@ export type components = {
 };
 
 export type paths = {
+  "/api/ai/companion/respond": {
+    post: {
+      operationId: "ai_companion_respond";
+      requestBody: {
+        required: true;
+        content: {
+          "application/json": components["schemas"]["AICompanionRespondRequest"];
+        };
+      };
+      responses: {
+        "200": {
+          content: {
+            "application/json": components["schemas"]["AICompanionRespondResponse"];
+          };
+        };
+        "401": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "404": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "409": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "422": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+      };
+    };
+  };
+  "/api/ai/journal/story": {
+    post: {
+      operationId: "ai_journal_story";
+      requestBody: {
+        required: true;
+        content: {
+          "application/json": components["schemas"]["AIJournalStoryRequest"];
+        };
+      };
+      responses: {
+        "200": {
+          content: {
+            "application/json": components["schemas"]["AIJournalStoryResponse"];
+          };
+        };
+        "401": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "404": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "409": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "422": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+      };
+    };
+  };
+  "/api/ai/npc/chat": {
+    post: {
+      operationId: "ai_npc_chat";
+      requestBody: {
+        required: true;
+        content: {
+          "application/json": components["schemas"]["AINpcChatRequest"];
+        };
+      };
+      responses: {
+        "200": {
+          content: {
+            "application/json": components["schemas"]["AINpcChatResponse"];
+          };
+        };
+        "401": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "404": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "409": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "422": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+      };
+    };
+  };
+  "/api/ai/recipe/describe": {
+    post: {
+      operationId: "ai_recipe_describe";
+      requestBody: {
+        required: true;
+        content: {
+          "application/json": components["schemas"]["AIRecipeDescribeRequest"];
+        };
+      };
+      responses: {
+        "200": {
+          content: {
+            "application/json": components["schemas"]["AIRecipeDescribeResponse"];
+          };
+        };
+        "401": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "404": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "409": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+        "422": {
+          content: {
+            "application/json": components["schemas"]["ErrorResponse"];
+          };
+        };
+      };
+    };
+  };
   "/api/auth/guest": {
     post: {
       operationId: "auth_guest";
@@ -937,12 +1134,46 @@ export type paths = {
 export type ApiErrorEnvelope = components["schemas"]["ErrorResponse"];
 export type HealthResponse = components["schemas"]["HealthResponse"];
 export type AccessTokenProvider = () => string | null;
+export type AccessTokenRefreshHandler = () => Promise<string | null>;
 
 export class GeneratedApiClient {
   constructor(
     private readonly baseUrl = "http://localhost:8000",
-    private readonly accessTokenProvider?: AccessTokenProvider
+    private readonly accessTokenProvider?: AccessTokenProvider,
+    private readonly refreshAccessToken?: AccessTokenRefreshHandler
   ) {}
+
+  async aiCompanionRespond(body: components["schemas"]["AICompanionRespondRequest"], options: RequestInit = {}): Promise<components["schemas"]["AICompanionRespondResponse"]> {
+    return this.request<components["schemas"]["AICompanionRespondResponse"]>("/api/ai/companion/respond", {
+      ...options,
+      method: "POST",
+      body: body === null ? undefined : JSON.stringify(body)
+    });
+  }
+
+  async aiJournalStory(body: components["schemas"]["AIJournalStoryRequest"], options: RequestInit = {}): Promise<components["schemas"]["AIJournalStoryResponse"]> {
+    return this.request<components["schemas"]["AIJournalStoryResponse"]>("/api/ai/journal/story", {
+      ...options,
+      method: "POST",
+      body: body === null ? undefined : JSON.stringify(body)
+    });
+  }
+
+  async aiNpcChat(body: components["schemas"]["AINpcChatRequest"], options: RequestInit = {}): Promise<components["schemas"]["AINpcChatResponse"]> {
+    return this.request<components["schemas"]["AINpcChatResponse"]>("/api/ai/npc/chat", {
+      ...options,
+      method: "POST",
+      body: body === null ? undefined : JSON.stringify(body)
+    });
+  }
+
+  async aiRecipeDescribe(body: components["schemas"]["AIRecipeDescribeRequest"], options: RequestInit = {}): Promise<components["schemas"]["AIRecipeDescribeResponse"]> {
+    return this.request<components["schemas"]["AIRecipeDescribeResponse"]>("/api/ai/recipe/describe", {
+      ...options,
+      method: "POST",
+      body: body === null ? undefined : JSON.stringify(body)
+    });
+  }
 
   async authGuest(body: components["schemas"]["GuestLoginRequest"], options: RequestInit = {}): Promise<components["schemas"]["AuthSessionResponse"]> {
     return this.request<components["schemas"]["AuthSessionResponse"]>("/api/auth/guest", {
@@ -1107,10 +1338,29 @@ export class GeneratedApiClient {
       headers.set("Authorization", `Bearer ${accessToken}`);
     }
 
-    const response = await fetch(`${this.baseUrl}${path}`, {
+    let response = await fetch(`${this.baseUrl}${path}`, {
       ...init,
       headers
     });
+
+    if (
+      response.status === 401 &&
+      accessToken &&
+      this.refreshAccessToken &&
+      path !== "/api/auth/guest" &&
+      path !== "/api/auth/login" &&
+      path !== "/api/auth/refresh" &&
+      path !== "/api/auth/register"
+    ) {
+      const refreshedAccessToken = await this.refreshAccessToken().catch(() => null);
+      if (refreshedAccessToken) {
+        headers.set("Authorization", `Bearer ${refreshedAccessToken}`);
+        response = await fetch(`${this.baseUrl}${path}`, {
+          ...init,
+          headers
+        });
+      }
+    }
 
     if (!response.ok) {
       const payload = (await response.json().catch(() => null)) as ApiErrorEnvelope | null;
