@@ -1,9 +1,10 @@
 "use client";
 
-import { HTMLMotionProps, motion, useReducedMotion } from "framer-motion";
+import { HTMLMotionProps, motion } from "framer-motion";
 import { ReactNode } from "react";
 
-import { motionTokens } from "@/lib/design-tokens";
+import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { interactionMotion } from "@/lib/animation/motion-tokens";
 import { cn } from "@/utils/cn";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
@@ -19,6 +20,7 @@ const variants: Record<ButtonVariant, string> = {
   ghost: "text-foreground hover:bg-muted"
 };
 
+/** Renders the shared animated command button. */
 export function Button({
   children,
   className,
@@ -26,7 +28,7 @@ export function Button({
   type = "button",
   ...props
 }: ButtonProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const reducedMotion = useMotionPreference();
 
   return (
     <motion.button
@@ -35,9 +37,10 @@ export function Button({
         variants[variant],
         className
       )}
+      data-motion-reduced={String(reducedMotion)}
       type={type}
-      whileHover={shouldReduceMotion ? undefined : { scale: motionTokens.hoverScale }}
-      whileTap={shouldReduceMotion ? undefined : { scale: motionTokens.pressScale }}
+      whileHover={reducedMotion ? undefined : interactionMotion.hover}
+      whileTap={reducedMotion ? undefined : interactionMotion.tap}
       {...props}
     >
       {children}
