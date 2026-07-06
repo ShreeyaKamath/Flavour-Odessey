@@ -9,6 +9,10 @@ import { GameplayScreen } from "@/features/game/gameplay-screen";
 import { apiClient } from "@/lib/api/client";
 import { audioEvents } from "@/lib/audio/audio-events";
 
+vi.mock("@/components/world/joy-meadow-environment", () => ({
+  JoyMeadowEnvironment: () => <div>Living Joy Meadow</div>
+}));
+
 type GameState = components["schemas"]["GameStateResponse"];
 
 function gameState(): GameState {
