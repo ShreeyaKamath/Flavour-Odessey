@@ -60,8 +60,8 @@ export function JoyMeadowScene({
   return (
     <motion.section
       animate={reducedMotion ? undefined : "visible"}
-      aria-label="Joy Meadow placeholder scene"
-      className="relative mt-6 min-h-72 overflow-hidden rounded-panel border border-border"
+      aria-label="Living Joy Meadow scene"
+      className="relative ml-[calc(50%-50vw)] mt-6 h-[min(68vh,44rem)] min-h-[28rem] w-screen overflow-hidden border-y border-border"
       data-motion-effect="scene-entrance"
       data-motion-reduced={String(reducedMotion)}
       initial={reducedMotion ? false : "hidden"}
