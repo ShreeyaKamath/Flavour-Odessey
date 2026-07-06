@@ -4,12 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  CraftingMotion,
-  IngredientMotion,
-  JournalMotion,
-  JoyMeadowScene
-} from "@/features/game/gameplay-motion";
+import { IngredientMotion, JournalMotion, JoyMeadowScene } from "@/features/game/gameplay-motion";
 import { useSettingsStore } from "@/stores/settings-store";
 
 describe("motion system", () => {
@@ -45,13 +40,12 @@ describe("motion system", () => {
       <>
         <JoyMeadowScene restored>Meadow</JoyMeadowScene>
         <IngredientMotion collected>Ingredient</IngredientMotion>
-        <CraftingMotion crafted>Recipe</CraftingMotion>
         <JournalMotion>Journal</JournalMotion>
       </>
     );
 
     const effects = container.querySelectorAll("[data-motion-effect]");
-    expect(effects).toHaveLength(4);
+    expect(effects).toHaveLength(3);
     effects.forEach((effect) => {
       expect(effect).toHaveAttribute("data-motion-reduced", "true");
     });
