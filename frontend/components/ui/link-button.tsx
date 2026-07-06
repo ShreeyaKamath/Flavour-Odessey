@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ComponentProps, ReactNode } from "react";
 
+import { useAudioFeedback } from "@/hooks/use-audio-feedback";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { interactionMotion } from "@/lib/animation/motion-tokens";
 import { cn } from "@/utils/cn";
@@ -29,10 +30,13 @@ export function LinkButton({
   children,
   className,
   href,
+  onClick,
+  onPointerEnter,
   variant = "primary",
   ...props
 }: LinkButtonProps) {
   const reducedMotion = useMotionPreference();
+  const audioFeedback = useAudioFeedback();
 
   return (
     <MotionLink
@@ -43,6 +47,16 @@ export function LinkButton({
       )}
       data-motion-reduced={String(reducedMotion)}
       href={href}
+      onClick={(event) => {
+        audioFeedback.click();
+        onClick?.(event);
+      }}
+      onPointerEnter={(event) => {
+        if (!reducedMotion) {
+          audioFeedback.hover();
+        }
+        onPointerEnter?.(event);
+      }}
       whileHover={reducedMotion ? undefined : interactionMotion.hover}
       whileTap={reducedMotion ? undefined : interactionMotion.tap}
       {...props}
