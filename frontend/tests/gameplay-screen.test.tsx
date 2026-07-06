@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { GameplayScreen } from "@/features/game/gameplay-screen";
 import { apiClient } from "@/lib/api/client";
+import { audioEvents } from "@/lib/audio/audio-events";
 
 type GameState = components["schemas"]["GameStateResponse"];
 
@@ -137,6 +138,7 @@ describe("GameplayScreen", () => {
     };
     vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(initial);
     vi.spyOn(apiClient, "collectInventoryIngredient").mockResolvedValueOnce(collected);
+    const audio = vi.spyOn(audioEvents, "publish");
     const user = userEvent.setup();
 
     render(<GameplayScreen />, { wrapper: TestQueryProvider });
@@ -145,6 +147,7 @@ describe("GameplayScreen", () => {
     expect(apiClient.collectInventoryIngredient).toHaveBeenCalledWith({
       ingredient_id: "vanilla_orchid"
     });
+    expect(audio).toHaveBeenCalledWith("IngredientCollected");
     const collectedButtons = await screen.findAllByRole("button", {
       name: "Collected"
     });
@@ -185,6 +188,7 @@ describe("GameplayScreen", () => {
     crafted.quest.crafted = true;
     vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(initial);
     vi.spyOn(apiClient, "craftRecipe").mockResolvedValueOnce(crafted);
+    const audio = vi.spyOn(audioEvents, "publish");
     const user = userEvent.setup();
 
     render(<GameplayScreen />, { wrapper: TestQueryProvider });
@@ -197,6 +201,7 @@ describe("GameplayScreen", () => {
     expect(apiClient.craftRecipe).toHaveBeenCalledWith({
       recipe_id: "golden_vanilla_bloom"
     });
+    expect(audio).toHaveBeenCalledWith("RecipeCrafted");
     expect(
       await screen.findByRole("button", {
         name: "Golden Vanilla Bloom crafted"
@@ -230,6 +235,39 @@ describe("GameplayScreen", () => {
       await screen.findByRole("heading", { name: "The Day Joy Returned" })
     ).toBeInTheDocument();
     expect(screen.getByText("The meadow remembered how to shine.")).toBeInTheDocument();
+  });
+
+  it("publishes restoration, quest, and journal audio events", async () => {
+    const initial = gameState();
+    initial.quest.can_complete = true;
+    initial.quest.crafted = true;
+    initial.recipe.crafted = true;
+    const restored = structuredClone(initial);
+    restored.island.restoration_level = 100;
+    restored.island.restored = true;
+    restored.quest.can_complete = false;
+    restored.quest.status = "completed";
+    restored.journal = [
+      {
+        content: "The meadow remembered how to shine.",
+        created_at: "2026-07-05T10:30:00Z",
+        emotion: "joy",
+        id: "10000000-0000-0000-0000-000000000001",
+        recipe_name: "Golden Vanilla Bloom",
+        title: "The Day Joy Returned"
+      }
+    ];
+    vi.spyOn(apiClient, "getGameState").mockResolvedValueOnce(initial);
+    vi.spyOn(apiClient, "completeQuest").mockResolvedValueOnce(restored);
+    const audio = vi.spyOn(audioEvents, "publish");
+    const user = userEvent.setup();
+
+    render(<GameplayScreen />, { wrapper: TestQueryProvider });
+    await user.click(await screen.findByRole("button", { name: "Restore Joy Meadow" }));
+
+    expect(audio).toHaveBeenCalledWith("QuestCompleted");
+    expect(audio).toHaveBeenCalledWith("EmotionRestored");
+    expect(audio).toHaveBeenCalledWith("JournalUpdated");
   });
 
   it("shows NPC chat loading and then displays generated dialogue", async () => {
