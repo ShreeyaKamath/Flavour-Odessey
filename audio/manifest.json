@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "sources": {
+    "silent_placeholder": {
+      "generated": true,
+      "mime_type": "audio/wav",
+      "src": "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
+    }
+  },
+  "assets": {
+    "ui_hover": {
+      "bus": "sfx",
+      "default_volume": 0.25,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "ui_click": {
+      "bus": "sfx",
+      "default_volume": 0.45,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "ingredient_collect": {
+      "bus": "sfx",
+      "default_volume": 0.55,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "crafting_sparkle": {
+      "bus": "sfx",
+      "default_volume": 0.7,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "restoration_joy": {
+      "bus": "sfx",
+      "default_volume": 0.8,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "quest_complete": {
+      "bus": "sfx",
+      "default_volume": 0.75,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "journal_reveal": {
+      "bus": "sfx",
+      "default_volume": 0.6,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "joy_meadow_music": {
+      "bus": "music",
+      "default_volume": 0.55,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "joy_meadow_ambience": {
+      "bus": "ambient",
+      "default_volume": 0.7,
+      "loop": true,
+      "source": "silent_placeholder"
+    }
+  }
+}
