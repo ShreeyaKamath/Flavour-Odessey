@@ -13,6 +13,12 @@ vi.mock("@/components/world/joy-meadow-environment", () => ({
   JoyMeadowEnvironment: () => <div>Living Joy Meadow</div>
 }));
 
+vi.mock("@/components/crafting/recipe-presentation", () => ({
+  RecipePresentation: ({ phase }: { phase: string }) => (
+    <div data-testid="recipe-presentation">{phase}</div>
+  )
+}));
+
 type GameState = components["schemas"]["GameStateResponse"];
 
 function gameState(): GameState {
@@ -197,20 +203,30 @@ describe("GameplayScreen", () => {
 
     render(<GameplayScreen />, { wrapper: TestQueryProvider });
     await user.click(
+      await screen.findByRole("checkbox", {
+        name: /Vanilla Orchid/
+      })
+    );
+    await user.click(
+      screen.getByRole("checkbox", {
+        name: /Honey Bloom/
+      })
+    );
+    await user.click(
       await screen.findByRole("button", {
-        name: "Craft Golden Vanilla Bloom"
+        name: "Begin magical crafting"
       })
     );
 
     expect(apiClient.craftRecipe).toHaveBeenCalledWith({
       recipe_id: "golden_vanilla_bloom"
     });
+    expect(audio).toHaveBeenCalledWith("CraftingMagicCharged");
     expect(audio).toHaveBeenCalledWith("RecipeCrafted");
     expect(
-      await screen.findByRole("button", {
-        name: "Golden Vanilla Bloom crafted"
-      })
-    ).toBeDisabled();
+      await screen.findByRole("dialog", { name: "Magical crafting sequence" })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("Ingredients are orbiting");
   });
 
   it("shows the restored journal memory", async () => {
