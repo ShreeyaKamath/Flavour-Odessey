@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { FormEvent, useState } from "react";
 
+import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -81,6 +82,7 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
 
   return (
     <div className="mx-auto max-w-7xl">
+      <JoyMeadowAudio active={state.started} />
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Joy Meadow</p>
