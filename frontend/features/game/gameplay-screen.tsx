@@ -4,12 +4,12 @@ import dynamic from "next/dynamic";
 import { FormEvent, useState } from "react";
 
 import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
+import { CraftingDirector } from "@/components/crafting/crafting-director";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   AmbientMotion,
-  CraftingMotion,
   GameplaySkeleton,
   IngredientMotion,
   JournalMotion,
@@ -245,85 +245,76 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
             </div>
           </section>
 
-          <div className="grid gap-8 lg:grid-cols-2">
-            <section aria-labelledby="quest-title" className="border-y border-border py-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quest</p>
-              <h2
-                className="mt-2 font-display text-2xl font-semibold text-foreground"
-                id="quest-title"
-              >
-                {state.quest.title}
-              </h2>
-              <p className="mt-3 leading-7 text-muted-foreground">{state.quest.description}</p>
-              <p className="mt-4 text-sm font-semibold capitalize text-foreground">
-                Status: {state.quest.status.replace("_", " ")}
-              </p>
-              {state.quest.status === "not_started" ? (
-                <Button
-                  className="mt-5"
-                  disabled={gameplay.isActing}
-                  onClick={() => gameplay.startQuest()}
-                >
-                  Start quest
-                </Button>
-              ) : null}
-              {state.quest.can_complete ? (
-                <Button
-                  className="mt-5"
-                  disabled={gameplay.isActing}
-                  onClick={() =>
-                    gameplay.restoreJoy(undefined, {
-                      onSuccess: () => ai.companion.mutate("joy_restored")
-                    })
-                  }
-                >
-                  Restore Joy Meadow
-                </Button>
-              ) : null}
-            </section>
-
-            <CraftingMotion crafted={state.recipe.crafted}>
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                Heart Flavor
-              </p>
-              <h2
-                className="mt-2 font-display text-2xl font-semibold text-foreground"
-                id="recipe-title"
-              >
-                {state.recipe.name}
-              </h2>
-              <p className="mt-3 leading-7 text-muted-foreground">{state.recipe.lore}</p>
-              <p className="mt-4 text-sm text-muted-foreground">Vanilla Orchid + Honey Bloom</p>
+          <section aria-labelledby="quest-title" className="border-y border-border py-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quest</p>
+            <h2
+              className="mt-2 font-display text-2xl font-semibold text-foreground"
+              id="quest-title"
+            >
+              {state.quest.title}
+            </h2>
+            <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">
+              {state.quest.description}
+            </p>
+            <p className="mt-4 text-sm font-semibold capitalize text-foreground">
+              Status: {state.quest.status.replace("_", " ")}
+            </p>
+            {state.quest.status === "not_started" ? (
               <Button
                 className="mt-5"
-                disabled={!questActive || !state.recipe.can_craft || gameplay.isActing}
+                disabled={gameplay.isActing}
+                onClick={() => gameplay.startQuest()}
+              >
+                Start quest
+              </Button>
+            ) : null}
+            {state.quest.can_complete ? (
+              <Button
+                className="mt-5"
+                disabled={gameplay.isActing}
                 onClick={() =>
-                  gameplay.craftRecipe(undefined, {
-                    onSuccess: () => ai.companion.mutate("recipe_crafted")
+                  gameplay.restoreJoy(undefined, {
+                    onSuccess: () => ai.companion.mutate("joy_restored")
                   })
                 }
-                variant={state.recipe.crafted ? "secondary" : "primary"}
               >
-                {state.recipe.crafted
-                  ? "Golden Vanilla Bloom crafted"
-                  : "Craft Golden Vanilla Bloom"}
+                Restore Joy Meadow
               </Button>
-              <Button
-                className="ml-2 mt-5"
-                disabled={ai.recipe.isPending}
-                onClick={() => ai.recipe.mutate()}
-                variant="ghost"
-              >
-                {ai.recipe.isPending ? "Remembering flavor..." : "Describe flavor"}
-              </Button>
-              {ai.recipe.data ? (
-                <AIResponse
-                  fallbackUsed={ai.recipe.data.fallback_used}
-                  text={ai.recipe.data.lore}
-                />
-              ) : null}
-              {ai.recipe.error ? <AIError message={ai.recipe.error.message} /> : null}
-            </CraftingMotion>
+            ) : null}
+          </section>
+
+          <CraftingDirector
+            canCraft={questActive && state.recipe.can_craft}
+            crafted={state.recipe.crafted}
+            disabled={gameplay.isActing}
+            emotion={state.recipe.emotion}
+            ingredients={state.inventory}
+            journalMemory={state.journal[0]}
+            lore={state.recipe.lore}
+            onCraft={({ onError, onSuccess }) =>
+              gameplay.craftRecipe(undefined, {
+                onError,
+                onSuccess: () => {
+                  onSuccess();
+                  ai.companion.mutate("recipe_crafted");
+                }
+              })
+            }
+            recipeName={state.recipe.name}
+            restored={state.island.restored}
+          />
+          <div className="border-b border-border pb-6">
+            <Button
+              disabled={ai.recipe.isPending}
+              onClick={() => ai.recipe.mutate()}
+              variant="ghost"
+            >
+              {ai.recipe.isPending ? "Remembering flavor..." : "Describe flavor"}
+            </Button>
+            {ai.recipe.data ? (
+              <AIResponse fallbackUsed={ai.recipe.data.fallback_used} text={ai.recipe.data.lore} />
+            ) : null}
+            {ai.recipe.error ? <AIError message={ai.recipe.error.message} /> : null}
           </div>
 
           <section aria-labelledby="inventory-title">
