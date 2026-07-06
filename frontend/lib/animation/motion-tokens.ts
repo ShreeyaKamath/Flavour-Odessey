@@ -89,15 +89,44 @@ export const ingredientCollect: Variants = {
   }
 };
 
-export const craftingReveal: Variants = {
-  idle: {
-    opacity: 1,
-    scale: 1
+export const craftingOverlay: Variants = {
+  hidden: {
+    opacity: 0
   },
-  crafted: {
-    opacity: [1, 0.72, 1],
-    scale: [1, motionTokens.scale.collect, 1],
+  visible: {
+    opacity: 1,
     transition: motionTransitions.scene
+  },
+  exit: {
+    opacity: 0,
+    transition: motionTransitions.reveal
+  }
+};
+
+export const recipeBookReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    rotateY: -motionTokens.rotation.bookPage,
+    transformOrigin: "left center",
+    x: -motionTokens.distance.scene
+  },
+  visible: {
+    opacity: 1,
+    rotateY: 0,
+    transition: motionTransitions.scene,
+    x: 0
+  }
+};
+
+export const completionBadgeReveal: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: motionTokens.scale.reveal
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: motionTransitions.reveal
   }
 };
 
