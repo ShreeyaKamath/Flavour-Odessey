@@ -7,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 import {
   ambientFloat,
-  craftingReveal,
   ingredientCollect,
   journalReveal,
   restorationGlow,
@@ -120,26 +119,6 @@ export function IngredientMotion({
     >
       {children}
     </motion.div>
-  );
-}
-
-/** Reveals canonical recipe content after crafting succeeds. */
-export function CraftingMotion({ children, crafted }: MotionChildrenProps & { crafted: boolean }) {
-  const reducedMotion = useMotionPreference();
-
-  return (
-    <motion.section
-      animate={reducedMotion ? undefined : crafted ? "crafted" : "idle"}
-      aria-labelledby="recipe-title"
-      className="relative border-y border-border py-6"
-      data-motion-effect="crafting-reveal"
-      data-motion-reduced={String(reducedMotion)}
-      initial={false}
-      variants={reducedMotion ? undefined : craftingReveal}
-    >
-      {children}
-      <AnimatePresence>{crafted && !reducedMotion ? <Sparkles compact /> : null}</AnimatePresence>
-    </motion.section>
   );
 }
 
