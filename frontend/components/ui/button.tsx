@@ -3,6 +3,7 @@
 import { HTMLMotionProps, motion } from "framer-motion";
 import { ReactNode } from "react";
 
+import { useAudioFeedback } from "@/hooks/use-audio-feedback";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { interactionMotion } from "@/lib/animation/motion-tokens";
 import { cn } from "@/utils/cn";
@@ -24,11 +25,15 @@ const variants: Record<ButtonVariant, string> = {
 export function Button({
   children,
   className,
+  disabled,
+  onClick,
+  onPointerEnter,
   variant = "primary",
   type = "button",
   ...props
 }: ButtonProps) {
   const reducedMotion = useMotionPreference();
+  const audioFeedback = useAudioFeedback();
 
   return (
     <motion.button
@@ -38,6 +43,17 @@ export function Button({
         className
       )}
       data-motion-reduced={String(reducedMotion)}
+      disabled={disabled}
+      onClick={(event) => {
+        audioFeedback.click();
+        onClick?.(event);
+      }}
+      onPointerEnter={(event) => {
+        if (!disabled && !reducedMotion) {
+          audioFeedback.hover();
+        }
+        onPointerEnter?.(event);
+      }}
       type={type}
       whileHover={reducedMotion ? undefined : interactionMotion.hover}
       whileTap={reducedMotion ? undefined : interactionMotion.tap}
