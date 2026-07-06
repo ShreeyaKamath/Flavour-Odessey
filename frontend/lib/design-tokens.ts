@@ -23,6 +23,7 @@ export const motionTokens = {
     soft: [0.22, 1, 0.36, 1] as [number, number, number, number]
   },
   rotation: {
+    bookPage: 82,
     page: 8,
     sparkle: 90
   },
