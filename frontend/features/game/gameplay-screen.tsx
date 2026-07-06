@@ -1,11 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { FormEvent, useState } from "react";
 
 import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   AmbientMotion,
   CraftingMotion,
@@ -20,6 +21,17 @@ import { useGameplay } from "@/features/game/use-gameplay";
 type GameplayScreenProps = {
   islandId?: string;
 };
+
+const JoyMeadowEnvironment = dynamic(
+  () =>
+    import("@/components/world/joy-meadow-environment").then(
+      (module) => module.JoyMeadowEnvironment
+    ),
+  {
+    loading: () => <Skeleton className="absolute inset-0 rounded-none" />,
+    ssr: false
+  }
+);
 
 function formatSavedAt(value: string | null | undefined) {
   if (!value) {
@@ -99,15 +111,8 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
       </header>
 
       <JoyMeadowScene restored={state.island.restored}>
-        <Image
-          alt="A quiet storybook meadow with a vanilla windmill, crystal trees, and golden falls"
-          className="object-cover"
-          fill
-          priority
-          sizes="(max-width: 1280px) 100vw, 1280px"
-          src="/images/joy_meadow_placeholder.png"
-        />
-        <div className="absolute inset-x-0 bottom-0 bg-background/90 px-5 py-4 backdrop-blur-sm">
+        <JoyMeadowEnvironment crafted={state.recipe.crafted} restored={state.island.restored} />
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-background/90 px-5 py-4 backdrop-blur-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <p className="font-semibold text-foreground">
