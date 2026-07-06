@@ -26,9 +26,39 @@
       "loop": false,
       "source": "silent_placeholder"
     },
+    "ingredient_hover": {
+      "bus": "sfx",
+      "default_volume": 0.3,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "crafting_magic_charge": {
+      "bus": "sfx",
+      "default_volume": 0.6,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "craft_success": {
+      "bus": "sfx",
+      "default_volume": 0.75,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
     "crafting_sparkle": {
       "bus": "sfx",
       "default_volume": 0.7,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "lumi_celebration": {
+      "bus": "sfx",
+      "default_volume": 0.65,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "recipe_page_flip": {
+      "bus": "sfx",
+      "default_volume": 0.5,
       "loop": false,
       "source": "silent_placeholder"
     },
