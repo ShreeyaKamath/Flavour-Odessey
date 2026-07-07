@@ -1,15 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { FormEvent, useState } from "react";
 
 import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
 import { CraftingDirector } from "@/components/crafting/crafting-director";
+import { NpcVillage } from "@/components/npcs/npc-village";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  AmbientMotion,
   GameplaySkeleton,
   IngredientMotion,
   JournalMotion,
@@ -17,6 +16,7 @@ import {
 } from "@/features/game/gameplay-motion";
 import { useAIInteractions } from "@/features/game/use-ai-interactions";
 import { useGameplay } from "@/features/game/use-gameplay";
+import { useNpcs } from "@/features/npcs/use-npcs";
 
 type GameplayScreenProps = {
   islandId?: string;
@@ -47,16 +47,7 @@ function formatSavedAt(value: string | null | undefined) {
 export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps) {
   const gameplay = useGameplay();
   const ai = useAIInteractions();
-  const [npcMessage, setNpcMessage] = useState("");
-
-  function submitNpcMessage(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const message = npcMessage.trim();
-    if (!message) {
-      return;
-    }
-    ai.npcChat.mutate(message);
-  }
+  const npcs = useNpcs(Boolean(gameplay.state.data?.started));
 
   if (islandId !== "joy_meadow") {
     return (
@@ -139,55 +130,30 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
 
       {state.started ? (
         <div className="mt-8 space-y-10">
-          <section aria-labelledby="dialogue-title">
-            <h2 className="font-display text-2xl font-semibold text-foreground" id="dialogue-title">
-              Meadow voices
-            </h2>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
-              {state.dialogue.map((line) => {
-                const dialogueCard = (
-                  <Card>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-accent">
-                      {line.role}
-                    </p>
-                    <h3 className="mt-1 font-semibold text-foreground">{line.character_name}</h3>
-                    <p className="mt-3 leading-7 text-muted-foreground">{line.text}</p>
-                  </Card>
-                );
-                return line.role === "companion" ? (
-                  <AmbientMotion key={line.character_id}>{dialogueCard}</AmbientMotion>
-                ) : (
-                  <div key={line.character_id}>{dialogueCard}</div>
-                );
-              })}
-            </div>
-            <div className="mt-4 grid gap-4 border-y border-border py-5 lg:grid-cols-2">
-              <form onSubmit={submitNpcMessage}>
-                <label className="text-sm font-semibold text-foreground" htmlFor="npc-message">
-                  Speak with the Meadow Keeper
-                </label>
-                <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-                  <input
-                    className="min-h-11 flex-1 rounded-control border border-border bg-surface px-3 text-sm text-foreground outline-none focus:border-accent"
-                    id="npc-message"
-                    maxLength={500}
-                    onChange={(event) => setNpcMessage(event.target.value)}
-                    placeholder="Ask about restoring Joy"
-                    value={npcMessage}
-                  />
-                  <Button disabled={!npcMessage.trim() || ai.npcChat.isPending} type="submit">
-                    {ai.npcChat.isPending ? "Listening..." : "Ask"}
-                  </Button>
-                </div>
-                {ai.npcChat.data ? (
-                  <AIResponse
-                    fallbackUsed={ai.npcChat.data.fallback_used}
-                    text={ai.npcChat.data.reply}
-                  />
-                ) : null}
-                {ai.npcChat.error ? <AIError message={ai.npcChat.error.message} /> : null}
-              </form>
-
+          <section className="space-y-4">
+            {npcs.npcs.isPending ? (
+              <Card>
+                <p className="text-sm text-muted-foreground">Gathering meadow voices...</p>
+              </Card>
+            ) : null}
+            {npcs.npcs.isError ? (
+              <p className="text-sm text-danger" role="alert">
+                {npcs.npcs.error.message}
+              </p>
+            ) : null}
+            {npcs.npcs.data ? (
+              <NpcVillage
+                chatError={ai.npcChat.error}
+                chatPending={ai.npcChat.isPending}
+                chatResponse={ai.npcChat.data}
+                giftPending={npcs.gift.isPending}
+                giftReaction={npcs.gift.data?.reaction}
+                npcs={npcs.npcs.data.items}
+                onGift={(npcId) => npcs.gift.mutate({ giftId: "golden_vanilla_bloom", npcId })}
+                onSendMessage={(npcId, message) => ai.npcChat.mutate({ message, npcId })}
+              />
+            ) : null}
+            <div className="grid gap-4 border-y border-border py-5 lg:grid-cols-2">
               <div>
                 <p className="text-sm font-semibold text-foreground">Lumi&apos;s guidance</p>
                 <Button
