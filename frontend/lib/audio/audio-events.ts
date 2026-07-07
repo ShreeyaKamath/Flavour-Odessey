@@ -21,6 +21,9 @@ export type AudioEventName =
   | "CrystalSelected"
   | "BookmarkSaved"
   | "MagicalTooltipShown"
+  | "CinematicStarted"
+  | "CinematicCompleted"
+  | "CinematicSkipped"
   | "NPCFootstep"
   | "NPCGreeting"
   | "NPCLaugh"
@@ -61,6 +64,9 @@ export const audioEventIds: Record<AudioEventName, AudioId> = {
   BookOpened: audioIds.book_open,
   CrystalSelected: audioIds.crystal_select,
   MagicalTooltipShown: audioIds.magical_tooltip,
+  CinematicCompleted: audioIds.bookmark_save,
+  CinematicSkipped: audioIds.book_close,
+  CinematicStarted: audioIds.book_open,
   PageFlipped: audioIds.page_flip,
   RecipePageFlipped: audioIds.recipe_page_flip,
   SatchelOpened: audioIds.satchel_open,

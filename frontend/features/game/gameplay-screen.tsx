@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 
 import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
+import { CinematicMoment } from "@/components/cinematics/cinematic-moment";
 import { CraftingDirector } from "@/components/crafting/crafting-director";
 import { LumiFloatingCompanion } from "@/components/lumi/lumi-floating-companion";
 import { LumiInteractionPanel } from "@/components/lumi/lumi-interaction-panel";
@@ -125,6 +126,12 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
           sublabel={formatSavedAt(state.save.last_saved_at)}
         />
       </header>
+      <div className="mt-4 flex flex-wrap gap-2" aria-label="Cinematic story moments">
+        <CinematicMoment label="Arrival" sceneId="joy_meadow_arrival" />
+        <CinematicMoment label="Meet Lumi" sceneId="lumi_first_meeting" />
+        <CinematicMoment label="Meet NPC" sceneId="npc_first_introduction" />
+        <CinematicMoment label="Day turn" sceneId="day_transition" />
+      </div>
 
       <JoyMeadowScene restored={state.island.restored}>
         <JoyMeadowEnvironment
@@ -286,10 +293,18 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                   Restore Joy Meadow
                 </Button>
               ) : null}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <CinematicMoment label="Quest complete scene" sceneId="quest_completion" />
+                <CinematicMoment label="Restoration scene" sceneId="joy_restoration" />
+              </div>
             </TreeQuestBoard>
           </section>
 
           <EnchantedCookbook>
+            <div className="mb-4 flex flex-wrap gap-2">
+              <CinematicMoment label="Crafting scene" sceneId="crafting" />
+              <CinematicMoment label="Recipe reveal" sceneId="recipe_reveal" />
+            </div>
             <CraftingDirector
               canCraft={questActive && state.recipe.can_craft}
               crafted={state.recipe.crafted}
