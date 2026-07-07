@@ -101,6 +101,39 @@ a {
   background: rgb(var(--color-accent) / 0.28);
 }
 
+@keyframes npc-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-0.25rem) scale(1.01);
+  }
+}
+
+@keyframes npc-walk {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateX(0.35rem) rotate(1deg);
+  }
+}
+
+@keyframes npc-celebrate {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  35% {
+    transform: translateY(-0.5rem) rotate(-2deg);
+  }
+  70% {
+    transform: translateY(-0.25rem) rotate(2deg);
+  }
+}
+
 .sr-only-focusable:not(:focus):not(:focus-within) {
   position: absolute;
   width: 1px;
