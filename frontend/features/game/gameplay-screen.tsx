@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 
 import { JoyMeadowAudio } from "@/components/audio/joy-meadow-audio";
 import { CraftingDirector } from "@/components/crafting/crafting-director";
+import { LumiFloatingCompanion } from "@/components/lumi/lumi-floating-companion";
+import { LumiInteractionPanel } from "@/components/lumi/lumi-interaction-panel";
 import { NpcVillage } from "@/components/npcs/npc-village";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -16,6 +18,7 @@ import {
 } from "@/features/game/gameplay-motion";
 import { useAIInteractions } from "@/features/game/use-ai-interactions";
 import { useGameplay } from "@/features/game/use-gameplay";
+import { useLumiCompanion } from "@/features/lumi/use-lumi-companion";
 import { useNpcs } from "@/features/npcs/use-npcs";
 
 type GameplayScreenProps = {
@@ -48,6 +51,12 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
   const gameplay = useGameplay();
   const ai = useAIInteractions();
   const npcs = useNpcs(Boolean(gameplay.state.data?.started));
+  const lumi = useLumiCompanion(
+    gameplay.state.data,
+    npcs.npcs.data?.items,
+    ai.companion.data,
+    ai.companion.error
+  );
 
   if (islandId !== "joy_meadow") {
     return (
@@ -86,6 +95,15 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
   return (
     <div className="mx-auto max-w-7xl">
       <JoyMeadowAudio active={state.started} />
+      <LumiFloatingCompanion
+        hint={lumi.hint}
+        onAsk={() => {
+          lumi.react("hint_requested");
+          ai.companion.mutate("hint");
+        }}
+        onToggleSleep={(event) => lumi.react(event)}
+        state={lumi.state}
+      />
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-accent">Joy Meadow</p>
@@ -150,28 +168,32 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                 giftReaction={npcs.gift.data?.reaction}
                 npcs={npcs.npcs.data.items}
                 onGift={(npcId) => npcs.gift.mutate({ giftId: "golden_vanilla_bloom", npcId })}
-                onSendMessage={(npcId, message) => ai.npcChat.mutate({ message, npcId })}
+                onSendMessage={(npcId, message) => {
+                  lumi.react("npc_conversation");
+                  ai.npcChat.mutate(
+                    { message, npcId },
+                    {
+                      onSuccess: (response) =>
+                        lumi.react("npc_conversation", `Lumi listens as ${response.reply}`)
+                    }
+                  );
+                }}
               />
             ) : null}
-            <div className="grid gap-4 border-y border-border py-5 lg:grid-cols-2">
-              <div>
-                <p className="text-sm font-semibold text-foreground">Lumi&apos;s guidance</p>
-                <Button
-                  className="mt-2"
-                  disabled={ai.companion.isPending}
-                  onClick={() => ai.companion.mutate("hint")}
-                  variant="secondary"
-                >
-                  {ai.companion.isPending ? "Lumi is thinking..." : "Ask Lumi for a hint"}
-                </Button>
-                {ai.companion.data ? (
-                  <AIResponse
-                    fallbackUsed={ai.companion.data.fallback_used}
-                    text={ai.companion.data.response}
-                  />
-                ) : null}
-                {ai.companion.error ? <AIError message={ai.companion.error.message} /> : null}
-              </div>
+            <div className="border-y border-border py-5">
+              <LumiInteractionPanel
+                aiError={ai.companion.error}
+                aiPending={ai.companion.isPending}
+                aiResponse={ai.companion.data}
+                hint={lumi.hint}
+                memories={lumi.memories}
+                memorySummary={lumi.memorySummary}
+                onAskHint={() => {
+                  lumi.react("hint_requested");
+                  ai.companion.mutate("hint");
+                }}
+                state={lumi.state}
+              />
             </div>
           </section>
 
@@ -197,7 +219,10 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                         disabled={item.collected || gameplay.isActing}
                         onClick={() =>
                           gameplay.collectIngredient(item.ingredient_id, {
-                            onSuccess: () => ai.companion.mutate("ingredient_collected")
+                            onSuccess: () => {
+                              lumi.react("ingredient_collected");
+                              ai.companion.mutate("ingredient_collected");
+                            }
                           })
                         }
                         variant="secondary"
@@ -240,7 +265,10 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                 disabled={gameplay.isActing}
                 onClick={() =>
                   gameplay.restoreJoy(undefined, {
-                    onSuccess: () => ai.companion.mutate("joy_restored")
+                    onSuccess: () => {
+                      lumi.react("joy_restored");
+                      ai.companion.mutate("joy_restored");
+                    }
                   })
                 }
               >
@@ -262,10 +290,12 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                 onError,
                 onSuccess: () => {
                   onSuccess();
+                  lumi.react("recipe_crafted");
                   ai.companion.mutate("recipe_crafted");
                 }
               })
             }
+            onLumiReaction={(event) => lumi.react(event)}
             recipeName={state.recipe.name}
             restored={state.island.restored}
           />
