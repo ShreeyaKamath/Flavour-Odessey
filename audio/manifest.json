@@ -164,6 +164,42 @@
       "loop": false,
       "source": "silent_placeholder"
     },
+    "weather_birds": {
+      "bus": "ambient",
+      "default_volume": 0.58,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "weather_wind": {
+      "bus": "ambient",
+      "default_volume": 0.5,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "weather_rain": {
+      "bus": "ambient",
+      "default_volume": 0.62,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "weather_mist": {
+      "bus": "ambient",
+      "default_volume": 0.48,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "weather_night": {
+      "bus": "ambient",
+      "default_volume": 0.52,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
+    "weather_golden_hour": {
+      "bus": "ambient",
+      "default_volume": 0.56,
+      "loop": true,
+      "source": "silent_placeholder"
+    },
     "joy_meadow_music": {
       "bus": "music",
       "default_volume": 0.55,

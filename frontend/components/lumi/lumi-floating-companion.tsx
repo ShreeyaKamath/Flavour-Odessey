@@ -9,6 +9,7 @@ import { audioEvents } from "@/lib/audio/audio-events";
 import { LumiAnimationController } from "@/lib/lumi/lumi-animation-controller";
 import { LumiEmotionController } from "@/lib/lumi/lumi-emotion-controller";
 import type { LumiEvent, LumiState } from "@/lib/lumi/lumi-types";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 import { cn } from "@/utils/cn";
 
 type LumiFloatingCompanionProps = {
@@ -16,6 +17,7 @@ type LumiFloatingCompanionProps = {
   onAsk: () => void;
   onToggleSleep: (event: LumiEvent) => void;
   state: LumiState;
+  world?: LivingWorldSnapshot;
 };
 
 /** Renders Lumi as a floating, cursor-aware magical companion in Joy Meadow. */
@@ -23,7 +25,8 @@ export function LumiFloatingCompanion({
   hint,
   onAsk,
   onToggleSleep,
-  state
+  state,
+  world
 }: LumiFloatingCompanionProps) {
   const reducedMotion = useMotionPreference();
   const emotion = new LumiEmotionController(state.emotion);
@@ -99,8 +102,10 @@ export function LumiFloatingCompanion({
         animate={bodyVariants ? "animate" : undefined}
         className={cn(
           "pointer-events-auto relative grid h-20 w-20 place-items-center rounded-full border border-border bg-surface-raised text-2xl text-accent",
-          emotion.expressionClass()
+          emotion.expressionClass(),
+          world?.condition === "night" ? "shadow-glow ring-2 ring-accent" : null
         )}
+        data-weather={world?.condition}
         initial={bodyVariants ? "initial" : false}
         onClick={onAsk}
         onFocus={() => audioEvents.publish("LumiHinted")}
@@ -109,6 +114,12 @@ export function LumiFloatingCompanion({
         type="button"
         variants={bodyVariants}
       >
+        {world?.condition === "rain" ? (
+          <span
+            aria-hidden="true"
+            className="absolute -top-4 h-8 w-14 rounded-t-full bg-accent/70"
+          />
+        ) : null}
         <span
           aria-hidden="true"
           className={cn(

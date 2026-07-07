@@ -22,6 +22,7 @@ export type AudioEventName =
   | "NPCWaved"
   | "ConversationOpened"
   | "ConversationClosed"
+  | "WeatherChanged"
   | "EmotionRestored"
   | "QuestCompleted"
   | "JournalUpdated";
@@ -52,7 +53,8 @@ export const audioEventIds: Record<AudioEventName, AudioId> = {
   ConversationClosed: audioIds.conversation_close,
   ConversationOpened: audioIds.conversation_open,
   UIClicked: audioIds.ui_click,
-  UIHovered: audioIds.ui_hover
+  UIHovered: audioIds.ui_hover,
+  WeatherChanged: audioIds.weather_wind
 };
 
 class AudioEventBus {

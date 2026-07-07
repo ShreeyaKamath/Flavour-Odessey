@@ -19,6 +19,7 @@ import { RelationshipManager } from "@/lib/npcs/relationship-manager";
 import { ScheduleManager } from "@/lib/npcs/schedule-manager";
 import { SpeechBubbleSystem } from "@/lib/npcs/speech-bubble-system";
 import { ThoughtBubbleSystem } from "@/lib/npcs/thought-bubble-system";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 
 type NpcVillageProps = {
@@ -30,6 +31,7 @@ type NpcVillageProps = {
   npcs: NpcState[];
   onGift: (npcId: NpcState["npc_id"]) => void;
   onSendMessage: (npcId: NpcState["npc_id"], message: string) => void;
+  world?: LivingWorldSnapshot;
 };
 
 /** Renders the living Joy Meadow NPC ecosystem and storybook conversation UI. */
@@ -41,7 +43,8 @@ export function NpcVillage({
   giftReaction,
   npcs,
   onGift,
-  onSendMessage
+  onSendMessage,
+  world
 }: NpcVillageProps) {
   const manager = useMemo(() => new NPCManager(npcs), [npcs]);
   const orderedNpcs = manager.ordered();
@@ -101,6 +104,7 @@ export function NpcVillage({
               npc={npc}
               onSelect={() => selectNpc(npc)}
               selected={npc.npc_id === selectedNpc.npc_id}
+              world={world}
             />
           ))}
         </div>
@@ -118,6 +122,7 @@ export function NpcVillage({
             onGift={() => onGift(selectedNpc.npc_id)}
             onMessageChange={setMessage}
             onSubmit={submitMessage}
+            world={world}
           />
         </Card>
       </div>
@@ -128,11 +133,13 @@ export function NpcVillage({
 function NpcCard({
   npc,
   onSelect,
-  selected
+  selected,
+  world
 }: {
   npc: NpcState;
   onSelect: () => void;
   selected: boolean;
+  world?: LivingWorldSnapshot;
 }) {
   const portrait = new PortraitRenderer(npc);
   const relationship = new RelationshipManager(npc);
@@ -175,6 +182,7 @@ function NpcCard({
       </div>
       <div className="mt-4 space-y-2 text-sm text-muted-foreground">
         <p>{schedule.activeStep().activity}</p>
+        {world ? <p>Weather routine: {world.npcRoutine}</p> : null}
         <p>{schedule.movementLabel()}</p>
         <p>{relationship.headline()}</p>
       </div>
@@ -194,7 +202,8 @@ function ConversationPanel({
   onClose,
   onGift,
   onMessageChange,
-  onSubmit
+  onSubmit,
+  world
 }: {
   chatError?: Error | null;
   chatPending: boolean;
@@ -207,6 +216,7 @@ function ConversationPanel({
   onGift: () => void;
   onMessageChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  world?: LivingWorldSnapshot;
 }) {
   const reducedMotion = useMotionPreference();
   const conversation = new ConversationController(npc, chatResponse);
@@ -283,6 +293,11 @@ function ConversationPanel({
         <div className="rounded-panel border border-border bg-background/60 p-4">
           <p className="text-sm font-semibold text-foreground">Thought bubble</p>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">{thought.text()}</p>
+          {world ? (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Weather: {world.conditionLabel}, {world.timeLabel}, {world.seasonLabel}
+            </p>
+          ) : null}
           <p className="mt-2 text-xs text-muted-foreground">Lumi nearby: {npc.lumi_reaction}</p>
         </div>
 
