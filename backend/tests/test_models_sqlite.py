@@ -118,7 +118,7 @@ async def test_sqlite_seed_data_is_idempotent(sqlite_session: AsyncSession) -> N
         ).scalar_one()
 
     assert await count(Island) == 5
-    assert await count(NPC) == 2
+    assert await count(NPC) == 6
     assert await count(Ingredient) == 2
     assert await count(Quest) == 1
     assert await count(Recipe) == 1
