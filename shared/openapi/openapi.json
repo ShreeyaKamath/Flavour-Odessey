@@ -117,7 +117,13 @@
             "type": "string"
           },
           "npc_id": {
-            "const": "joy_meadow_keeper",
+            "enum": [
+              "joy_meadow_keeper",
+              "joy_meadow_baker",
+              "joy_meadow_gardener",
+              "joy_meadow_child_explorer",
+              "joy_meadow_traveling_merchant"
+            ],
             "title": "Npc Id",
             "type": "string"
           }
@@ -147,21 +153,34 @@
             "type": "boolean"
           },
           "mood": {
-            "enum": [
-              "hopeful",
-              "joyful"
-            ],
             "title": "Mood",
             "type": "string"
           },
           "npc_id": {
-            "const": "joy_meadow_keeper",
+            "enum": [
+              "joy_meadow_keeper",
+              "joy_meadow_baker",
+              "joy_meadow_gardener",
+              "joy_meadow_child_explorer",
+              "joy_meadow_traveling_merchant"
+            ],
             "title": "Npc Id",
             "type": "string"
           },
           "provider": {
             "title": "Provider",
             "type": "string"
+          },
+          "relationship": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NpcRelationshipState"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
           },
           "reply": {
             "title": "Reply",
@@ -1088,6 +1107,432 @@
           "memory_written"
         ],
         "title": "NpcChatResponse",
+        "type": "object"
+      },
+      "NpcConversationTurn": {
+        "additionalProperties": false,
+        "properties": {
+          "mood": {
+            "title": "Mood",
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "speaker": {
+            "enum": [
+              "player",
+              "npc"
+            ],
+            "title": "Speaker",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "speaker",
+          "text",
+          "mood",
+          "occurred_at"
+        ],
+        "title": "NpcConversationTurn",
+        "type": "object"
+      },
+      "NpcGiftPreferences": {
+        "additionalProperties": false,
+        "properties": {
+          "avoids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Avoids",
+            "type": "array"
+          },
+          "likes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Likes",
+            "type": "array"
+          },
+          "loves": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Loves",
+            "type": "array"
+          }
+        },
+        "required": [
+          "loves",
+          "likes",
+          "avoids"
+        ],
+        "title": "NpcGiftPreferences",
+        "type": "object"
+      },
+      "NpcGiftRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "gift_id": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Gift Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "gift_id"
+        ],
+        "title": "NpcGiftRequest",
+        "type": "object"
+      },
+      "NpcGiftResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "friendship_delta": {
+            "title": "Friendship Delta",
+            "type": "integer"
+          },
+          "npc_id": {
+            "enum": [
+              "joy_meadow_keeper",
+              "joy_meadow_baker",
+              "joy_meadow_gardener",
+              "joy_meadow_child_explorer",
+              "joy_meadow_traveling_merchant"
+            ],
+            "title": "Npc Id",
+            "type": "string"
+          },
+          "reaction": {
+            "title": "Reaction",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/components/schemas/NpcRelationshipState"
+          },
+          "trust_delta": {
+            "title": "Trust Delta",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "npc_id",
+          "reaction",
+          "friendship_delta",
+          "trust_delta",
+          "relationship"
+        ],
+        "title": "NpcGiftResponse",
+        "type": "object"
+      },
+      "NpcMovementState": {
+        "additionalProperties": false,
+        "properties": {
+          "from_location": {
+            "title": "From Location",
+            "type": "string"
+          },
+          "no_teleporting": {
+            "const": true,
+            "default": true,
+            "title": "No Teleporting",
+            "type": "boolean"
+          },
+          "progress": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Progress",
+            "type": "number"
+          },
+          "to_location": {
+            "title": "To Location",
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_location",
+          "to_location",
+          "progress"
+        ],
+        "title": "NpcMovementState",
+        "type": "object"
+      },
+      "NpcRelationshipState": {
+        "additionalProperties": false,
+        "properties": {
+          "conversation_history": {
+            "items": {
+              "$ref": "#/components/schemas/NpcConversationTurn"
+            },
+            "title": "Conversation History",
+            "type": "array"
+          },
+          "friendship_level": {
+            "minimum": 0,
+            "title": "Friendship Level",
+            "type": "integer"
+          },
+          "friendship_xp": {
+            "minimum": 0,
+            "title": "Friendship Xp",
+            "type": "integer"
+          },
+          "memory_highlights": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Memory Highlights",
+            "type": "array"
+          },
+          "milestones": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Milestones",
+            "type": "array"
+          },
+          "relationship_status": {
+            "title": "Relationship Status",
+            "type": "string"
+          },
+          "trust_level": {
+            "minimum": 0,
+            "title": "Trust Level",
+            "type": "integer"
+          },
+          "trust_xp": {
+            "minimum": 0,
+            "title": "Trust Xp",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "friendship_xp",
+          "trust_xp",
+          "friendship_level",
+          "trust_level",
+          "relationship_status",
+          "milestones",
+          "memory_highlights",
+          "conversation_history"
+        ],
+        "title": "NpcRelationshipState",
+        "type": "object"
+      },
+      "NpcScheduleStep": {
+        "additionalProperties": false,
+        "properties": {
+          "activity": {
+            "title": "Activity",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "location": {
+            "title": "Location",
+            "type": "string"
+          },
+          "starts_at": {
+            "title": "Starts At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "activity",
+          "location",
+          "starts_at"
+        ],
+        "title": "NpcScheduleStep",
+        "type": "object"
+      },
+      "NpcStateResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "age_group": {
+            "title": "Age Group",
+            "type": "string"
+          },
+          "animation_state": {
+            "title": "Animation State",
+            "type": "string"
+          },
+          "current_activity": {
+            "title": "Current Activity",
+            "type": "string"
+          },
+          "current_goal": {
+            "title": "Current Goal",
+            "type": "string"
+          },
+          "current_location": {
+            "title": "Current Location",
+            "type": "string"
+          },
+          "current_mood": {
+            "title": "Current Mood",
+            "type": "string"
+          },
+          "daily_schedule": {
+            "items": {
+              "$ref": "#/components/schemas/NpcScheduleStep"
+            },
+            "title": "Daily Schedule",
+            "type": "array"
+          },
+          "emotion_icon": {
+            "title": "Emotion Icon",
+            "type": "string"
+          },
+          "energy_level": {
+            "maximum": 100,
+            "minimum": 0,
+            "title": "Energy Level",
+            "type": "integer"
+          },
+          "favorite_flavor": {
+            "title": "Favorite Flavor",
+            "type": "string"
+          },
+          "favorite_flower": {
+            "title": "Favorite Flower",
+            "type": "string"
+          },
+          "favorite_weather": {
+            "title": "Favorite Weather",
+            "type": "string"
+          },
+          "gift_preferences": {
+            "$ref": "#/components/schemas/NpcGiftPreferences"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "lumi_reaction": {
+            "title": "Lumi Reaction",
+            "type": "string"
+          },
+          "memory_summary": {
+            "title": "Memory Summary",
+            "type": "string"
+          },
+          "movement": {
+            "$ref": "#/components/schemas/NpcMovementState"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "npc_id": {
+            "enum": [
+              "joy_meadow_keeper",
+              "joy_meadow_baker",
+              "joy_meadow_gardener",
+              "joy_meadow_child_explorer",
+              "joy_meadow_traveling_merchant"
+            ],
+            "title": "Npc Id",
+            "type": "string"
+          },
+          "occupation": {
+            "title": "Occupation",
+            "type": "string"
+          },
+          "personality": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Personality",
+            "type": "array"
+          },
+          "portrait": {
+            "title": "Portrait",
+            "type": "string"
+          },
+          "relationship": {
+            "$ref": "#/components/schemas/NpcRelationshipState"
+          },
+          "speech_bubble": {
+            "title": "Speech Bubble",
+            "type": "string"
+          },
+          "speech_speed": {
+            "enum": [
+              "slow",
+              "normal",
+              "bright",
+              "dreamy"
+            ],
+            "title": "Speech Speed",
+            "type": "string"
+          },
+          "thought_bubble": {
+            "title": "Thought Bubble",
+            "type": "string"
+          },
+          "voice_style": {
+            "title": "Voice Style",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "npc_id",
+          "name",
+          "portrait",
+          "occupation",
+          "age_group",
+          "voice_style",
+          "favorite_flavor",
+          "favorite_weather",
+          "favorite_flower",
+          "personality",
+          "current_mood",
+          "energy_level",
+          "current_goal",
+          "current_activity",
+          "current_location",
+          "memory_summary",
+          "relationship",
+          "gift_preferences",
+          "daily_schedule",
+          "animation_state",
+          "emotion_icon",
+          "speech_speed",
+          "thought_bubble",
+          "speech_bubble",
+          "lumi_reaction",
+          "movement"
+        ],
+        "title": "NpcStateResponse",
+        "type": "object"
+      },
+      "NpcsResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NpcStateResponse"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "NpcsResponse",
         "type": "object"
       },
       "PaginationMeta": {
@@ -2719,6 +3164,236 @@
         "summary": "Create Entry",
         "tags": [
           "journal"
+        ]
+      }
+    },
+    "/api/npcs": {
+      "get": {
+        "operationId": "list_npcs",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NpcsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Npcs",
+        "tags": [
+          "npcs"
+        ]
+      }
+    },
+    "/api/npcs/{npc_id}": {
+      "get": {
+        "operationId": "get_npc",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "npc_id",
+            "required": true,
+            "schema": {
+              "title": "Npc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NpcStateResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Npc",
+        "tags": [
+          "npcs"
+        ]
+      }
+    },
+    "/api/npcs/{npc_id}/gift": {
+      "post": {
+        "operationId": "give_npc_gift",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "npc_id",
+            "required": true,
+            "schema": {
+              "title": "Npc Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NpcGiftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NpcGiftResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Give Npc Gift",
+        "tags": [
+          "npcs"
         ]
       }
     },
