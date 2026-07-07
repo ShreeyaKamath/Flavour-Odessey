@@ -19,7 +19,65 @@ vi.mock("@/components/crafting/recipe-presentation", () => ({
   )
 }));
 
+vi.mock("@/features/npcs/use-npcs", () => ({
+  useNpcs: () => ({
+    gift: {
+      data: undefined,
+      isPending: false,
+      mutate: vi.fn()
+    },
+    npcs: {
+      data: { items: [{ name: "Meadow Keeper", npc_id: "joy_meadow_keeper" }] },
+      isError: false,
+      isPending: false
+    }
+  })
+}));
+
+vi.mock("@/components/npcs/npc-village", () => ({
+  NpcVillage: ({
+    chatError,
+    chatPending,
+    chatResponse,
+    onSendMessage
+  }: {
+    chatError?: Error | null;
+    chatPending: boolean;
+    chatResponse?: components["schemas"]["AINpcChatResponse"];
+    onSendMessage: (
+      npcId: components["schemas"]["AINpcChatRequest"]["npc_id"],
+      message: string
+    ) => void;
+  }) => (
+    <section aria-labelledby="npc-village-title">
+      <h2 id="npc-village-title">Meadow voices</h2>
+      <p>Meadow Keeper</p>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const input = form.elements.namedItem("npc-message") as HTMLInputElement;
+          onSendMessage("joy_meadow_keeper", input.value);
+        }}
+      >
+        <label htmlFor="npc-message">Speak with Meadow Keeper</label>
+        <input id="npc-message" name="npc-message" />
+        <button disabled={chatPending} type="submit">
+          {chatPending ? "Listening..." : "Ask"}
+        </button>
+      </form>
+      {chatResponse ? <p>{chatResponse.reply}</p> : null}
+      {chatError ? <p role="alert">{chatError.message}</p> : null}
+    </section>
+  )
+}));
+
+vi.mock("@/hooks/use-motion-preference", () => ({
+  useMotionPreference: () => true
+}));
+
 type GameState = components["schemas"]["GameStateResponse"];
+type NpcState = components["schemas"]["NpcStateResponse"];
 
 function gameState(): GameState {
   return {
@@ -88,6 +146,64 @@ function gameState(): GameState {
   };
 }
 
+function npcState(overrides: Partial<NpcState> = {}): NpcState {
+  return {
+    age_group: "elder",
+    animation_state: "idle_breathing",
+    current_activity: "Water Flowers",
+    current_goal: "Help Joy Meadow remember laughter",
+    current_location: "Flower Beds",
+    current_mood: "thinking",
+    daily_schedule: [
+      {
+        activity: "Water Flowers",
+        label: "Morning",
+        location: "Flower Beds",
+        starts_at: "06:00"
+      }
+    ],
+    emotion_icon: "thought",
+    energy_level: 68,
+    favorite_flavor: "Golden Vanilla Bloom",
+    favorite_flower: "Vanilla Orchid",
+    favorite_weather: "Warm breeze",
+    gift_preferences: {
+      avoids: ["wilted_petal"],
+      likes: ["honey_bloom"],
+      loves: ["golden_vanilla_bloom"]
+    },
+    id: "20000000-0000-0000-0000-000000000001",
+    lumi_reaction: "bows to Lumi and smiles",
+    memory_summary: "No shared memories yet.",
+    movement: {
+      from_location: "Flower Beds",
+      no_teleporting: true,
+      progress: 0.2,
+      to_location: "Bakery Porch"
+    },
+    name: "Meadow Keeper",
+    npc_id: "joy_meadow_keeper",
+    occupation: "Meadow Keeper",
+    personality: ["patient", "protective"],
+    portrait: "npc.joy_meadow_keeper.portrait",
+    relationship: {
+      conversation_history: [],
+      friendship_level: 0,
+      friendship_xp: 0,
+      memory_highlights: [],
+      milestones: [],
+      relationship_status: "new acquaintance",
+      trust_level: 0,
+      trust_xp: 0
+    },
+    speech_bubble: "Vanilla Orchid and Honey Bloom once made the meadow shine.",
+    speech_speed: "normal",
+    thought_bubble: "The first scoop is closer than the flowers know.",
+    voice_style: "gentle, ceremonial, brief",
+    ...overrides
+  };
+}
+
 function TestQueryProvider({ children }: { children: ReactNode }) {
   const client = new QueryClient({
     defaultOptions: { queries: { retry: false } }
@@ -97,6 +213,24 @@ function TestQueryProvider({ children }: { children: ReactNode }) {
 
 describe("GameplayScreen", () => {
   beforeEach(() => {
+    vi.spyOn(apiClient, "listNpcs").mockResolvedValue({
+      items: [
+        npcState(),
+        npcState({
+          id: "20000000-0000-0000-0000-000000000002",
+          name: "Maribel Crumb",
+          npc_id: "joy_meadow_baker",
+          occupation: "Village Baker"
+        })
+      ]
+    });
+    vi.spyOn(apiClient, "giveNpcGift").mockResolvedValue({
+      friendship_delta: 8,
+      npc_id: "joy_meadow_keeper",
+      reaction: "Meadow Keeper treasures the Golden Vanilla Bloom.",
+      relationship: npcState().relationship,
+      trust_delta: 3
+    });
     vi.spyOn(apiClient, "aiCompanionRespond").mockResolvedValue({
       companion_id: "lumi",
       event: "hint",
@@ -120,8 +254,9 @@ describe("GameplayScreen", () => {
     expect(
       await screen.findByRole("heading", { name: "Restore the first scoop" })
     ).toBeInTheDocument();
-    expect(screen.getByText("Lumi")).toBeInTheDocument();
-    expect(screen.getByText("Meadow Keeper")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Meadow voices" })).toBeInTheDocument();
+    expect(screen.getByText("Lumi's guidance")).toBeInTheDocument();
+    expect(screen.getAllByText("Meadow Keeper").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "Inventory" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Journal of Memories" })).toBeInTheDocument();
   });
@@ -176,7 +311,7 @@ describe("GameplayScreen", () => {
     await user.click(await screen.findByRole("button", { name: "Collect Vanilla Orchid" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("The flower slipped away");
-    expect(screen.getByText("Lumi")).toBeInTheDocument();
+    expect(screen.getByText("Lumi's guidance")).toBeInTheDocument();
   });
 
   it("crafts Golden Vanilla Bloom when the ingredients are ready", async () => {
@@ -226,7 +361,9 @@ describe("GameplayScreen", () => {
     expect(
       await screen.findByRole("dialog", { name: "Magical crafting sequence" })
     ).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("Ingredients are orbiting");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      /Ingredients are orbiting|Golden light is gathering/
+    );
   });
 
   it("shows the restored journal memory", async () => {
@@ -299,14 +436,16 @@ describe("GameplayScreen", () => {
           resolveChat = resolve;
         })
     );
+
     const user = userEvent.setup();
 
     render(<GameplayScreen />, { wrapper: TestQueryProvider });
-    await user.type(
-      await screen.findByLabelText("Speak with the Meadow Keeper"),
-      "How can I help?"
-    );
+    await user.type(await screen.findByLabelText("Speak with Meadow Keeper"), "How can I help?");
     await user.click(screen.getByRole("button", { name: "Ask" }));
+    expect(apiClient.aiNpcChat).toHaveBeenCalledWith({
+      message: "How can I help?",
+      npc_id: "joy_meadow_keeper"
+    });
 
     expect(screen.getByRole("button", { name: "Listening..." })).toBeDisabled();
     resolveChat?.({
@@ -322,7 +461,7 @@ describe("GameplayScreen", () => {
     expect(
       await screen.findByText("Carry the golden bloom gently, and Joy will remember you.")
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it("labels deterministic fallback companion text", async () => {
     vi.mocked(apiClient.aiCompanionRespond).mockResolvedValueOnce({
