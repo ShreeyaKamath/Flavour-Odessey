@@ -80,6 +80,54 @@
       "loop": false,
       "source": "silent_placeholder"
     },
+    "npc_footstep": {
+      "bus": "sfx",
+      "default_volume": 0.35,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "npc_greeting": {
+      "bus": "sfx",
+      "default_volume": 0.45,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "npc_laugh": {
+      "bus": "sfx",
+      "default_volume": 0.45,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "npc_surprised": {
+      "bus": "sfx",
+      "default_volume": 0.45,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "npc_celebrate": {
+      "bus": "sfx",
+      "default_volume": 0.55,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "npc_wave": {
+      "bus": "sfx",
+      "default_volume": 0.35,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "conversation_open": {
+      "bus": "sfx",
+      "default_volume": 0.4,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "conversation_close": {
+      "bus": "sfx",
+      "default_volume": 0.35,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
     "joy_meadow_music": {
       "bus": "music",
       "default_volume": 0.55,
