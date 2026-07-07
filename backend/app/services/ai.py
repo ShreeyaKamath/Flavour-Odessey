@@ -37,6 +37,7 @@ from app.schemas.contracts import (
     AINpcChatResponse,
     AIRecipeDescribeResponse,
 )
+from app.services.npc import NPCService
 
 
 class SQLAlchemyMemoryStore(MemoryStore):
@@ -130,6 +131,7 @@ class AIService:
         self.companion = CompanionAgent(orchestrator)
         self.recipe = RecipeAgent(orchestrator)
         self.narrative = NarrativeHelper(orchestrator)
+        self.npcs = NPCService(session)
 
     async def npc_chat(
         self,
@@ -138,7 +140,7 @@ class AIService:
         player_message: str,
     ) -> AINpcChatResponse:
         profile = await self._started_profile(user_id)
-        npc = await self._npc(npc_key)
+        npc = await self.npcs.get_joy_meadow_npc(npc_key)
         island = await self._joy_meadow()
         status = await self._quest_status(profile.id)
         restored = await self._is_restored(profile.id, island.id)
@@ -168,13 +170,23 @@ class AIService:
                 profile.id,
                 {"npc_id": npc.key, "importance": written.importance},
             )
+        mood = "celebrating" if restored else npc.profile.get("current_mood", "hopeful")
+        relationship = await self.npcs.apply_conversation(
+            profile,
+            npc,
+            player_message,
+            generated.text,
+            mood,
+            importance,
+        )
         await self.session.commit()
         return AINpcChatResponse(
-            npc_id="joy_meadow_keeper",
+            npc_id=npc.key,
             reply=generated.text,
-            mood="joyful" if restored else "hopeful",
+            mood=mood,
             memory_written=written is not None,
             importance=importance,
+            relationship=relationship,
             provider=generated.provider,
             fallback_used=generated.fallback_used,
         )
@@ -301,7 +313,7 @@ class AIService:
         return profile
 
     async def _npc(self, npc_key: str) -> NPC:
-        if npc_key not in {"lumi", "joy_meadow_keeper"}:
+        if npc_key != "lumi":
             raise AppError("NOT_FOUND", "Character not found", status_code=404)
         npc = (
             await self.session.execute(select(NPC).where(NPC.key == npc_key))
