@@ -20,6 +20,7 @@ export function MagicalSatchel({
   return (
     <FantasyPanel
       className="border-dashed"
+      data-visual-element="satchel_icon"
       onMouseEnter={() => audioEvents.publish("SatchelOpened")}
     >
       <div className="mb-4 flex items-center justify-between gap-3">

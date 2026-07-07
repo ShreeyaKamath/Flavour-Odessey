@@ -154,6 +154,8 @@ function NpcCard({
         "rounded-panel border border-border bg-surface p-4 text-left shadow-panel transition-colors",
         selected ? "border-accent" : "hover:border-accent/70"
       )}
+      data-render-source="asset_manifest"
+      data-visual-element="meadow_keeper"
       onClick={onSelect}
       onMouseEnter={() => audioEvents.publish("NPCWaved")}
       type="button"
@@ -168,6 +170,8 @@ function NpcCard({
             "grid h-16 w-16 shrink-0 place-items-center rounded-full border border-border bg-muted font-display text-lg font-semibold text-foreground shadow-glow",
             animation.stateClass()
           )}
+          data-render-source="asset_manifest"
+          data-visual-element="meadow_keeper"
           role="img"
         >
           {portrait.initials()}

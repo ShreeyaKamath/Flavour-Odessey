@@ -101,6 +101,7 @@ body {
 
 .storybook-parchment {
   background:
+    var(--asset-parchment, linear-gradient(transparent, transparent)),
     radial-gradient(circle at 16% 12%, rgb(var(--storybook-gold) / 0.22), transparent 12rem),
     radial-gradient(circle at 82% 20%, rgb(var(--storybook-crystal) / 0.16), transparent 13rem),
     linear-gradient(
@@ -108,6 +109,7 @@ body {
       rgb(var(--storybook-parchment)),
       rgb(var(--storybook-parchment-deep) / 0.72)
     );
+  background-blend-mode: soft-light, normal, normal, normal;
 }
 
 .storybook-border {

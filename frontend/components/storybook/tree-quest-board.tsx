@@ -14,6 +14,7 @@ export function TreeQuestBoard({ children }: TreeQuestBoardProps) {
   return (
     <FantasyPanel
       className="bg-[linear-gradient(135deg,rgb(var(--storybook-parchment-deep)/0.86),rgb(var(--storybook-parchment)/0.7))]"
+      data-visual-element="wood_panel"
       onMouseEnter={() => audioEvents.publish("PageFlipped")}
     >
       <div className="mb-4 flex items-center gap-3">

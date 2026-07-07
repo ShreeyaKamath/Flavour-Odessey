@@ -105,6 +105,8 @@ export function LumiFloatingCompanion({
           emotion.expressionClass(),
           world?.condition === "night" ? "shadow-glow ring-2 ring-accent" : null
         )}
+        data-render-source="asset_manifest"
+        data-visual-element="lumi"
         data-weather={world?.condition}
         initial={bodyVariants ? "initial" : false}
         onClick={onAsk}

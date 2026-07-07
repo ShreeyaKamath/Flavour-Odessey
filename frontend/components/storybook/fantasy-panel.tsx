@@ -26,6 +26,8 @@ export function FantasyPanel({ children, className, framed = true, ...props }: F
         className
       )}
       data-motion-reduced={String(reducedMotion)}
+      data-render-source="asset_manifest"
+      data-visual-element="parchment_panel"
       initial={reducedMotion ? false : "hidden"}
       variants={reducedMotion ? undefined : panelReveal}
       whileHover={reducedMotion ? undefined : interactionMotion.hover}

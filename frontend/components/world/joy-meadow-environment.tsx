@@ -1,9 +1,11 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import { useEffect } from "react";
 
 import { EnvironmentManager } from "@/components/world/environment-manager";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { renderingSystem } from "@/lib/rendering/rendering-system";
 import { joyMeadowLandmarks } from "@/lib/world/joy-meadow-config";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
@@ -23,12 +25,18 @@ export function JoyMeadowEnvironment({
 }: JoyMeadowEnvironmentProps) {
   const reducedMotion = useMotionPreference();
 
+  useEffect(() => {
+    void renderingSystem.preloadCoreVisuals();
+  }, []);
+
   return (
     <div
       className="absolute inset-0 bg-accent/20"
       data-environment-ready="true"
       data-particles-paused={String(paused)}
+      data-render-source="asset_manifest"
       data-time-of-day={world.timeOfDay}
+      data-visual-element="joy_meadow_environment"
       data-weather={world.condition}
     >
       <Canvas

@@ -1,0 +1,487 @@
+{
+  "version": 1,
+  "activePackId": "core_placeholder",
+  "packs": [
+    {
+      "id": "core_placeholder",
+      "label": "Core Placeholder Pack",
+      "description": "Local-safe generated placeholders for production art slots."
+    }
+  ],
+  "assets": [
+    {
+      "id": "environment.tree",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "tree", "lod"],
+      "placeholder": { "label": "Tree", "primary": "#4d965b", "secondary": "#76543c" },
+      "lod": { "near": "environment.tree", "medium": "environment.tree", "far": "environment.tree" }
+    },
+    {
+      "id": "environment.grass",
+      "category": "environment",
+      "kind": "texture",
+      "src": null,
+      "tags": ["joy_meadow", "grass", "wind"],
+      "placeholder": { "label": "Grass", "primary": "#68ad65", "secondary": "#3f8755" },
+      "lod": {
+        "near": "environment.grass",
+        "medium": "environment.grass",
+        "far": "environment.grass"
+      }
+    },
+    {
+      "id": "environment.flower",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "flower", "wind"],
+      "placeholder": { "label": "Flower", "primary": "#f38ca7", "secondary": "#ffd45c" },
+      "lod": {
+        "near": "environment.flower",
+        "medium": "environment.flower",
+        "far": "environment.flower"
+      }
+    },
+    {
+      "id": "environment.cloud",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "cloud", "parallax"],
+      "placeholder": { "label": "Cloud", "primary": "#fff7e8", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "environment.cloud",
+        "medium": "environment.cloud",
+        "far": "environment.cloud"
+      }
+    },
+    {
+      "id": "environment.water",
+      "category": "environment",
+      "kind": "material",
+      "src": null,
+      "tags": ["joy_meadow", "water", "reflection"],
+      "placeholder": { "label": "Water", "primary": "#65c5cf", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "environment.water",
+        "medium": "environment.water",
+        "far": "environment.water"
+      }
+    },
+    {
+      "id": "environment.bridge",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "landmark", "bridge"],
+      "placeholder": { "label": "Bridge", "primary": "#a9784e", "secondary": "#f4dcaa" },
+      "lod": {
+        "near": "environment.bridge",
+        "medium": "environment.bridge",
+        "far": "environment.bridge"
+      }
+    },
+    {
+      "id": "environment.windmill",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "landmark", "windmill"],
+      "placeholder": { "label": "Windmill", "primary": "#f7dca2", "secondary": "#e98586" },
+      "lod": {
+        "near": "environment.windmill",
+        "medium": "environment.windmill",
+        "far": "environment.windmill"
+      }
+    },
+    {
+      "id": "environment.river",
+      "category": "environment",
+      "kind": "material",
+      "src": null,
+      "tags": ["joy_meadow", "river", "water"],
+      "placeholder": { "label": "River", "primary": "#65c5cf", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "environment.river",
+        "medium": "environment.river",
+        "far": "environment.river"
+      }
+    },
+    {
+      "id": "environment.recipe_shrine",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "landmark", "recipe_shrine"],
+      "placeholder": { "label": "Recipe Shrine", "primary": "#f4dcaa", "secondary": "#ffd96a" },
+      "lod": {
+        "near": "environment.recipe_shrine",
+        "medium": "environment.recipe_shrine",
+        "far": "environment.recipe_shrine"
+      }
+    },
+    {
+      "id": "environment.journal_tree",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "landmark", "journal_tree"],
+      "placeholder": { "label": "Journal Tree", "primary": "#4d965b", "secondary": "#ffd96a" },
+      "lod": {
+        "near": "environment.journal_tree",
+        "medium": "environment.journal_tree",
+        "far": "environment.journal_tree"
+      }
+    },
+    {
+      "id": "environment.berry_bush",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "berry_bush", "plant"],
+      "placeholder": { "label": "Berry Bush", "primary": "#4d965b", "secondary": "#c54f73" },
+      "lod": {
+        "near": "environment.berry_bush",
+        "medium": "environment.berry_bush",
+        "far": "environment.berry_bush"
+      }
+    },
+    {
+      "id": "environment.npc_house",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "npc_house", "structure"],
+      "placeholder": { "label": "NPC House", "primary": "#fff0c2", "secondary": "#e98586" },
+      "lod": {
+        "near": "environment.npc_house",
+        "medium": "environment.npc_house",
+        "far": "environment.npc_house"
+      }
+    },
+    {
+      "id": "environment.path",
+      "category": "environment",
+      "kind": "texture",
+      "src": null,
+      "tags": ["joy_meadow", "path", "ground"],
+      "placeholder": { "label": "Path", "primary": "#f4dcaa", "secondary": "#a9784e" },
+      "lod": { "near": "environment.path", "medium": "environment.path", "far": "environment.path" }
+    },
+    {
+      "id": "environment.fence",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "fence", "structure"],
+      "placeholder": { "label": "Fence", "primary": "#a9784e", "secondary": "#f4dcaa" },
+      "lod": {
+        "near": "environment.fence",
+        "medium": "environment.fence",
+        "far": "environment.fence"
+      }
+    },
+    {
+      "id": "environment.rock",
+      "category": "environment",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["joy_meadow", "rock", "ground"],
+      "placeholder": { "label": "Rock", "primary": "#b7b1a4", "secondary": "#e8dcc6" },
+      "lod": { "near": "environment.rock", "medium": "environment.rock", "far": "environment.rock" }
+    },
+    {
+      "id": "character.lumi",
+      "category": "characters",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["lumi", "companion", "emotion_overlay"],
+      "placeholder": { "label": "Lumi", "primary": "#fff28b", "secondary": "#a9f1d4" },
+      "lod": { "near": "character.lumi", "medium": "character.lumi", "far": "character.lumi" }
+    },
+    {
+      "id": "character.npc_meadow_keeper",
+      "category": "characters",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["npc", "joy_meadow", "portrait", "idle"],
+      "placeholder": { "label": "Meadow Keeper", "primary": "#ffd45c", "secondary": "#4d965b" },
+      "lod": {
+        "near": "character.npc_meadow_keeper",
+        "medium": "character.npc_meadow_keeper",
+        "far": "character.npc_meadow_keeper"
+      }
+    },
+    {
+      "id": "character.player",
+      "category": "characters",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["player", "idle", "walking", "future_skeletal"],
+      "placeholder": { "label": "Player", "primary": "#f38ca7", "secondary": "#87d8bb" },
+      "lod": { "near": "character.player", "medium": "character.player", "far": "character.player" }
+    },
+    {
+      "id": "portrait.lumi",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": null,
+      "tags": ["lumi", "expression", "portrait"],
+      "placeholder": { "label": "Lumi Portrait", "primary": "#fff28b", "secondary": "#a9f1d4" },
+      "lod": { "near": "portrait.lumi", "medium": "portrait.lumi", "far": "portrait.lumi" }
+    },
+    {
+      "id": "ice_cream.golden_vanilla_bloom",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["golden_vanilla_bloom", "sprinkles", "glow", "soft_shadow"],
+      "placeholder": {
+        "label": "Golden Vanilla Bloom",
+        "primary": "#ffe5a4",
+        "secondary": "#f38ca7"
+      },
+      "lod": {
+        "near": "ice_cream.golden_vanilla_bloom",
+        "medium": "ice_cream.golden_vanilla_bloom",
+        "far": "ice_cream.golden_vanilla_bloom"
+      }
+    },
+    {
+      "id": "ice_cream.sprinkles",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["sprinkles", "topping", "future_shader"],
+      "placeholder": { "label": "Sprinkles", "primary": "#ffd45c", "secondary": "#f38ca7" },
+      "lod": {
+        "near": "ice_cream.sprinkles",
+        "medium": "ice_cream.sprinkles",
+        "far": "ice_cream.sprinkles"
+      }
+    },
+    {
+      "id": "ice_cream.chocolate_drizzle",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["chocolate_drizzle", "topping", "future_shader"],
+      "placeholder": { "label": "Drizzle", "primary": "#76543c", "secondary": "#a9784e" },
+      "lod": {
+        "near": "ice_cream.chocolate_drizzle",
+        "medium": "ice_cream.chocolate_drizzle",
+        "far": "ice_cream.chocolate_drizzle"
+      }
+    },
+    {
+      "id": "ice_cream.fruit",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["fruit", "topping", "future_shader"],
+      "placeholder": { "label": "Fruit", "primary": "#c54f73", "secondary": "#87d8bb" },
+      "lod": { "near": "ice_cream.fruit", "medium": "ice_cream.fruit", "far": "ice_cream.fruit" }
+    },
+    {
+      "id": "ui.book_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["storybook", "book", "texture"],
+      "placeholder": { "label": "Book", "primary": "#f4dcaa", "secondary": "#76543c" },
+      "lod": { "near": "ui.book_texture", "medium": "ui.book_texture", "far": "ui.book_texture" }
+    },
+    {
+      "id": "ui.ribbon_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["bookmark", "ribbon", "texture"],
+      "placeholder": { "label": "Ribbon", "primary": "#c54f73", "secondary": "#ffd96a" },
+      "lod": {
+        "near": "ui.ribbon_texture",
+        "medium": "ui.ribbon_texture",
+        "far": "ui.ribbon_texture"
+      }
+    },
+    {
+      "id": "ui.crystal_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["settings", "crystal", "texture"],
+      "placeholder": { "label": "Crystal", "primary": "#a9f1d4", "secondary": "#b7d8ff" },
+      "lod": {
+        "near": "ui.crystal_texture",
+        "medium": "ui.crystal_texture",
+        "far": "ui.crystal_texture"
+      }
+    },
+    {
+      "id": "ui.wood_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["quest_board", "wood", "texture"],
+      "placeholder": { "label": "Wood", "primary": "#76543c", "secondary": "#a9784e" },
+      "lod": { "near": "ui.wood_texture", "medium": "ui.wood_texture", "far": "ui.wood_texture" }
+    },
+    {
+      "id": "ui.parchment_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["parchment", "panel", "texture"],
+      "placeholder": { "label": "Parchment", "primary": "#f4dcaa", "secondary": "#fff8da" },
+      "lod": {
+        "near": "ui.parchment_texture",
+        "medium": "ui.parchment_texture",
+        "far": "ui.parchment_texture"
+      }
+    },
+    {
+      "id": "ui.fantasy_border",
+      "category": "ui",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["border", "storybook", "button"],
+      "placeholder": { "label": "Border", "primary": "#ffd96a", "secondary": "#76543c" },
+      "lod": {
+        "near": "ui.fantasy_border",
+        "medium": "ui.fantasy_border",
+        "far": "ui.fantasy_border"
+      }
+    },
+    {
+      "id": "icon.bookmark",
+      "category": "icons",
+      "kind": "icon",
+      "src": null,
+      "tags": ["bookmark", "save"],
+      "placeholder": { "label": "Bookmark", "primary": "#c54f73", "secondary": "#ffd96a" },
+      "lod": { "near": "icon.bookmark", "medium": "icon.bookmark", "far": "icon.bookmark" }
+    },
+    {
+      "id": "icon.satchel",
+      "category": "icons",
+      "kind": "icon",
+      "src": null,
+      "tags": ["inventory", "satchel"],
+      "placeholder": { "label": "Satchel", "primary": "#a9784e", "secondary": "#ffd96a" },
+      "lod": { "near": "icon.satchel", "medium": "icon.satchel", "far": "icon.satchel" }
+    },
+    {
+      "id": "effect.glow",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["glow", "bloom_ready"],
+      "placeholder": { "label": "Glow", "primary": "#ffd96a", "secondary": "#fff4ae" },
+      "lod": { "near": "effect.glow", "medium": "effect.glow", "far": "effect.glow" }
+    },
+    {
+      "id": "effect.sparkle",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["sparkles", "magic", "crafting"],
+      "placeholder": { "label": "Sparkle", "primary": "#fff4ae", "secondary": "#a9f1d4" },
+      "lod": { "near": "effect.sparkle", "medium": "effect.sparkle", "far": "effect.sparkle" }
+    },
+    {
+      "id": "effect.dust",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["dust", "ambient"],
+      "placeholder": { "label": "Dust", "primary": "#fff8da", "secondary": "#ffd96a" },
+      "lod": { "near": "effect.dust", "medium": "effect.dust", "far": "effect.dust" }
+    },
+    {
+      "id": "effect.firefly",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["fireflies", "night"],
+      "placeholder": { "label": "Firefly", "primary": "#fff28b", "secondary": "#d6e7ff" },
+      "lod": { "near": "effect.firefly", "medium": "effect.firefly", "far": "effect.firefly" }
+    },
+    {
+      "id": "effect.mist",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["mist", "fog"],
+      "placeholder": { "label": "Mist", "primary": "#d8f3ff", "secondary": "#b7d8ff" },
+      "lod": { "near": "effect.mist", "medium": "effect.mist", "far": "effect.mist" }
+    },
+    {
+      "id": "effect.rain",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["rain", "weather"],
+      "placeholder": { "label": "Rain", "primary": "#b7ddff", "secondary": "#65c5cf" },
+      "lod": { "near": "effect.rain", "medium": "effect.rain", "far": "effect.rain" }
+    },
+    {
+      "id": "effect.snow",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["snow", "weather", "future_post_processing"],
+      "placeholder": { "label": "Snow", "primary": "#ffffff", "secondary": "#d6e7ff" },
+      "lod": { "near": "effect.snow", "medium": "effect.snow", "far": "effect.snow" }
+    },
+    {
+      "id": "effect.steam",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["steam", "ice_cream", "future_shader"],
+      "placeholder": { "label": "Steam", "primary": "#fff8da", "secondary": "#d8f3ff" },
+      "lod": { "near": "effect.steam", "medium": "effect.steam", "far": "effect.steam" }
+    },
+    {
+      "id": "effect.reflection",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["reflection", "ice_cream", "future_post_processing"],
+      "placeholder": { "label": "Reflection", "primary": "#d8ffff", "secondary": "#65c5cf" },
+      "lod": {
+        "near": "effect.reflection",
+        "medium": "effect.reflection",
+        "far": "effect.reflection"
+      }
+    },
+    {
+      "id": "effect.soft_shadow",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["soft_shadow", "ice_cream", "grounding"],
+      "placeholder": { "label": "Shadow", "primary": "#76543c", "secondary": "#b7b1a4" },
+      "lod": {
+        "near": "effect.soft_shadow",
+        "medium": "effect.soft_shadow",
+        "far": "effect.soft_shadow"
+      }
+    },
+    {
+      "id": "effect.water_ripple",
+      "category": "effects",
+      "kind": "effect",
+      "src": null,
+      "tags": ["water", "ripple", "future_post_processing"],
+      "placeholder": { "label": "Ripple", "primary": "#65c5cf", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "effect.water_ripple",
+        "medium": "effect.water_ripple",
+        "far": "effect.water_ripple"
+      }
+    }
+  ]
+}
