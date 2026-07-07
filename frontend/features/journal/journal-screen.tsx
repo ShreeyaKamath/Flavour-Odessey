@@ -1,3 +1,5 @@
+import { CinematicCheckpoint } from "@/components/cinematics/cinematic-checkpoint";
+import { CinematicMoment } from "@/components/cinematics/cinematic-moment";
 import { MagicalPage } from "@/components/storybook/magical-page";
 import { PageTurnTransition } from "@/components/storybook/page-turn-transition";
 import { StorybookShell } from "@/components/storybook/storybook-shell";
@@ -24,6 +26,13 @@ export function JournalScreen() {
               This page waits for the restored memory from Joy Meadow, ready to hold recipe lore,
               NPC story notes, and the first golden illustration.
             </p>
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <CinematicMoment label="Reveal memory" sceneId="journal_memory_reveal" />
+            <CinematicMoment label="Turn the sky" sceneId="day_transition" />
+          </div>
+          <div className="mt-5">
+            <CinematicCheckpoint label="Memory page marked" sceneId="journal_memory_reveal" />
           </div>
         </MagicalPage>
       </PageTurnTransition>

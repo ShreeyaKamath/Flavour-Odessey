@@ -1,3 +1,5 @@
+import { CinematicCheckpoint } from "@/components/cinematics/cinematic-checkpoint";
+import { CinematicMoment } from "@/components/cinematics/cinematic-moment";
 import { GlowingBookmark } from "@/components/storybook/glowing-bookmark";
 import { StorybookShell } from "@/components/storybook/storybook-shell";
 import { LinkButton } from "@/components/ui/link-button";
@@ -20,6 +22,10 @@ export function MainMenuScreen() {
     >
       <div className="space-y-5">
         <GlowingBookmark label="Adventure saved" sublabel="Joy Meadow awaits" />
+        <div className="flex flex-wrap gap-2">
+          <CinematicMoment label="Opening cinematic" sceneId="opening" />
+          <CinematicMoment label="First arrival" sceneId="joy_meadow_arrival" />
+        </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-panel border border-border bg-surface/70 p-4">
             <h2 className="font-display text-xl font-semibold text-foreground">New adventure</h2>
@@ -34,6 +40,7 @@ export function MainMenuScreen() {
             </p>
           </div>
         </div>
+        <CinematicCheckpoint label="Opening chapter ready" sceneId="opening" />
       </div>
     </StorybookShell>
   );
