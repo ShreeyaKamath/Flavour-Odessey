@@ -1,4 +1,4 @@
-from datetime import datetime
+﻿from datetime import datetime
 from enum import StrEnum
 from typing import Any, Literal
 from uuid import UUID
@@ -331,17 +331,111 @@ class GameStartRequest(ContractModel):
     island_id: Literal["joy_meadow"] = "joy_meadow"
 
 
+JoyMeadowNpcId = Literal[
+    "joy_meadow_keeper",
+    "joy_meadow_baker",
+    "joy_meadow_gardener",
+    "joy_meadow_child_explorer",
+    "joy_meadow_traveling_merchant",
+]
+
+
+class NpcScheduleStep(ContractModel):
+    label: str
+    activity: str
+    location: str
+    starts_at: str
+
+
+class NpcGiftPreferences(ContractModel):
+    loves: list[str]
+    likes: list[str]
+    avoids: list[str]
+
+
+class NpcConversationTurn(ContractModel):
+    speaker: Literal["player", "npc"]
+    text: str
+    mood: str
+    occurred_at: datetime
+
+
+class NpcRelationshipState(ContractModel):
+    friendship_xp: int = Field(ge=0)
+    trust_xp: int = Field(ge=0)
+    friendship_level: int = Field(ge=0)
+    trust_level: int = Field(ge=0)
+    relationship_status: str
+    milestones: list[str]
+    memory_highlights: list[str]
+    conversation_history: list[NpcConversationTurn]
+
+
+class NpcMovementState(ContractModel):
+    from_location: str
+    to_location: str
+    progress: float = Field(ge=0, le=1)
+    no_teleporting: Literal[True] = True
+
+
+class NpcStateResponse(ContractModel):
+    id: UUID
+    npc_id: JoyMeadowNpcId
+    name: str
+    portrait: str
+    occupation: str
+    age_group: str
+    voice_style: str
+    favorite_flavor: str
+    favorite_weather: str
+    favorite_flower: str
+    personality: list[str]
+    current_mood: str
+    energy_level: int = Field(ge=0, le=100)
+    current_goal: str
+    current_activity: str
+    current_location: str
+    memory_summary: str
+    relationship: NpcRelationshipState
+    gift_preferences: NpcGiftPreferences
+    daily_schedule: list[NpcScheduleStep]
+    animation_state: str
+    emotion_icon: str
+    speech_speed: Literal["slow", "normal", "bright", "dreamy"]
+    thought_bubble: str
+    speech_bubble: str
+    lumi_reaction: str
+    movement: NpcMovementState
+
+
+class NpcsResponse(ContractModel):
+    items: list[NpcStateResponse]
+
+
+class NpcGiftRequest(ContractModel):
+    gift_id: str = Field(min_length=1, max_length=120)
+
+
+class NpcGiftResponse(ContractModel):
+    npc_id: JoyMeadowNpcId
+    reaction: str
+    friendship_delta: int
+    trust_delta: int
+    relationship: NpcRelationshipState
+
+
 class AINpcChatRequest(ContractModel):
-    npc_id: Literal["joy_meadow_keeper"]
+    npc_id: JoyMeadowNpcId
     message: str = Field(min_length=1, max_length=500)
 
 
 class AINpcChatResponse(ContractModel):
-    npc_id: Literal["joy_meadow_keeper"]
+    npc_id: JoyMeadowNpcId
     reply: str
-    mood: Literal["hopeful", "joyful"]
+    mood: str
     memory_written: bool
     importance: int = Field(ge=0, le=10)
+    relationship: NpcRelationshipState | None = None
     provider: str
     fallback_used: bool
 
@@ -451,6 +545,15 @@ CONTRACT_MODELS: tuple[type[BaseModel], ...] = (
     SaveStatusResponse,
     GameStateResponse,
     GameStartRequest,
+    NpcScheduleStep,
+    NpcGiftPreferences,
+    NpcConversationTurn,
+    NpcRelationshipState,
+    NpcMovementState,
+    NpcStateResponse,
+    NpcsResponse,
+    NpcGiftRequest,
+    NpcGiftResponse,
     AINpcChatRequest,
     AINpcChatResponse,
     AICompanionRespondRequest,
