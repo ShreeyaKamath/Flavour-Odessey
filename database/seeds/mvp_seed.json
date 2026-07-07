@@ -36,10 +36,7 @@
           "palette": ["sunny_yellow", "blossom_pink", "fresh_mint"],
           "sounds": ["sprinkle_birds", "distant_laughter", "wind_chimes"]
         },
-        "manifest_keys": [
-          "island.joy_meadow.map",
-          "audio.joy_meadow.ambience"
-        ]
+        "manifest_keys": ["island.joy_meadow.map", "audio.joy_meadow.ambience"]
       }
     },
     {
@@ -163,12 +160,203 @@
       "key": "joy_meadow_keeper",
       "island_key": "joy_meadow",
       "name": "Meadow Keeper",
-      "role": "joy_meadow_npc",
+      "role": "meadow_keeper",
       "profile": {
+        "portrait": "npc.joy_meadow_keeper.portrait",
+        "occupation": "Meadow Keeper",
+        "age_group": "elder",
+        "voice_style": "gentle, ceremonial, brief",
+        "favorite_flavor": "Golden Vanilla Bloom",
+        "favorite_weather": "Warm breeze",
+        "favorite_flower": "Vanilla Orchid",
+        "personality": ["patient", "protective", "hopeful"],
+        "current_mood": "thinking",
+        "energy_level": 68,
+        "current_goal": "Help Joy Meadow remember its first recipe",
+        "memory_summary": "Waiting for the first shared memory with the Flavor Keeper.",
+        "gift_preferences": {
+          "loves": ["golden_vanilla_bloom", "vanilla_orchid"],
+          "likes": ["honey_bloom"],
+          "avoids": ["wilted_petal"]
+        },
+        "daily_schedule": [
+          {
+            "label": "Morning",
+            "activity": "Water Flowers",
+            "location": "Flower Beds",
+            "starts_at": "06:00"
+          },
+          {
+            "label": "Late Morning",
+            "activity": "Visit Bakery",
+            "location": "Bakery Porch",
+            "starts_at": "09:00"
+          },
+          {
+            "label": "Noon",
+            "activity": "Walk Bridge",
+            "location": "Small Bridge",
+            "starts_at": "12:00"
+          },
+          {
+            "label": "Afternoon",
+            "activity": "Talk to Lumi",
+            "location": "Recipe Shrine",
+            "starts_at": "15:00"
+          },
+          {
+            "label": "Evening",
+            "activity": "Rest",
+            "location": "Journal Tree",
+            "starts_at": "18:00"
+          },
+          {
+            "label": "Dusk",
+            "activity": "Go Home",
+            "location": "Meadow Path",
+            "starts_at": "21:00"
+          },
+          {
+            "label": "Night",
+            "activity": "Sleep",
+            "location": "Meadow Cottage",
+            "starts_at": "23:00"
+          }
+        ],
+        "thought_bubble": "The first scoop is closer than the flowers know.",
+        "lumi_reaction": "bows to Lumi and smiles",
         "tone": "warm",
         "dialogue": {
           "before_restoration": "Vanilla Orchid and Honey Bloom once made the meadow shine.",
           "after_restoration": "The first scoop has returned, and with it our brightest memories."
+        }
+      }
+    },
+    {
+      "key": "joy_meadow_baker",
+      "island_key": "joy_meadow",
+      "name": "Maribel Crumb",
+      "role": "baker",
+      "profile": {
+        "portrait": "npc.joy_meadow_baker.portrait",
+        "occupation": "Village Baker",
+        "age_group": "adult",
+        "voice_style": "bright, flour-dusted, encouraging",
+        "favorite_flavor": "Honey Bloom Swirl",
+        "favorite_weather": "Sunny morning",
+        "favorite_flower": "Honey Bloom",
+        "personality": ["generous", "practical", "excited"],
+        "current_mood": "excited",
+        "energy_level": 84,
+        "current_goal": "Bake something cheerful enough for the whole meadow",
+        "memory_summary": "Hopes the Flavor Keeper brings back warm bakery laughter.",
+        "gift_preferences": {
+          "loves": ["honey_bloom", "golden_vanilla_bloom"],
+          "likes": ["vanilla_orchid"],
+          "avoids": ["burnt_sugar"]
+        },
+        "thought_bubble": "A little honey could make today sing.",
+        "lumi_reaction": "offers Lumi a tiny spoon",
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "My ovens are warm, but the recipes still feel quiet.",
+          "after_restoration": "Listen to that! Even the bread is rising happier today."
+        }
+      }
+    },
+    {
+      "key": "joy_meadow_gardener",
+      "island_key": "joy_meadow",
+      "name": "Tavi Sprig",
+      "role": "gardener",
+      "profile": {
+        "portrait": "npc.joy_meadow_gardener.portrait",
+        "occupation": "Crystal Gardener",
+        "age_group": "young_adult",
+        "voice_style": "soft, observant, curious",
+        "favorite_flavor": "Vanilla Orchid Cream",
+        "favorite_weather": "Gentle rain",
+        "favorite_flower": "Vanilla Orchid",
+        "personality": ["curious", "careful", "kind"],
+        "current_mood": "curious",
+        "energy_level": 76,
+        "current_goal": "Coax the meadow flowers into blooming bravely",
+        "memory_summary": "Tracks which flowers brighten when kindness is nearby.",
+        "gift_preferences": {
+          "loves": ["vanilla_orchid"],
+          "likes": ["honey_bloom", "golden_vanilla_bloom"],
+          "avoids": ["cracked_seed"]
+        },
+        "thought_bubble": "The petals are listening for a friendly voice.",
+        "lumi_reaction": "pets Lumi's glow with one careful finger",
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "The flowers are not gone. They are only holding their breath.",
+          "after_restoration": "Every stem is standing taller. They remember you."
+        }
+      }
+    },
+    {
+      "key": "joy_meadow_child_explorer",
+      "island_key": "joy_meadow",
+      "name": "Pip Puddlejump",
+      "role": "child_explorer",
+      "profile": {
+        "portrait": "npc.joy_meadow_child_explorer.portrait",
+        "occupation": "Child Explorer",
+        "age_group": "child",
+        "voice_style": "quick, wondering, sincere",
+        "favorite_flavor": "Sprinkle Sunshine",
+        "favorite_weather": "Golden hour",
+        "favorite_flower": "Daisy Bell",
+        "personality": ["playful", "brave", "surprised"],
+        "current_mood": "surprised",
+        "energy_level": 92,
+        "current_goal": "Find the brightest secret beside the river",
+        "memory_summary": "Wants to tell the Flavor Keeper about every butterfly path.",
+        "gift_preferences": {
+          "loves": ["sparkle_sticker", "golden_vanilla_bloom"],
+          "likes": ["honey_bloom"],
+          "avoids": ["boring_stone"]
+        },
+        "thought_bubble": "What if the bridge knows a shortcut?",
+        "lumi_reaction": "waves both hands at Lumi",
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "I saw a flower wiggle! Or maybe it saw me first.",
+          "after_restoration": "The whole meadow feels like it is playing tag with the sun!"
+        }
+      }
+    },
+    {
+      "key": "joy_meadow_traveling_merchant",
+      "island_key": "joy_meadow",
+      "name": "Saffron Vale",
+      "role": "traveling_merchant",
+      "profile": {
+        "portrait": "npc.joy_meadow_traveling_merchant.portrait",
+        "occupation": "Traveling Merchant",
+        "age_group": "adult",
+        "voice_style": "polished, amused, warm",
+        "favorite_flavor": "Caramel Cloud",
+        "favorite_weather": "Clear twilight",
+        "favorite_flower": "Lantern Lily",
+        "personality": ["observant", "relaxed", "proud"],
+        "current_mood": "relaxed",
+        "energy_level": 71,
+        "current_goal": "Trade stories without opening new island routes",
+        "memory_summary": "Carries small rumors, but keeps Joy Meadow as today's whole world.",
+        "gift_preferences": {
+          "loves": ["golden_vanilla_bloom"],
+          "likes": ["vanilla_orchid", "honey_bloom"],
+          "avoids": ["dull_coin"]
+        },
+        "thought_bubble": "A restored village always remembers fair bargains.",
+        "lumi_reaction": "tips a tiny hat toward Lumi",
+        "tone": "warm",
+        "dialogue": {
+          "before_restoration": "I have traveled far enough to know when a village is waiting to smile.",
+          "after_restoration": "Now this is a meadow worth crossing twice."
         }
       }
     }
