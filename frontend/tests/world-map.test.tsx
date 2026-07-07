@@ -79,7 +79,7 @@ describe("WorldMapScreen", () => {
   });
 
   it("renders Joy Meadow as the playable island", async () => {
-    vi.spyOn(apiClient, "getWorld").mockResolvedValueOnce(worldResponse);
+    vi.spyOn(apiClient, "getWorld").mockResolvedValue(worldResponse);
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
@@ -93,7 +93,7 @@ describe("WorldMapScreen", () => {
   });
 
   it("shows locked islands without navigation", async () => {
-    vi.spyOn(apiClient, "getWorld").mockResolvedValueOnce(worldResponse);
+    vi.spyOn(apiClient, "getWorld").mockResolvedValue(worldResponse);
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
@@ -103,7 +103,7 @@ describe("WorldMapScreen", () => {
   });
 
   it("renders loading and error states", async () => {
-    vi.spyOn(apiClient, "getWorld").mockRejectedValueOnce(new Error("World service unavailable"));
+    vi.spyOn(apiClient, "getWorld").mockRejectedValue(new Error("World service unavailable"));
 
     render(<WorldMapScreen />, { wrapper: TestQueryProvider });
 
