@@ -1,4 +1,5 @@
 import type { components } from "@flavor/contracts/api";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 export type LumiEmotion =
   "happy" | "curious" | "excited" | "sleepy" | "proud" | "worried" | "celebrating" | "thoughtful";
@@ -13,6 +14,7 @@ export type LumiEvent =
   | "joy_restored"
   | "npc_conversation"
   | "crafting_started"
+  | "weather_changed"
   | "sleep"
   | "wake"
   | "ai_unavailable";
@@ -31,6 +33,8 @@ export type LumiContext = {
   currentNpcName?: string;
   game: components["schemas"]["GameStateResponse"];
   npcNearby: boolean;
-  timeOfDay: "morning" | "afternoon" | "golden_hour" | "night";
-  weather: string;
+  timeOfDay: LivingWorldSnapshot["timeOfDay"];
+  weather: LivingWorldSnapshot["condition"];
+  weatherLabel: string;
+  world?: LivingWorldSnapshot;
 };

@@ -24,6 +24,8 @@ const particleSeeds: Record<ParticleKind, number> = {
   flowers: 29,
   leaves: 43,
   magic: 47,
+  mist: 67,
+  rain: 71,
   recipe: 53,
   restoration: 59,
   sparkles: 37,

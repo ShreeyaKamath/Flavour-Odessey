@@ -78,6 +78,12 @@ export class LumiStateMachine {
         message: message ?? "You brought Joy back. I am glowing all the way through.",
         mode: "reacting"
       },
+      weather_changed: {
+        emotion: "curious",
+        lastEvent: event,
+        message: message ?? "The meadow air changed. I will glow where the path gets soft.",
+        mode: "following"
+      },
       npc_conversation: {
         emotion: "curious",
         lastEvent: event,

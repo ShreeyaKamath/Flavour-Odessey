@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { NpcVillage } from "@/components/npcs/npc-village";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 vi.mock("@/hooks/use-motion-preference", () => ({
   useMotionPreference: () => true
@@ -69,6 +70,32 @@ function npc(overrides: Partial<NpcState> = {}): NpcState {
   };
 }
 
+const rainyWorld = {
+  ambientColor: "#a9c7d8",
+  audioAmbience: "weather_rain",
+  cloudCover: 1,
+  condition: "rain",
+  conditionLabel: "Rain",
+  fireflyIntensity: 0,
+  flowerSway: 1.15,
+  fogDensity: 0.36,
+  grassSway: 1.2,
+  lightingBlend: 0.38,
+  lumiReaction: "Lumi tucks beneath a leaf.",
+  npcRoutine: "Runs indoors, reads, and drinks hot chocolate.",
+  particleColor: "#b7ddff",
+  rainIntensity: 1,
+  season: "joy_meadow_spring",
+  seasonLabel: "Joy Meadow spring",
+  skyBottom: "#9eb8c8",
+  skyTop: "#566f86",
+  timeLabel: "Afternoon",
+  timeOfDay: "afternoon",
+  transitionProgress: 0.5,
+  waterReflection: 0.9,
+  windStrength: 0.86
+} satisfies LivingWorldSnapshot;
+
 describe("NpcVillage", () => {
   it("renders animated NPC portraits and relationship details", async () => {
     render(
@@ -87,10 +114,13 @@ describe("NpcVillage", () => {
         ]}
         onGift={vi.fn()}
         onSendMessage={vi.fn()}
+        world={rainyWorld}
       />
     );
 
     expect(screen.getByRole("heading", { name: "Meadow voices" })).toBeInTheDocument();
+    expect(screen.getAllByText(/Weather routine: Runs indoors/).length).toBeGreaterThan(0);
+    expect(screen.getByText("Weather: Rain, Afternoon, Joy Meadow spring")).toBeInTheDocument();
     expect(screen.getByRole("img", { name: /Meadow Keeper portrait/ })).toBeInTheDocument();
     expect(screen.getAllByText("friendly neighbor · Friendship 1").length).toBeGreaterThan(0);
     expect(await screen.findByText("The meadow is listening.")).toBeInTheDocument();

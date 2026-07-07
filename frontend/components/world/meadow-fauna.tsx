@@ -9,13 +9,15 @@ import {
   environmentMotion,
   joyMeadowPalette
 } from "@/lib/world/joy-meadow-config";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type MeadowFaunaProps = {
   paused: boolean;
   reducedMotion: boolean;
+  world: LivingWorldSnapshot;
 };
 
-function ButterflySwarm({ paused, reducedMotion }: MeadowFaunaProps) {
+function ButterflySwarm({ paused, reducedMotion, world }: MeadowFaunaProps) {
   const swarm = useRef<Group>(null);
 
   useFrame(({ clock }) => {
@@ -25,10 +27,17 @@ function ButterflySwarm({ paused, reducedMotion }: MeadowFaunaProps) {
     const elapsed = clock.getElapsedTime() * environmentMotion.butterflySpeed;
     swarm.current.position.x = Math.sin(elapsed) * 2.2;
     swarm.current.position.y =
-      1.25 + Math.sin(elapsed * environmentMotion.butterflyVerticalFactor) * 0.32;
+      1.25 +
+      Math.sin(elapsed * environmentMotion.butterflyVerticalFactor) *
+        0.32 *
+        (1 - world.rainIntensity * 0.7);
     swarm.current.position.z = Math.cos(elapsed * environmentMotion.beeOrbitSpeed) * 1.5;
     swarm.current.rotation.y = elapsed * environmentMotion.butterflyRotationSpeed;
   });
+
+  if (world.rainIntensity > 0.75 || world.condition === "night") {
+    return null;
+  }
 
   return (
     <group position={[-1.6, 1.2, 0]} ref={swarm}>
@@ -58,7 +67,7 @@ function ButterflySwarm({ paused, reducedMotion }: MeadowFaunaProps) {
   );
 }
 
-function BeeSwarm({ paused, reducedMotion }: MeadowFaunaProps) {
+function BeeSwarm({ paused, reducedMotion, world }: MeadowFaunaProps) {
   const bees = useRef<Group>(null);
 
   useFrame(({ clock }) => {
@@ -69,6 +78,10 @@ function BeeSwarm({ paused, reducedMotion }: MeadowFaunaProps) {
     bees.current.position.x = Math.cos(elapsed * environmentMotion.beeOrbitSpeed) * 1.1;
     bees.current.position.y = 0.9 + Math.sin(elapsed * environmentMotion.beeBobSpeed) * 0.15;
   });
+
+  if (world.rainIntensity > 0.45 || world.condition === "night") {
+    return null;
+  }
 
   return (
     <group position={[3.4, 1, 1]} ref={bees}>
@@ -88,7 +101,7 @@ function BeeSwarm({ paused, reducedMotion }: MeadowFaunaProps) {
   );
 }
 
-function SprinkleBirds({ paused, reducedMotion }: MeadowFaunaProps) {
+function SprinkleBirds({ paused, reducedMotion, world }: MeadowFaunaProps) {
   const birds = useRef<Group>(null);
 
   useFrame(({ clock }) => {
@@ -99,6 +112,10 @@ function SprinkleBirds({ paused, reducedMotion }: MeadowFaunaProps) {
     birds.current.position.x = Math.sin(elapsed) * 5;
     birds.current.position.y = 4.6 + Math.sin(elapsed * environmentMotion.birdBobFactor) * 0.18;
   });
+
+  if (world.condition === "rain" || world.condition === "night" || world.condition === "mist") {
+    return null;
+  }
 
   return (
     <group position={[0, 4.6, -6]} ref={birds}>

@@ -12,11 +12,13 @@ import {
   joyMeadowTreePositions
 } from "@/lib/world/joy-meadow-config";
 import { generateFieldPositions } from "@/lib/world/scene-utils";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type MeadowFloraProps = {
   paused: boolean;
   reducedMotion: boolean;
   restored: boolean;
+  world: LivingWorldSnapshot;
 };
 
 function useFieldInstances(
@@ -40,7 +42,7 @@ function useFieldInstances(
   }, [mesh, positions, yOffset]);
 }
 
-function GrassField({ paused, reducedMotion }: Omit<MeadowFloraProps, "restored">) {
+function GrassField({ paused, reducedMotion, world }: Omit<MeadowFloraProps, "restored">) {
   const grass = useRef<InstancedMesh>(null);
   const positions = useMemo(() => generateFieldPositions(environmentCounts.grass, 103, 14, 13), []);
   useFieldInstances(grass, positions, 0.18);
@@ -51,7 +53,8 @@ function GrassField({ paused, reducedMotion }: Omit<MeadowFloraProps, "restored"
     }
     grass.current.rotation.z =
       Math.sin(clock.getElapsedTime() * environmentMotion.grassSwaySpeed) *
-      environmentMotion.grassSwayAmplitude;
+      environmentMotion.grassSwayAmplitude *
+      world.grassSway;
   });
 
   return (
@@ -80,7 +83,7 @@ function FlowerPatch({
   );
 }
 
-function FlowerField({ paused, reducedMotion, restored }: MeadowFloraProps) {
+function FlowerField({ paused, reducedMotion, restored, world }: MeadowFloraProps) {
   const flowers = useRef<Group>(null);
   const stems = useRef<InstancedMesh>(null);
   const positions = useMemo(
@@ -105,7 +108,9 @@ function FlowerField({ paused, reducedMotion, restored }: MeadowFloraProps) {
           environmentMotion.flowerSwayFactor
       ) *
       environmentMotion.grassSwayAmplitude *
-      1.4;
+      1.4 *
+      world.flowerSway *
+      (restored ? 1 : 0.82);
   });
 
   return (
@@ -180,12 +185,13 @@ export function MeadowFlora(props: MeadowFloraProps) {
     trees.current.rotation.z =
       Math.sin(clock.getElapsedTime() * environmentMotion.treeSwaySpeed) *
       environmentMotion.grassSwayAmplitude *
-      0.35;
+      0.35 *
+      props.world.grassSway;
   });
 
   return (
     <>
-      <GrassField paused={props.paused} reducedMotion={props.reducedMotion} />
+      <GrassField paused={props.paused} reducedMotion={props.reducedMotion} world={props.world} />
       <FlowerField {...props} />
       <group ref={trees}>
         {joyMeadowTreePositions.map((position, index) => (

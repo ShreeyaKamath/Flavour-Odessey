@@ -1,6 +1,16 @@
-export type TimeOfDay = "morning" | "afternoon" | "golden_hour" | "night";
+export type TimeOfDay = "morning" | "afternoon" | "golden_hour" | "evening" | "night";
+export type WeatherCondition = "sunny" | "cloudy" | "rain" | "mist" | "golden_hour" | "night";
 export type ParticleKind =
-  "wind" | "flowers" | "sparkles" | "magic" | "fireflies" | "recipe" | "restoration" | "leaves";
+  | "wind"
+  | "flowers"
+  | "sparkles"
+  | "magic"
+  | "fireflies"
+  | "recipe"
+  | "restoration"
+  | "leaves"
+  | "rain"
+  | "mist";
 
 type LightingPreset = {
   ambientColor: string;
@@ -81,6 +91,17 @@ export const lightingPresets: Record<TimeOfDay, LightingPreset> = {
     keyPosition: [7, 5, -2],
     skyGlow: "#ffd27d"
   },
+  evening: {
+    ambientColor: "#d7b6d9",
+    ambientIntensity: 1,
+    background: "#72558b",
+    exposure: 0.94,
+    fog: "#6b638d",
+    keyColor: "#ffcfa8",
+    keyIntensity: 1.65,
+    keyPosition: [5, 4, -2],
+    skyGlow: "#ffd0a7"
+  },
   night: {
     ambientColor: "#809ac5",
     ambientIntensity: 0.75,
@@ -100,7 +121,9 @@ export const particlePresets: Record<ParticleKind, ParticlePreset> = {
   sparkles: { color: "#ffe784", opacity: 0.9, size: 0.07, speed: 0.4 },
   magic: { color: "#a9f1d4", opacity: 0.85, size: 0.075, speed: 0.3 },
   fireflies: { color: "#fff28b", opacity: 0.95, size: 0.09, speed: 0.24 },
+  mist: { color: "#d8f3ff", opacity: 0.34, size: 0.12, speed: 0.16 },
   recipe: { color: "#ffd96a", opacity: 0.9, size: 0.085, speed: 0.5 },
+  rain: { color: "#b7ddff", opacity: 0.62, size: 0.045, speed: 0.82 },
   restoration: { color: "#fff4ae", opacity: 0.95, size: 0.1, speed: 0.58 },
   leaves: { color: "#78ad62", opacity: 0.72, size: 0.065, speed: 0.3 }
 };
@@ -148,14 +171,18 @@ export const environmentCounts = {
   grass: 220,
   leaves: 24,
   magicParticles: 20,
+  mist: 44,
   pollen: 76,
+  rain: 96,
   recipeParticles: 32,
   sparkles: 24,
   restorationParticles: 44
 } as const;
 
 export const environmentTiming = {
-  clockRefreshMs: 60_000
+  clockRefreshMs: 4_000,
+  timeCycleMs: 1_200_000,
+  weatherCycleMs: 900_000
 } as const;
 
 export const joyMeadowLandmarks = [
@@ -195,6 +222,9 @@ export function resolveTimeOfDay(hour: number): TimeOfDay {
   }
   if (hour >= 17 && hour < 20) {
     return "golden_hour";
+  }
+  if (hour >= 20 && hour < 22) {
+    return "evening";
   }
   return "night";
 }

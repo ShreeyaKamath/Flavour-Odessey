@@ -2,29 +2,43 @@
 
 import { AnimatedWater } from "@/components/world/animated-water";
 import { CameraController } from "@/components/world/camera-controller";
+import { FireflyController } from "@/components/world/firefly-controller";
 import { JoyMeadowLandmarks } from "@/components/world/joy-meadow-landmarks";
 import { LightingController } from "@/components/world/lighting-controller";
 import { MeadowFauna } from "@/components/world/meadow-fauna";
 import { MeadowFlora } from "@/components/world/meadow-flora";
 import { ParallaxManager } from "@/components/world/parallax-manager";
 import { ParticleManager } from "@/components/world/particle-manager";
+import { SkyRenderer } from "@/components/world/sky-renderer";
 import { WeatherRenderer } from "@/components/world/weather-renderer";
-import { environmentCounts, joyMeadowPalette, type TimeOfDay } from "@/lib/world/joy-meadow-config";
+import { environmentCounts, joyMeadowPalette } from "@/lib/world/joy-meadow-config";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type EnvironmentManagerProps = {
   crafted: boolean;
   paused: boolean;
   reducedMotion: boolean;
   restored: boolean;
-  timeOfDay: TimeOfDay;
+  world: LivingWorldSnapshot;
 };
 
-function MeadowTerrain({ paused, reducedMotion }: { paused: boolean; reducedMotion: boolean }) {
+function MeadowTerrain({
+  paused,
+  reducedMotion,
+  world
+}: {
+  paused: boolean;
+  reducedMotion: boolean;
+  world: LivingWorldSnapshot;
+}) {
   return (
     <>
       <mesh receiveShadow position={[0, -0.28, -1]}>
         <cylinderGeometry args={[8.5, 8.8, 0.55, 48]} />
-        <meshStandardMaterial color={joyMeadowPalette.grass} roughness={0.96} />
+        <meshStandardMaterial
+          color={world.condition === "rain" ? joyMeadowPalette.grassDark : joyMeadowPalette.grass}
+          roughness={0.96}
+        />
       </mesh>
       <ParallaxManager paused={paused} position={[0, 0, -8]} reducedMotion={reducedMotion}>
         {[-6, -3, 0, 3, 6].map((x, index) => (
@@ -47,20 +61,24 @@ export function EnvironmentManager({
   paused,
   reducedMotion,
   restored,
-  timeOfDay
+  world
 }: EnvironmentManagerProps) {
-  const night = timeOfDay === "night";
-
   return (
     <>
-      <LightingController timeOfDay={timeOfDay} />
+      <SkyRenderer world={world} />
+      <LightingController world={world} />
       <CameraController paused={paused} reducedMotion={reducedMotion} />
-      <MeadowTerrain paused={paused} reducedMotion={reducedMotion} />
-      <AnimatedWater paused={paused} reducedMotion={reducedMotion} />
-      <MeadowFlora paused={paused} reducedMotion={reducedMotion} restored={restored} />
+      <MeadowTerrain paused={paused} reducedMotion={reducedMotion} world={world} />
+      <AnimatedWater paused={paused} reducedMotion={reducedMotion} world={world} />
+      <MeadowFlora
+        paused={paused}
+        reducedMotion={reducedMotion}
+        restored={restored}
+        world={world}
+      />
       <JoyMeadowLandmarks paused={paused} reducedMotion={reducedMotion} restored={restored} />
-      <WeatherRenderer paused={paused} reducedMotion={reducedMotion} />
-      <MeadowFauna paused={paused} reducedMotion={reducedMotion} />
+      <WeatherRenderer paused={paused} reducedMotion={reducedMotion} world={world} />
+      <MeadowFauna paused={paused} reducedMotion={reducedMotion} world={world} />
       <ParticleManager
         count={environmentCounts.magicParticles}
         kind="magic"
@@ -74,13 +92,7 @@ export function EnvironmentManager({
         paused={paused}
         reducedMotion={reducedMotion}
       />
-      <ParticleManager
-        active={night}
-        count={environmentCounts.fireflies}
-        kind="fireflies"
-        paused={paused}
-        reducedMotion={reducedMotion}
-      />
+      <FireflyController paused={paused} reducedMotion={reducedMotion} world={world} />
       <ParticleManager
         active={crafted}
         count={environmentCounts.recipeParticles}

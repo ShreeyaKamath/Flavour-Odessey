@@ -14,6 +14,18 @@ export class LumiHintController {
       return context.companionResponse.response;
     }
 
+    if (context.weather === "rain") {
+      return "Rain is tapping on Joy Meadow. I will hide under a leaf, but I am still listening.";
+    }
+
+    if (context.weather === "night") {
+      return "Night makes my glow stronger. Follow the soft light and the fireflies.";
+    }
+
+    if (context.weather === "golden_hour") {
+      return "Golden hour makes every flower look proud. This is a lovely time to restore Joy.";
+    }
+
     if (missingIngredients.length) {
       return `I sense ${missingIngredients[0].name} nearby. It is the next glow in our path.`;
     }
@@ -42,6 +54,6 @@ export class LumiHintController {
       return `${context.currentNpcName} has a meadow memory nearby. A kind question may open it.`;
     }
 
-    return `The ${context.weather} air feels ${context.timeOfDay.replace("_", " ")}. I will watch for the next sparkle.`;
+    return `The ${context.weatherLabel.toLowerCase()} air feels ${context.timeOfDay.replace("_", " ")}. I will watch for the next sparkle.`;
   }
 }

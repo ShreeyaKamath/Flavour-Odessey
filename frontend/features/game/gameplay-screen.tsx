@@ -20,6 +20,7 @@ import { useAIInteractions } from "@/features/game/use-ai-interactions";
 import { useGameplay } from "@/features/game/use-gameplay";
 import { useLumiCompanion } from "@/features/lumi/use-lumi-companion";
 import { useNpcs } from "@/features/npcs/use-npcs";
+import { useLivingWorld } from "@/features/world/use-living-world";
 
 type GameplayScreenProps = {
   islandId?: string;
@@ -51,11 +52,13 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
   const gameplay = useGameplay();
   const ai = useAIInteractions();
   const npcs = useNpcs(Boolean(gameplay.state.data?.started));
+  const livingWorld = useLivingWorld();
   const lumi = useLumiCompanion(
     gameplay.state.data,
     npcs.npcs.data?.items,
     ai.companion.data,
-    ai.companion.error
+    ai.companion.error,
+    livingWorld.world
   );
 
   if (islandId !== "joy_meadow") {
@@ -94,7 +97,7 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
 
   return (
     <div className="mx-auto max-w-7xl">
-      <JoyMeadowAudio active={state.started} />
+      <JoyMeadowAudio active={state.started} world={livingWorld.world} />
       <LumiFloatingCompanion
         hint={lumi.hint}
         onAsk={() => {
@@ -103,6 +106,7 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
         }}
         onToggleSleep={(event) => lumi.react(event)}
         state={lumi.state}
+        world={livingWorld.world}
       />
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -120,7 +124,12 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
       </header>
 
       <JoyMeadowScene restored={state.island.restored}>
-        <JoyMeadowEnvironment crafted={state.recipe.crafted} restored={state.island.restored} />
+        <JoyMeadowEnvironment
+          crafted={state.recipe.crafted}
+          paused={livingWorld.paused}
+          restored={state.island.restored}
+          world={livingWorld.world}
+        />
         <div className="absolute inset-x-0 bottom-0 z-10 bg-background/90 px-5 py-4 backdrop-blur-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -170,14 +179,16 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                 onGift={(npcId) => npcs.gift.mutate({ giftId: "golden_vanilla_bloom", npcId })}
                 onSendMessage={(npcId, message) => {
                   lumi.react("npc_conversation");
+                  const contextualMessage = `${message}\n\nJoy Meadow context: ${livingWorld.world.conditionLabel}, ${livingWorld.world.timeLabel}, ${livingWorld.world.seasonLabel}.`;
                   ai.npcChat.mutate(
-                    { message, npcId },
+                    { message: contextualMessage, npcId },
                     {
                       onSuccess: (response) =>
                         lumi.react("npc_conversation", `Lumi listens as ${response.reply}`)
                     }
                   );
                 }}
+                world={livingWorld.world}
               />
             ) : null}
             <div className="border-y border-border py-5">
