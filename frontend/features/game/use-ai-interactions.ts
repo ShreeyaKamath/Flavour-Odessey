@@ -7,15 +7,16 @@ import { gameStateQueryKey } from "@/features/game/use-gameplay";
 import { apiClient } from "@/lib/api/client";
 
 type CompanionEvent = components["schemas"]["AICompanionRespondRequest"]["event"];
+type NpcId = components["schemas"]["AINpcChatRequest"]["npc_id"];
 
 export function useAIInteractions() {
   const queryClient = useQueryClient();
 
   const npcChat = useMutation({
-    mutationFn: (message: string) =>
+    mutationFn: ({ message, npcId }: { message: string; npcId: NpcId }) =>
       apiClient.aiNpcChat({
         message,
-        npc_id: "joy_meadow_keeper"
+        npc_id: npcId
       })
   });
   const companion = useMutation({
