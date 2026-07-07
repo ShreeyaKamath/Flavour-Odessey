@@ -24,6 +24,8 @@ export function GlowingBookmark({ className, label, sublabel }: GlowingBookmarkP
         "after:absolute after:bottom-[-0.65rem] after:left-1/2 after:h-0 after:w-0 after:-translate-x-1/2 after:border-x-[0.7rem] after:border-t-[0.7rem] after:border-x-transparent after:border-t-primary",
         className
       )}
+      data-render-source="asset_manifest"
+      data-visual-element="bookmark"
       onMouseEnter={() => audioEvents.publish("BookmarkSaved")}
       transition={{ duration: 3.2, repeat: Number.POSITIVE_INFINITY }}
     >

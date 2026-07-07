@@ -14,6 +14,14 @@ export class LumiHintController {
       return context.companionResponse.response;
     }
 
+    if (missingIngredients.length) {
+      return `I sense ${missingIngredients[0].name} nearby. It is the next glow in our path.`;
+    }
+
+    if (game.recipe.can_craft && !game.recipe.crafted) {
+      return "The satchel is ready. Golden Vanilla Bloom can wake from those ingredients now.";
+    }
+
     if (context.weather === "rain") {
       return "Rain is tapping on Joy Meadow. I will hide under a leaf, but I am still listening.";
     }
@@ -26,16 +34,8 @@ export class LumiHintController {
       return "Golden hour makes every flower look proud. This is a lovely time to restore Joy.";
     }
 
-    if (missingIngredients.length) {
-      return `I sense ${missingIngredients[0].name} nearby. It is the next glow in our path.`;
-    }
-
     if (game.quest.status === "not_started") {
       return "The first quest is ready. Let us ask the meadow what it needs.";
-    }
-
-    if (game.recipe.can_craft && !game.recipe.crafted) {
-      return "The satchel is ready. Golden Vanilla Bloom can wake from those ingredients now.";
     }
 
     if (context.craftingActive) {

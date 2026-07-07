@@ -234,6 +234,8 @@ export function RecipePresentation({
       )}
       data-crafting-phase={phase}
       data-particles-paused={String(!visible)}
+      data-render-source="asset_manifest"
+      data-visual-element="golden_vanilla_bloom"
       role="img"
       title={interactive ? "Drag to turn the recipe and scroll to zoom" : undefined}
     >
