@@ -18,12 +18,24 @@ export class LumiHintController {
       return `I sense ${missingIngredients[0].name} nearby. It is the next glow in our path.`;
     }
 
-    if (game.quest.status === "not_started") {
-      return "The first quest is ready. Let us ask the meadow what it needs.";
-    }
-
     if (game.recipe.can_craft && !game.recipe.crafted) {
       return "The satchel is ready. Golden Vanilla Bloom can wake from those ingredients now.";
+    }
+
+    if (context.weather === "rain") {
+      return "Rain is tapping on Joy Meadow. I will hide under a leaf, but I am still listening.";
+    }
+
+    if (context.weather === "night") {
+      return "Night makes my glow stronger. Follow the soft light and the fireflies.";
+    }
+
+    if (context.weather === "golden_hour") {
+      return "Golden hour makes every flower look proud. This is a lovely time to restore Joy.";
+    }
+
+    if (game.quest.status === "not_started") {
+      return "The first quest is ready. Let us ask the meadow what it needs.";
     }
 
     if (context.craftingActive) {
@@ -42,6 +54,6 @@ export class LumiHintController {
       return `${context.currentNpcName} has a meadow memory nearby. A kind question may open it.`;
     }
 
-    return `The ${context.weather} air feels ${context.timeOfDay.replace("_", " ")}. I will watch for the next sparkle.`;
+    return `The ${context.weatherLabel.toLowerCase()} air feels ${context.timeOfDay.replace("_", " ")}. I will watch for the next sparkle.`;
   }
 }

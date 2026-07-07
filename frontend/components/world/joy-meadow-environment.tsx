@@ -1,61 +1,50 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { EnvironmentManager } from "@/components/world/environment-manager";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
-import { usePageVisibility } from "@/hooks/use-page-visibility";
-import {
-  environmentTiming,
-  joyMeadowLandmarks,
-  resolveTimeOfDay,
-  type TimeOfDay
-} from "@/lib/world/joy-meadow-config";
+import { renderingSystem } from "@/lib/rendering/rendering-system";
+import { joyMeadowLandmarks } from "@/lib/world/joy-meadow-config";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type JoyMeadowEnvironmentProps = {
   crafted: boolean;
   restored: boolean;
+  paused: boolean;
+  world: LivingWorldSnapshot;
 };
-
-const timeLabels: Record<TimeOfDay, string> = {
-  afternoon: "Afternoon",
-  golden_hour: "Golden hour",
-  morning: "Morning",
-  night: "Night"
-};
-
-function currentTimeOfDay() {
-  return resolveTimeOfDay(new Date().getHours());
-}
 
 /** Renders the lazy, performance-aware living Joy Meadow canvas. */
-export function JoyMeadowEnvironment({ crafted, restored }: JoyMeadowEnvironmentProps) {
+export function JoyMeadowEnvironment({
+  crafted,
+  paused,
+  restored,
+  world
+}: JoyMeadowEnvironmentProps) {
   const reducedMotion = useMotionPreference();
-  const visible = usePageVisibility();
-  const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>(currentTimeOfDay);
 
   useEffect(() => {
-    const timer = window.setInterval(
-      () => setTimeOfDay(currentTimeOfDay()),
-      environmentTiming.clockRefreshMs
-    );
-    return () => window.clearInterval(timer);
+    void renderingSystem.preloadCoreVisuals();
   }, []);
 
   return (
     <div
       className="absolute inset-0 bg-accent/20"
       data-environment-ready="true"
-      data-particles-paused={String(!visible)}
-      data-time-of-day={timeOfDay}
+      data-particles-paused={String(paused)}
+      data-render-source="asset_manifest"
+      data-time-of-day={world.timeOfDay}
+      data-visual-element="joy_meadow_environment"
+      data-weather={world.condition}
     >
       <Canvas
         camera={{ far: 50, fov: 48, near: 0.1, position: [0, 4.5, 10.5] }}
         className="h-full w-full"
         dpr={[1, 1.5]}
         fallback={<div className="h-full w-full bg-accent/20" />}
-        frameloop={visible && !reducedMotion ? "always" : "demand"}
+        frameloop={!paused && !reducedMotion ? "always" : "demand"}
         gl={{
           alpha: false,
           antialias: true,
@@ -67,10 +56,10 @@ export function JoyMeadowEnvironment({ crafted, restored }: JoyMeadowEnvironment
       >
         <EnvironmentManager
           crafted={crafted}
-          paused={!visible}
+          paused={paused}
           reducedMotion={reducedMotion}
           restored={restored}
-          timeOfDay={timeOfDay}
+          world={world}
         />
       </Canvas>
 
@@ -78,7 +67,7 @@ export function JoyMeadowEnvironment({ crafted, restored }: JoyMeadowEnvironment
         aria-hidden="true"
         className="pointer-events-none absolute right-4 top-4 rounded-control border border-border/70 bg-background/75 px-3 py-2 text-xs font-semibold text-foreground shadow-panel backdrop-blur-sm"
       >
-        {timeLabels[timeOfDay]} | Warm breeze
+        {world.timeLabel} | {world.conditionLabel}
       </div>
       <p className="sr-only">
         A living Joy Meadow with a windmill, flowers, a bridge and river, berry bushes, an Ice Cream

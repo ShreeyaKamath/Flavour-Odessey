@@ -7,6 +7,11 @@ import { CraftingDirector } from "@/components/crafting/crafting-director";
 import { LumiFloatingCompanion } from "@/components/lumi/lumi-floating-companion";
 import { LumiInteractionPanel } from "@/components/lumi/lumi-interaction-panel";
 import { NpcVillage } from "@/components/npcs/npc-village";
+import { EnchantedCookbook } from "@/components/storybook/enchanted-cookbook";
+import { GlowingBookmark } from "@/components/storybook/glowing-bookmark";
+import { MagicalPage } from "@/components/storybook/magical-page";
+import { MagicalSatchel } from "@/components/storybook/magical-satchel";
+import { TreeQuestBoard } from "@/components/storybook/tree-quest-board";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,6 +25,7 @@ import { useAIInteractions } from "@/features/game/use-ai-interactions";
 import { useGameplay } from "@/features/game/use-gameplay";
 import { useLumiCompanion } from "@/features/lumi/use-lumi-companion";
 import { useNpcs } from "@/features/npcs/use-npcs";
+import { useLivingWorld } from "@/features/world/use-living-world";
 
 type GameplayScreenProps = {
   islandId?: string;
@@ -51,11 +57,13 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
   const gameplay = useGameplay();
   const ai = useAIInteractions();
   const npcs = useNpcs(Boolean(gameplay.state.data?.started));
+  const livingWorld = useLivingWorld();
   const lumi = useLumiCompanion(
     gameplay.state.data,
     npcs.npcs.data?.items,
     ai.companion.data,
-    ai.companion.error
+    ai.companion.error,
+    livingWorld.world
   );
 
   if (islandId !== "joy_meadow") {
@@ -94,7 +102,7 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
 
   return (
     <div className="mx-auto max-w-7xl">
-      <JoyMeadowAudio active={state.started} />
+      <JoyMeadowAudio active={state.started} world={livingWorld.world} />
       <LumiFloatingCompanion
         hint={lumi.hint}
         onAsk={() => {
@@ -103,6 +111,7 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
         }}
         onToggleSleep={(event) => lumi.react(event)}
         state={lumi.state}
+        world={livingWorld.world}
       />
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -111,16 +120,19 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
             Restore the first scoop
           </h1>
         </div>
-        <div className="text-right text-sm text-muted-foreground">
-          <p className="font-semibold text-foreground">
-            {state.save.status === "saved" ? "Progress saved" : "Not saved"}
-          </p>
-          <p>{formatSavedAt(state.save.last_saved_at)}</p>
-        </div>
+        <GlowingBookmark
+          label={state.save.status === "saved" ? "Progress saved" : "Not saved"}
+          sublabel={formatSavedAt(state.save.last_saved_at)}
+        />
       </header>
 
       <JoyMeadowScene restored={state.island.restored}>
-        <JoyMeadowEnvironment crafted={state.recipe.crafted} restored={state.island.restored} />
+        <JoyMeadowEnvironment
+          crafted={state.recipe.crafted}
+          paused={livingWorld.paused}
+          restored={state.island.restored}
+          world={livingWorld.world}
+        />
         <div className="absolute inset-x-0 bottom-0 z-10 bg-background/90 px-5 py-4 backdrop-blur-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -170,14 +182,16 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
                 onGift={(npcId) => npcs.gift.mutate({ giftId: "golden_vanilla_bloom", npcId })}
                 onSendMessage={(npcId, message) => {
                   lumi.react("npc_conversation");
+                  const contextualMessage = `${message}\n\nJoy Meadow context: ${livingWorld.world.conditionLabel}, ${livingWorld.world.timeLabel}, ${livingWorld.world.seasonLabel}.`;
                   ai.npcChat.mutate(
-                    { message, npcId },
+                    { message: contextualMessage, npcId },
                     {
                       onSuccess: (response) =>
                         lumi.react("npc_conversation", `Lumi listens as ${response.reply}`)
                     }
                   );
                 }}
+                world={livingWorld.world}
               />
             ) : null}
             <div className="border-y border-border py-5">
@@ -198,107 +212,107 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
           </section>
 
           <section aria-labelledby="ingredients-title">
-            <h2
-              className="font-display text-2xl font-semibold text-foreground"
-              id="ingredients-title"
-            >
-              Starter ingredients
-            </h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {state.inventory.map((item) => (
-                <IngredientMotion collected={item.collected} key={item.ingredient_id}>
-                  <Card>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="font-semibold text-foreground">{item.name}</h3>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          In satchel: {item.quantity}
-                        </p>
+            <MagicalSatchel title="Starter ingredients" titleId="ingredients-title">
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {state.inventory.map((item) => (
+                  <IngredientMotion collected={item.collected} key={item.ingredient_id}>
+                    <Card>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="font-semibold text-foreground">{item.name}</h3>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            In satchel: {item.quantity}
+                          </p>
+                        </div>
+                        <Button
+                          disabled={item.collected || gameplay.isActing}
+                          onClick={() =>
+                            gameplay.collectIngredient(item.ingredient_id, {
+                              onSuccess: () => {
+                                lumi.react("ingredient_collected");
+                                ai.companion.mutate("ingredient_collected");
+                              }
+                            })
+                          }
+                          variant="secondary"
+                        >
+                          {item.collected ? "Collected" : `Collect ${item.name}`}
+                        </Button>
                       </div>
-                      <Button
-                        disabled={item.collected || gameplay.isActing}
-                        onClick={() =>
-                          gameplay.collectIngredient(item.ingredient_id, {
-                            onSuccess: () => {
-                              lumi.react("ingredient_collected");
-                              ai.companion.mutate("ingredient_collected");
-                            }
-                          })
-                        }
-                        variant="secondary"
-                      >
-                        {item.collected ? "Collected" : `Collect ${item.name}`}
-                      </Button>
-                    </div>
-                  </Card>
-                </IngredientMotion>
-              ))}
-            </div>
+                    </Card>
+                  </IngredientMotion>
+                ))}
+              </div>
+            </MagicalSatchel>
           </section>
 
-          <section aria-labelledby="quest-title" className="border-y border-border py-6">
-            <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quest</p>
-            <h2
-              className="mt-2 font-display text-2xl font-semibold text-foreground"
-              id="quest-title"
-            >
-              {state.quest.title}
-            </h2>
-            <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">
-              {state.quest.description}
-            </p>
-            <p className="mt-4 text-sm font-semibold capitalize text-foreground">
-              Status: {state.quest.status.replace("_", " ")}
-            </p>
-            {state.quest.status === "not_started" ? (
-              <Button
-                className="mt-5"
-                disabled={gameplay.isActing}
-                onClick={() => gameplay.startQuest()}
+          <section aria-labelledby="quest-title">
+            <TreeQuestBoard>
+              <p className="text-xs font-semibold uppercase tracking-wide text-accent">Quest</p>
+              <h2
+                className="mt-2 font-display text-2xl font-semibold text-foreground"
+                id="quest-title"
               >
-                Start quest
-              </Button>
-            ) : null}
-            {state.quest.can_complete ? (
-              <Button
-                className="mt-5"
-                disabled={gameplay.isActing}
-                onClick={() =>
-                  gameplay.restoreJoy(undefined, {
-                    onSuccess: () => {
-                      lumi.react("joy_restored");
-                      ai.companion.mutate("joy_restored");
-                    }
-                  })
-                }
-              >
-                Restore Joy Meadow
-              </Button>
-            ) : null}
+                {state.quest.title}
+              </h2>
+              <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">
+                {state.quest.description}
+              </p>
+              <p className="mt-4 text-sm font-semibold capitalize text-foreground">
+                Status: {state.quest.status.replace("_", " ")}
+              </p>
+              {state.quest.status === "not_started" ? (
+                <Button
+                  className="mt-5"
+                  disabled={gameplay.isActing}
+                  onClick={() => gameplay.startQuest()}
+                >
+                  Start quest
+                </Button>
+              ) : null}
+              {state.quest.can_complete ? (
+                <Button
+                  className="mt-5"
+                  disabled={gameplay.isActing}
+                  onClick={() =>
+                    gameplay.restoreJoy(undefined, {
+                      onSuccess: () => {
+                        lumi.react("joy_restored");
+                        ai.companion.mutate("joy_restored");
+                      }
+                    })
+                  }
+                >
+                  Restore Joy Meadow
+                </Button>
+              ) : null}
+            </TreeQuestBoard>
           </section>
 
-          <CraftingDirector
-            canCraft={questActive && state.recipe.can_craft}
-            crafted={state.recipe.crafted}
-            disabled={gameplay.isActing}
-            emotion={state.recipe.emotion}
-            ingredients={state.inventory}
-            journalMemory={state.journal[0]}
-            lore={state.recipe.lore}
-            onCraft={({ onError, onSuccess }) =>
-              gameplay.craftRecipe(undefined, {
-                onError,
-                onSuccess: () => {
-                  onSuccess();
-                  lumi.react("recipe_crafted");
-                  ai.companion.mutate("recipe_crafted");
-                }
-              })
-            }
-            onLumiReaction={(event) => lumi.react(event)}
-            recipeName={state.recipe.name}
-            restored={state.island.restored}
-          />
+          <EnchantedCookbook>
+            <CraftingDirector
+              canCraft={questActive && state.recipe.can_craft}
+              crafted={state.recipe.crafted}
+              disabled={gameplay.isActing}
+              emotion={state.recipe.emotion}
+              ingredients={state.inventory}
+              journalMemory={state.journal[0]}
+              lore={state.recipe.lore}
+              onCraft={({ onError, onSuccess }) =>
+                gameplay.craftRecipe(undefined, {
+                  onError,
+                  onSuccess: () => {
+                    onSuccess();
+                    lumi.react("recipe_crafted");
+                    ai.companion.mutate("recipe_crafted");
+                  }
+                })
+              }
+              onLumiReaction={(event) => lumi.react(event)}
+              recipeName={state.recipe.name}
+              restored={state.island.restored}
+            />
+          </EnchantedCookbook>
           <div className="border-b border-border pb-6">
             <Button
               disabled={ai.recipe.isPending}
@@ -314,58 +328,53 @@ export function GameplayScreen({ islandId = "joy_meadow" }: GameplayScreenProps)
           </div>
 
           <section aria-labelledby="inventory-title">
-            <h2
-              className="font-display text-2xl font-semibold text-foreground"
-              id="inventory-title"
-            >
-              Inventory
-            </h2>
-            <div className="mt-4 divide-y divide-border border-y border-border">
-              {state.inventory.map((item) => (
-                <div
-                  className="flex items-center justify-between gap-4 py-3"
-                  key={item.ingredient_id}
-                >
-                  <span className="font-medium text-foreground">{item.name}</span>
-                  <span className="text-sm text-muted-foreground">{item.quantity}</span>
-                </div>
-              ))}
-            </div>
+            <MagicalSatchel title="Inventory" titleId="inventory-title">
+              <div className="mt-4 divide-y divide-border border-y border-border">
+                {state.inventory.map((item) => (
+                  <div
+                    className="flex items-center justify-between gap-4 py-3"
+                    key={item.ingredient_id}
+                  >
+                    <span className="font-medium text-foreground">{item.name}</span>
+                    <span className="text-sm text-muted-foreground">{item.quantity}</span>
+                  </div>
+                ))}
+              </div>
+            </MagicalSatchel>
           </section>
 
           <section aria-labelledby="journal-title">
-            <h2 className="font-display text-2xl font-semibold text-foreground" id="journal-title">
-              Journal of Memories
-            </h2>
-            {state.journal.length ? (
-              <JournalMotion>
-                <h3 className="font-display text-xl font-semibold text-foreground">
-                  {state.journal[0].title}
-                </h3>
-                <p className="mt-2 text-sm font-semibold text-accent">
-                  {state.journal[0].recipe_name}
+            <MagicalPage title="Journal of Memories" titleId="journal-title">
+              {state.journal.length ? (
+                <JournalMotion>
+                  <h3 className="font-display text-xl font-semibold text-foreground">
+                    {state.journal[0].title}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold text-accent">
+                    {state.journal[0].recipe_name}
+                  </p>
+                  <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">
+                    {ai.journal.data?.story ?? state.journal[0].content}
+                  </p>
+                  <Button
+                    className="mt-4"
+                    disabled={ai.journal.isPending}
+                    onClick={() => ai.journal.mutate()}
+                    variant="secondary"
+                  >
+                    {ai.journal.isPending ? "Writing the memory..." : "Tell this memory"}
+                  </Button>
+                  {ai.journal.data?.fallback_used ? (
+                    <p className="mt-2 text-xs text-muted-foreground">Deterministic fallback</p>
+                  ) : null}
+                  {ai.journal.error ? <AIError message={ai.journal.error.message} /> : null}
+                </JournalMotion>
+              ) : (
+                <p className="mt-3 text-muted-foreground">
+                  A new memory will appear when Joy returns.
                 </p>
-                <p className="mt-3 max-w-3xl leading-7 text-muted-foreground">
-                  {ai.journal.data?.story ?? state.journal[0].content}
-                </p>
-                <Button
-                  className="mt-4"
-                  disabled={ai.journal.isPending}
-                  onClick={() => ai.journal.mutate()}
-                  variant="secondary"
-                >
-                  {ai.journal.isPending ? "Writing the memory..." : "Tell this memory"}
-                </Button>
-                {ai.journal.data?.fallback_used ? (
-                  <p className="mt-2 text-xs text-muted-foreground">Deterministic fallback</p>
-                ) : null}
-                {ai.journal.error ? <AIError message={ai.journal.error.message} /> : null}
-              </JournalMotion>
-            ) : (
-              <p className="mt-3 text-muted-foreground">
-                A new memory will appear when Joy returns.
-              </p>
-            )}
+              )}
+            </MagicalPage>
           </section>
         </div>
       ) : null}

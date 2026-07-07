@@ -5,6 +5,7 @@ import { LumiHintController } from "@/lib/lumi/lumi-hint-controller";
 import { LumiMemoryBridge } from "@/lib/lumi/lumi-memory-bridge";
 import { LumiStateMachine } from "@/lib/lumi/lumi-state-machine";
 import type { LumiContext } from "@/lib/lumi/lumi-types";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type GameState = components["schemas"]["GameStateResponse"];
 
@@ -17,24 +18,43 @@ export class LumiManager {
   context(
     game: GameState,
     npcs: NpcState[] | undefined,
-    companionResponse?: components["schemas"]["AICompanionRespondResponse"]
+    companionResponse?: components["schemas"]["AICompanionRespondResponse"],
+    world?: LivingWorldSnapshot
   ): LumiContext {
     const currentNpc = npcs?.[0];
+    const fallbackWorld = this.fallbackWorld();
     return {
       companionResponse,
       craftingActive: game.recipe.can_craft && !game.recipe.crafted,
       currentNpcName: currentNpc?.name,
       game,
       npcNearby: Boolean(currentNpc),
-      timeOfDay: this.timeOfDay(new Date()),
-      weather: "sunny"
+      timeOfDay: world?.timeOfDay ?? fallbackWorld.timeOfDay,
+      weather: world?.condition ?? fallbackWorld.condition,
+      weatherLabel: world?.conditionLabel ?? fallbackWorld.conditionLabel,
+      world
     };
+  }
+
+  private fallbackWorld() {
+    const now = new Date();
+    const timeOfDay = this.timeOfDay(now);
+    return {
+      condition:
+        timeOfDay === "night" ? "night" : timeOfDay === "golden_hour" ? "golden_hour" : "sunny",
+      conditionLabel:
+        timeOfDay === "night" ? "Night" : timeOfDay === "golden_hour" ? "Golden hour" : "Sunny",
+      timeOfDay
+    } as const;
   }
 
   private timeOfDay(now: Date): LumiContext["timeOfDay"] {
     const hour = now.getHours();
     if (hour < 6 || hour >= 21) {
       return "night";
+    }
+    if (hour >= 20) {
+      return "evening";
     }
     if (hour >= 17) {
       return "golden_hour";

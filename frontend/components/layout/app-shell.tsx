@@ -19,7 +19,7 @@ export function AppShell({ children }: AppShellProps) {
       </a>
       <GlobalNavigation />
       <main
-        className="min-h-[calc(100vh-4rem)] px-[var(--space-page)] py-8"
+        className="storybook-dust min-h-[calc(100vh-4rem)] px-[var(--space-page)] py-8"
         id="main"
         tabIndex={-1}
       >

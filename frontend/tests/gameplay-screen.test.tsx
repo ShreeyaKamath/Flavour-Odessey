@@ -34,6 +34,37 @@ vi.mock("@/features/npcs/use-npcs", () => ({
   })
 }));
 
+vi.mock("@/features/world/use-living-world", () => ({
+  useLivingWorld: () => ({
+    paused: false,
+    world: {
+      ambientColor: "#fff0b5",
+      audioAmbience: "weather_birds",
+      cloudCover: 0.22,
+      condition: "sunny",
+      conditionLabel: "Sunny",
+      fireflyIntensity: 0,
+      flowerSway: 0.62,
+      fogDensity: 0.02,
+      grassSway: 0.6,
+      lightingBlend: 1,
+      lumiReaction: "Lumi glows brighter in the sun.",
+      npcRoutine: "Gardens, crosses the bridge, and talks near the Vanilla Orchid beds.",
+      particleColor: "#fff4c2",
+      rainIntensity: 0,
+      season: "joy_meadow_spring",
+      seasonLabel: "Joy Meadow spring",
+      skyBottom: "#bdebd7",
+      skyTop: "#82cde7",
+      timeLabel: "Morning",
+      timeOfDay: "morning",
+      transitionProgress: 0.25,
+      waterReflection: 0.82,
+      windStrength: 0.42
+    }
+  })
+}));
+
 vi.mock("@/components/npcs/npc-village", () => ({
   NpcVillage: ({
     chatError,
@@ -443,7 +474,7 @@ describe("GameplayScreen", () => {
     await user.type(await screen.findByLabelText("Speak with Meadow Keeper"), "How can I help?");
     await user.click(screen.getByRole("button", { name: "Ask" }));
     expect(apiClient.aiNpcChat).toHaveBeenCalledWith({
-      message: "How can I help?",
+      message: "How can I help?\n\nJoy Meadow context: Sunny, Morning, Joy Meadow spring.",
       npc_id: "joy_meadow_keeper"
     });
 

@@ -7,6 +7,7 @@ import type { NpcState } from "@/features/npcs/use-npcs";
 import { audioEvents } from "@/lib/audio/audio-events";
 import { LumiManager } from "@/lib/lumi/lumi-manager";
 import type { LumiEvent, LumiState } from "@/lib/lumi/lumi-types";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type GameState = components["schemas"]["GameStateResponse"];
 
@@ -15,12 +16,13 @@ export function useLumiCompanion(
   game: GameState | undefined,
   npcs?: NpcState[],
   companionResponse?: components["schemas"]["AICompanionRespondResponse"],
-  companionError?: Error | null
+  companionError?: Error | null,
+  world?: LivingWorldSnapshot
 ) {
   const manager = useMemo(() => new LumiManager(), []);
   const [state, setState] = useState<LumiState>(() => manager.stateMachine.initial());
   const [memories, setMemories] = useState(() => [manager.memory.record("idle", state)]);
-  const context = game ? manager.context(game, npcs, companionResponse) : undefined;
+  const context = game ? manager.context(game, npcs, companionResponse, world) : undefined;
   const hint = context
     ? manager.hints.nextHint(context)
     : "Lumi is finding the path to Joy Meadow.";
@@ -64,6 +66,14 @@ export function useLumiCompanion(
     react("ai_unavailable");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companionError]);
+
+  useEffect(() => {
+    if (!world) {
+      return;
+    }
+    react("weather_changed", world.lumiReaction);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [world?.condition, world?.timeOfDay]);
 
   useEffect(() => {
     const handleVisibility = () => {

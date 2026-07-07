@@ -5,14 +5,16 @@ import { useRef } from "react";
 import { Group, Mesh, MeshStandardMaterial } from "three";
 
 import { environmentMotion, joyMeadowPalette } from "@/lib/world/joy-meadow-config";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 type AnimatedWaterProps = {
   paused: boolean;
   reducedMotion: boolean;
+  world: LivingWorldSnapshot;
 };
 
 /** Renders a gently animated river with moving highlight ribbons. */
-export function AnimatedWater({ paused, reducedMotion }: AnimatedWaterProps) {
+export function AnimatedWater({ paused, reducedMotion, world }: AnimatedWaterProps) {
   const river = useRef<Mesh>(null);
   const highlights = useRef<Group>(null);
 
@@ -26,10 +28,14 @@ export function AnimatedWater({ paused, reducedMotion }: AnimatedWaterProps) {
         0.035 +
         Math.sin(elapsed * environmentMotion.waterSpeed) * environmentMotion.waterBobAmplitude;
       const material = river.current.material as MeshStandardMaterial;
-      material.opacity = 0.78 + Math.sin(elapsed * environmentMotion.waterOpacitySpeed) * 0.06;
+      material.opacity =
+        0.62 +
+        world.waterReflection * 0.2 +
+        Math.sin(elapsed * environmentMotion.waterOpacitySpeed) * 0.06;
     }
     if (highlights.current) {
-      highlights.current.position.z += delta * environmentMotion.waterHighlightSpeed;
+      highlights.current.position.z +=
+        delta * environmentMotion.waterHighlightSpeed * (0.7 + world.waterReflection);
       if (highlights.current.position.z > 2) {
         highlights.current.position.z = -2;
       }
@@ -43,7 +49,7 @@ export function AnimatedWater({ paused, reducedMotion }: AnimatedWaterProps) {
         <meshStandardMaterial
           color={joyMeadowPalette.river}
           metalness={0.08}
-          opacity={0.82}
+          opacity={0.74 + world.waterReflection * 0.12}
           roughness={0.2}
           transparent
         />

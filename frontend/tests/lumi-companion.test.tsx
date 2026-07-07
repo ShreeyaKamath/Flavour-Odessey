@@ -7,6 +7,7 @@ import { LumiFloatingCompanion } from "@/components/lumi/lumi-floating-companion
 import { LumiInteractionPanel } from "@/components/lumi/lumi-interaction-panel";
 import { LumiManager } from "@/lib/lumi/lumi-manager";
 import type { LumiState } from "@/lib/lumi/lumi-types";
+import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
 vi.mock("@/hooks/use-motion-preference", () => ({
   useMotionPreference: () => true
@@ -80,6 +81,35 @@ function gameState(overrides: Partial<GameState> = {}): GameState {
   };
 }
 
+function world(overrides: Partial<LivingWorldSnapshot> = {}): LivingWorldSnapshot {
+  return {
+    ambientColor: "#a9c7d8",
+    audioAmbience: "weather_rain",
+    cloudCover: 1,
+    condition: "rain",
+    conditionLabel: "Rain",
+    fireflyIntensity: 0,
+    flowerSway: 1.15,
+    fogDensity: 0.36,
+    grassSway: 1.2,
+    lightingBlend: 0.38,
+    lumiReaction: "Lumi tucks beneath a leaf.",
+    npcRoutine: "Runs indoors, reads, and drinks hot chocolate.",
+    particleColor: "#b7ddff",
+    rainIntensity: 1,
+    season: "joy_meadow_spring",
+    seasonLabel: "Joy Meadow spring",
+    skyBottom: "#9eb8c8",
+    skyTop: "#566f86",
+    timeLabel: "Afternoon",
+    timeOfDay: "afternoon",
+    transitionProgress: 0.5,
+    waterReflection: 0.9,
+    windStrength: 0.86,
+    ...overrides
+  };
+}
+
 describe("Lumi companion", () => {
   it("renders the floating companion with accessible emotion and controls", async () => {
     const onAsk = vi.fn();
@@ -92,10 +122,15 @@ describe("Lumi companion", () => {
         onAsk={onAsk}
         onToggleSleep={onToggleSleep}
         state={lumiState({ emotion: "excited", message: "That ingredient lit up!" })}
+        world={world()}
       />
     );
 
     expect(screen.getByLabelText("Lumi companion, excited")).toBeInTheDocument();
+    expect(screen.getByLabelText("Lumi companion, excited")).toHaveAttribute(
+      "data-weather",
+      "rain"
+    );
     expect(screen.getByText("That ingredient lit up!")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Ask Lumi for contextual guidance" }));
     expect(onAsk).toHaveBeenCalledOnce();
@@ -155,5 +190,24 @@ describe("Lumi companion", () => {
     expect(manager.hints.nextHint(manager.context(readyState, undefined))).toContain(
       "Golden Vanilla Bloom"
     );
+  });
+
+  it("uses weather-aware Lumi hints when weather is the most important context", () => {
+    const manager = new LumiManager();
+    const readyState = gameState({
+      inventory: gameState().inventory.map((item) => ({
+        ...item,
+        collected: true,
+        quantity: 1
+      })),
+      recipe: {
+        ...gameState().recipe,
+        crafted: true
+      }
+    });
+
+    expect(
+      manager.hints.nextHint(manager.context(readyState, undefined, undefined, world()))
+    ).toContain("Rain");
   });
 });
