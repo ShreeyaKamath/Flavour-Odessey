@@ -8,6 +8,11 @@ export type AudioEventName =
   | "CraftingMagicCharged"
   | "RecipeCrafted"
   | "LumiCelebrated"
+  | "LumiHovered"
+  | "LumiBlinked"
+  | "LumiHinted"
+  | "LumiExcited"
+  | "LumiSlept"
   | "RecipePageFlipped"
   | "NPCFootstep"
   | "NPCGreeting"
@@ -29,7 +34,12 @@ export const audioEventIds: Record<AudioEventName, AudioId> = {
   IngredientCollected: audioIds.ingredient_collect,
   IngredientHovered: audioIds.ingredient_hover,
   JournalUpdated: audioIds.journal_reveal,
-  LumiCelebrated: audioIds.lumi_celebration,
+  LumiCelebrated: audioIds.lumi_celebrate,
+  LumiBlinked: audioIds.lumi_blink,
+  LumiExcited: audioIds.lumi_excited,
+  LumiHinted: audioIds.lumi_hint,
+  LumiHovered: audioIds.lumi_hover,
+  LumiSlept: audioIds.lumi_sleep,
   NPCCelebrated: audioIds.npc_celebrate,
   NPCFootstep: audioIds.npc_footstep,
   NPCGreeting: audioIds.npc_greeting,

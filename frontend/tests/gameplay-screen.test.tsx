@@ -255,7 +255,7 @@ describe("GameplayScreen", () => {
       await screen.findByRole("heading", { name: "Restore the first scoop" })
     ).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Meadow voices" })).toBeInTheDocument();
-    expect(screen.getByText("Lumi's guidance")).toBeInTheDocument();
+    expect(screen.getByText("Lumi's companion panel")).toBeInTheDocument();
     expect(screen.getAllByText("Meadow Keeper").length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { name: "Inventory" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Journal of Memories" })).toBeInTheDocument();
@@ -311,7 +311,7 @@ describe("GameplayScreen", () => {
     await user.click(await screen.findByRole("button", { name: "Collect Vanilla Orchid" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("The flower slipped away");
-    expect(screen.getByText("Lumi's guidance")).toBeInTheDocument();
+    expect(screen.getByText("Lumi's companion panel")).toBeInTheDocument();
   });
 
   it("crafts Golden Vanilla Bloom when the ingredients are ready", async () => {
@@ -478,8 +478,8 @@ describe("GameplayScreen", () => {
     await user.click(await screen.findByRole("button", { name: "Ask Lumi for a hint" }));
 
     expect(
-      await screen.findByText("Gather both meadow blooms before you begin.")
-    ).toBeInTheDocument();
+      await screen.findAllByText("Gather both meadow blooms before you begin.")
+    ).not.toHaveLength(0);
     expect(screen.getByText("Deterministic fallback")).toBeInTheDocument();
   });
 });

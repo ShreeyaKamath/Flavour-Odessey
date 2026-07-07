@@ -47,6 +47,7 @@ type CraftingDirectorProps = {
   journalMemory?: CraftingJournalMemory;
   lore: string;
   onCraft: (callbacks: CraftingCallbacks) => void;
+  onLumiReaction?: (event: "crafting_started" | "recipe_crafted") => void;
   recipeName: string;
   restored: boolean;
 };
@@ -83,6 +84,7 @@ export function CraftingDirector({
   journalMemory,
   lore,
   onCraft,
+  onLumiReaction,
   recipeName,
   restored
 }: CraftingDirectorProps) {
@@ -92,6 +94,7 @@ export function CraftingDirector({
   const [serverSucceeded, setServerSucceeded] = useState(false);
   const [chargeReady, setChargeReady] = useState(false);
   const sequenceStarted = useRef(false);
+  const onLumiReactionRef = useRef(onLumiReaction);
   const cinematic = isCraftingCinematic(phase);
   const allSelected = hasAllCraftingIngredients(selected);
   const inventory = useMemo(
@@ -104,6 +107,10 @@ export function CraftingDirector({
       setPhase("complete");
     }
   }, [crafted, phase]);
+
+  useEffect(() => {
+    onLumiReactionRef.current = onLumiReaction;
+  }, [onLumiReaction]);
 
   useEffect(() => {
     if (phase !== "charging") {
@@ -132,6 +139,7 @@ export function CraftingDirector({
         setPhase(nextPhase);
         if (nextPhase === "celebrating") {
           audioEvents.publish("LumiCelebrated");
+          onLumiReactionRef.current?.("recipe_crafted");
         }
         if (nextPhase === "revealed") {
           audioEvents.publish("RecipePageFlipped");
@@ -190,6 +198,7 @@ export function CraftingDirector({
     setServerSucceeded(false);
     setPhase("charging");
     audioEvents.publish("CraftingMagicCharged");
+    onLumiReactionRef.current?.("crafting_started");
     onCraft({
       onError: () => {
         sequenceStarted.current = false;

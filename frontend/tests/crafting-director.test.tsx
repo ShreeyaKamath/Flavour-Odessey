@@ -27,7 +27,8 @@ const ingredients = [
 ];
 
 function renderDirector(onCraft: Parameters<typeof CraftingDirector>[0]["onCraft"]) {
-  return render(
+  const onLumiReaction = vi.fn();
+  const result = render(
     <CraftingDirector
       canCraft
       crafted={false}
@@ -36,10 +37,12 @@ function renderDirector(onCraft: Parameters<typeof CraftingDirector>[0]["onCraft
       ingredients={ingredients}
       lore="A golden scoop that remembers sunlight."
       onCraft={onCraft}
+      onLumiReaction={onLumiReaction}
       recipeName="Golden Vanilla Bloom"
       restored={false}
     />
   );
+  return { ...result, onLumiReaction };
 }
 
 describe("CraftingDirector", () => {
@@ -47,7 +50,7 @@ describe("CraftingDirector", () => {
     const onCraft = vi.fn(({ onSuccess }) => onSuccess());
     const audio = vi.spyOn(audioEvents, "publish");
     const user = userEvent.setup();
-    renderDirector(onCraft);
+    const { onLumiReaction } = renderDirector(onCraft);
 
     const begin = screen.getByRole("button", { name: "Begin magical crafting" });
     expect(begin).toBeDisabled();
@@ -58,8 +61,11 @@ describe("CraftingDirector", () => {
     await user.click(begin);
 
     expect(onCraft).toHaveBeenCalledOnce();
+    expect(onLumiReaction).toHaveBeenCalledWith("crafting_started");
     expect(audio).toHaveBeenCalledWith("CraftingMagicCharged");
+    expect(screen.getByRole("dialog", { name: "Magical crafting sequence" })).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: "Return to Joy Meadow" })).toBeInTheDocument();
+    expect(onLumiReaction).toHaveBeenCalledWith("recipe_crafted");
     expect(audio).toHaveBeenCalledWith("LumiCelebrated");
     expect(audio).toHaveBeenCalledWith("RecipePageFlipped");
     expect(screen.getByText("This memory will bloom when Joy Meadow is restored.")).toBeVisible();
