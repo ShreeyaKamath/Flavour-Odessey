@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
 import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { audioEvents } from "@/lib/audio/audio-events";
 import { pageTransition } from "@/lib/animation/motion-tokens";
 
 type PageTransitionProps = {
@@ -24,6 +25,7 @@ export function PageTransition({ children }: PageTransitionProps) {
         exit={reducedMotion ? undefined : "exit"}
         initial={reducedMotion ? false : "hidden"}
         key={pathname}
+        onAnimationStart={() => audioEvents.publish("PageFlipped")}
         variants={reducedMotion ? undefined : pageTransition}
       >
         {children}

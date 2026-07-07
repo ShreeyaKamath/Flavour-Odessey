@@ -98,6 +98,48 @@
       "loop": false,
       "source": "silent_placeholder"
     },
+    "page_flip": {
+      "bus": "sfx",
+      "default_volume": 0.5,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "book_open": {
+      "bus": "sfx",
+      "default_volume": 0.45,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "book_close": {
+      "bus": "sfx",
+      "default_volume": 0.38,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "satchel_open": {
+      "bus": "sfx",
+      "default_volume": 0.42,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "crystal_select": {
+      "bus": "sfx",
+      "default_volume": 0.46,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "bookmark_save": {
+      "bus": "sfx",
+      "default_volume": 0.5,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
+    "magical_tooltip": {
+      "bus": "sfx",
+      "default_volume": 0.28,
+      "loop": false,
+      "source": "silent_placeholder"
+    },
     "restoration_joy": {
       "bus": "sfx",
       "default_volume": 0.8,
