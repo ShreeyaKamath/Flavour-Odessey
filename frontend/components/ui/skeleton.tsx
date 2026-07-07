@@ -16,7 +16,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
     <motion.div
       animate={reducedMotion ? undefined : "pulsing"}
       aria-hidden="true"
-      className={cn("rounded-control bg-muted", className)}
+      className={cn("storybook-parchment rounded-control bg-muted", className)}
       data-motion-reduced={String(reducedMotion)}
       initial={reducedMotion ? false : "resting"}
       variants={reducedMotion ? undefined : skeletonPulse}

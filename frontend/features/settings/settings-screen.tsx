@@ -1,9 +1,10 @@
 "use client";
 
 import { VolumeControl } from "@/components/audio/volume-control";
+import { CrystalSettingsPanel } from "@/components/storybook/crystal-settings-panel";
+import { MagicalTooltip } from "@/components/storybook/magical-tooltip";
+import { StorybookShell } from "@/components/storybook/storybook-shell";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ScreenShell } from "@/features/screens/screen-shell";
 import { useAudioStore } from "@/stores/audio-store";
 import { useSettingsStore } from "@/stores/settings-store";
 
@@ -24,21 +25,21 @@ export function SettingsScreen() {
   const toggleTheme = useSettingsStore((state) => state.toggleTheme);
 
   return (
-    <ScreenShell
+    <StorybookShell
       description="Adjust visual accessibility and the independent sound layers used throughout the adventure."
       eyebrow="Settings"
-      title="Adventure settings"
+      title="Crystal menu"
     >
       <div className="grid gap-3 sm:grid-cols-2">
-        <Card>
-          <h2 className="font-semibold text-foreground">Theme</h2>
+        <CrystalSettingsPanel title="Theme">
           <p className="mt-2 text-sm text-muted-foreground">Current theme: {theme}</p>
-          <Button className="mt-4" onClick={toggleTheme} variant="secondary">
-            Toggle theme
-          </Button>
-        </Card>
-        <Card>
-          <h2 className="font-semibold text-foreground">Motion</h2>
+          <MagicalTooltip label="Switch between parchment day ink and moonlit ink.">
+            <Button className="mt-4" onClick={toggleTheme} variant="secondary">
+              Toggle theme
+            </Button>
+          </MagicalTooltip>
+        </CrystalSettingsPanel>
+        <CrystalSettingsPanel title="Motion">
           <label className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
             <input
               checked={reducedMotion}
@@ -48,11 +49,10 @@ export function SettingsScreen() {
             />
             Reduce motion
           </label>
-        </Card>
-        <Card className="sm:col-span-2">
+        </CrystalSettingsPanel>
+        <CrystalSettingsPanel className="sm:col-span-2" title="Audio mixer">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 className="font-semibold text-foreground">Audio mixer</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Sound preferences are saved in this browser.
               </p>
@@ -98,8 +98,8 @@ export function SettingsScreen() {
               value={ambient}
             />
           </div>
-        </Card>
+        </CrystalSettingsPanel>
       </div>
-    </ScreenShell>
+    </StorybookShell>
   );
 }

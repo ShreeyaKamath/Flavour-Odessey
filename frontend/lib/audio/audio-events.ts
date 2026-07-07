@@ -14,6 +14,13 @@ export type AudioEventName =
   | "LumiExcited"
   | "LumiSlept"
   | "RecipePageFlipped"
+  | "PageFlipped"
+  | "BookOpened"
+  | "BookClosed"
+  | "SatchelOpened"
+  | "CrystalSelected"
+  | "BookmarkSaved"
+  | "MagicalTooltipShown"
   | "NPCFootstep"
   | "NPCGreeting"
   | "NPCLaugh"
@@ -49,7 +56,14 @@ export const audioEventIds: Record<AudioEventName, AudioId> = {
   NPCWaved: audioIds.npc_wave,
   QuestCompleted: audioIds.quest_complete,
   RecipeCrafted: audioIds.craft_success,
+  BookmarkSaved: audioIds.bookmark_save,
+  BookClosed: audioIds.book_close,
+  BookOpened: audioIds.book_open,
+  CrystalSelected: audioIds.crystal_select,
+  MagicalTooltipShown: audioIds.magical_tooltip,
+  PageFlipped: audioIds.page_flip,
   RecipePageFlipped: audioIds.recipe_page_flip,
+  SatchelOpened: audioIds.satchel_open,
   ConversationClosed: audioIds.conversation_close,
   ConversationOpened: audioIds.conversation_open,
   UIClicked: audioIds.ui_click,
