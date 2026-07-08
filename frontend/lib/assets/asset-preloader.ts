@@ -49,7 +49,7 @@ export class AssetPreloader {
       });
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const image = new Image();
       image.onload = () => {
         this.cache.set(assetId, {
@@ -65,7 +65,20 @@ export class AssetPreloader {
           url: resolution.url
         });
       };
-      image.onerror = () => reject(new Error(`Unable to preload asset: ${assetId}`));
+      image.onerror = () => {
+        const fallbackUrl = this.assets.placeholderUrl(assetId);
+        this.cache.set(assetId, {
+          assetId,
+          placeholder: true,
+          url: fallbackUrl
+        });
+        resolve({
+          assetId,
+          fromCache: false,
+          placeholder: true,
+          url: fallbackUrl
+        });
+      };
       image.src = resolution.url;
     });
   }

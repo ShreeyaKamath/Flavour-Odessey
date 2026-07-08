@@ -4,6 +4,9 @@ import { Canvas } from "@react-three/fiber";
 import { useMemo } from "react";
 import { Color } from "three";
 
+import { WebGLFallback } from "@/components/production/webgl-fallback";
+import { detectWebGLAvailable } from "@/lib/production/browser-capabilities";
+
 function FoundationMesh() {
   const materialColor = useMemo(() => new Color("#76cdbc"), []);
 
@@ -17,11 +20,18 @@ function FoundationMesh() {
 
 /** Renders the lightweight Three.js foundation scene. */
 export function FoundationScene() {
+  const canRenderWebGL = typeof window === "undefined" || detectWebGLAvailable();
+
+  if (!canRenderWebGL) {
+    return <WebGLFallback label="The storybook scene is shown in fallback mode." />;
+  }
+
   return (
     <Canvas
       camera={{ position: [0, 0, 4.5], fov: 45 }}
       className="h-full min-h-64 w-full"
       dpr={[1, 1.5]}
+      fallback={<WebGLFallback label="The storybook scene is shown in fallback mode." />}
     >
       <ambientLight intensity={0.8} />
       <directionalLight intensity={1.4} position={[3, 4, 5]} />

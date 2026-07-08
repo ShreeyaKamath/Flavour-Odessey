@@ -9,6 +9,7 @@ import {
   particlePresets,
   type ParticleKind
 } from "@/lib/world/joy-meadow-config";
+import { capParticleCount } from "@/lib/production/performance";
 import { createSeededRandom } from "@/lib/world/scene-utils";
 
 type ParticleManagerProps = {
@@ -43,16 +44,17 @@ export function ParticleManager({
   const points = useRef<Points>(null);
   const material = useRef<PointsMaterial>(null);
   const preset = particlePresets[kind];
+  const cappedCount = capParticleCount(count);
   const positions = useMemo(() => {
     const random = createSeededRandom(particleSeeds[kind]);
-    const values = new Float32Array(count * 3);
-    for (let index = 0; index < count; index += 1) {
+    const values = new Float32Array(cappedCount * 3);
+    for (let index = 0; index < cappedCount; index += 1) {
       values[index * 3] = (random() - 0.5) * 13;
       values[index * 3 + 1] = 0.45 + random() * 5.2;
       values[index * 3 + 2] = -7 + random() * 12;
     }
     return values;
-  }, [count, kind]);
+  }, [cappedCount, kind]);
 
   useFrame(({ clock }, delta) => {
     if (!points.current || paused || reducedMotion) {

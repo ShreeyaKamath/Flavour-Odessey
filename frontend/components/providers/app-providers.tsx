@@ -9,6 +9,7 @@ import { AudioProvider } from "@/components/providers/audio-provider";
 import { LoadingProvider } from "@/components/providers/loading-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ProductionStatusBanner } from "@/components/production/production-status-banner";
 import { WebSocketProvider } from "@/components/providers/websocket-provider";
 import { Toast } from "@/components/ui/toast";
 
@@ -28,6 +29,7 @@ export function AppProviders({ children }: AppProvidersProps) {
                 <WebSocketProvider>
                   <LoadingProvider>
                     {children}
+                    <ProductionStatusBanner />
                     <Toast />
                   </LoadingProvider>
                 </WebSocketProvider>
