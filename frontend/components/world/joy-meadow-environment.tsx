@@ -3,8 +3,10 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect } from "react";
 
+import { WebGLFallback } from "@/components/production/webgl-fallback";
 import { EnvironmentManager } from "@/components/world/environment-manager";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { detectWebGLAvailable } from "@/lib/production/browser-capabilities";
 import { renderingSystem } from "@/lib/rendering/rendering-system";
 import { joyMeadowLandmarks } from "@/lib/world/joy-meadow-config";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
@@ -29,6 +31,8 @@ export function JoyMeadowEnvironment({
     void renderingSystem.preloadCoreVisuals();
   }, []);
 
+  const canRenderWebGL = typeof window === "undefined" || detectWebGLAvailable();
+
   return (
     <div
       className="absolute inset-0 bg-accent/20"
@@ -39,29 +43,33 @@ export function JoyMeadowEnvironment({
       data-visual-element="joy_meadow_environment"
       data-weather={world.condition}
     >
-      <Canvas
-        camera={{ far: 50, fov: 48, near: 0.1, position: [0, 4.5, 10.5] }}
-        className="h-full w-full"
-        dpr={[1, 1.5]}
-        fallback={<div className="h-full w-full bg-accent/20" />}
-        frameloop={!paused && !reducedMotion ? "always" : "demand"}
-        gl={{
-          alpha: false,
-          antialias: true,
-          powerPreference: "high-performance"
-        }}
-        onCreated={({ camera }) => camera.lookAt(0, 1.2, -1.5)}
-        performance={{ min: 0.55 }}
-        shadows
-      >
-        <EnvironmentManager
-          crafted={crafted}
-          paused={paused}
-          reducedMotion={reducedMotion}
-          restored={restored}
-          world={world}
-        />
-      </Canvas>
+      {canRenderWebGL ? (
+        <Canvas
+          camera={{ far: 50, fov: 48, near: 0.1, position: [0, 4.5, 10.5] }}
+          className="h-full w-full"
+          dpr={[1, 1.5]}
+          fallback={<WebGLFallback />}
+          frameloop={!paused && !reducedMotion ? "always" : "demand"}
+          gl={{
+            alpha: false,
+            antialias: true,
+            powerPreference: "high-performance"
+          }}
+          onCreated={({ camera }) => camera.lookAt(0, 1.2, -1.5)}
+          performance={{ min: 0.55 }}
+          shadows
+        >
+          <EnvironmentManager
+            crafted={crafted}
+            paused={paused}
+            reducedMotion={reducedMotion}
+            restored={restored}
+            world={world}
+          />
+        </Canvas>
+      ) : (
+        <WebGLFallback label="Joy Meadow is shown in fallback mode." />
+      )}
 
       <div
         aria-hidden="true"
