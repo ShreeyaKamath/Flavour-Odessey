@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Joy Meadow tree placeholder">
+  <rect x="228" y="268" width="56" height="170" rx="20" fill="#76543c"/>
+  <circle cx="206" cy="220" r="98" fill="#4d965b"/>
+  <circle cx="294" cy="216" r="112" fill="#68ad65"/>
+  <circle cx="254" cy="128" r="92" fill="#87c96f"/>
+  <path d="M244 298c-21-32-49-50-86-54" fill="none" stroke="#5f3f2e" stroke-width="14" stroke-linecap="round"/>
+</svg>

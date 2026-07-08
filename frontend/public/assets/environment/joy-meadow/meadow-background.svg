@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Joy Meadow background placeholder">
+  <defs>
+    <linearGradient id="meadow" x1="0" x2="0" y1="0" y2="1">
+      <stop stop-color="#d8ffff"/>
+      <stop offset=".46" stop-color="#bde98f"/>
+      <stop offset="1" stop-color="#5fae64"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#meadow)"/>
+  <path d="M0 520c160-80 330-78 510 6 150 70 310 74 500 4 230-85 430-67 590 52v318H0z" fill="#79c86a"/>
+  <path d="M0 630c260-70 520-46 760 26 330 99 580 65 840-34v278H0z" fill="#4d965b"/>
+  <path d="M240 700c210-26 430-10 660 44 200 47 370 42 540-12" fill="none" stroke="#f4dcaa" stroke-width="44" stroke-linecap="round" opacity=".72"/>
+</svg>

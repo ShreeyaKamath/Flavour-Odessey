@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Joy Meadow flower placeholder">
+  <path d="M128 132v82" stroke="#3f8755" stroke-width="16" stroke-linecap="round"/>
+  <ellipse cx="96" cy="100" rx="34" ry="48" fill="#f38ca7" transform="rotate(-38 96 100)"/>
+  <ellipse cx="160" cy="100" rx="34" ry="48" fill="#ffd45c" transform="rotate(38 160 100)"/>
+  <ellipse cx="128" cy="72" rx="34" ry="48" fill="#fff7e8"/>
+  <ellipse cx="128" cy="126" rx="34" ry="48" fill="#f38ca7"/>
+  <circle cx="128" cy="112" r="24" fill="#ffd96a"/>
+</svg>

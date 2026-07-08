@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Recipe shrine placeholder">
+  <ellipse cx="256" cy="432" rx="170" ry="42" fill="#a9784e" opacity=".34"/>
+  <path d="M128 398h256l-32-210H160z" fill="#f4dcaa"/>
+  <path d="M112 190h288" stroke="#ffd96a" stroke-width="36" stroke-linecap="round"/>
+  <path d="M166 190v214M346 190v214" stroke="#a9784e" stroke-width="28" stroke-linecap="round"/>
+  <path d="m256 216 46 72-46 72-46-72z" fill="#ffd96a"/>
+</svg>

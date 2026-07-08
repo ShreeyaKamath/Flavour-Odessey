@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Joy Meadow windmill placeholder">
+  <path d="M162 476h188l-24-244H186z" fill="#f7dca2"/>
+  <path d="M142 244l114-124 114 124z" fill="#e98586"/>
+  <circle cx="256" cy="230" r="22" fill="#76543c"/>
+  <path d="M256 230V50M256 230v180M256 230H76M256 230h180" stroke="#fff7e8" stroke-width="26" stroke-linecap="round"/>
+  <path d="M222 476h68v-92h-68z" fill="#76543c"/>
+</svg>

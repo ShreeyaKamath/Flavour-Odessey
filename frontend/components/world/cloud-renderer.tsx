@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group } from "three";
 
+import { useAssetTexture } from "@/components/world/use-asset-texture";
 import { environmentCounts, environmentMotion } from "@/lib/world/joy-meadow-config";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
@@ -26,6 +27,7 @@ const cloudPositions = [
 /** Renders weather-aware cloud cover with wind-driven drift. */
 export function CloudRenderer({ paused, reducedMotion, world }: CloudRendererProps) {
   const clouds = useRef<Group>(null);
+  const { texture: cloudTexture } = useAssetTexture("environment.cloud", "far");
 
   useFrame((_, delta) => {
     if (!clouds.current || paused || reducedMotion) {
@@ -45,6 +47,7 @@ export function CloudRenderer({ paused, reducedMotion, world }: CloudRendererPro
             <sphereGeometry args={[0.8, 16, 12]} />
             <meshStandardMaterial
               color={world.condition === "rain" ? "#cbd7df" : "#fff7e8"}
+              map={cloudTexture ?? undefined}
               opacity={0.42 + world.cloudCover * 0.48}
               roughness={1}
               transparent
@@ -54,6 +57,7 @@ export function CloudRenderer({ paused, reducedMotion, world }: CloudRendererPro
             <sphereGeometry args={[0.75, 16, 12]} />
             <meshStandardMaterial
               color={world.condition === "rain" ? "#b8c8d2" : "#fff7e8"}
+              map={cloudTexture ?? undefined}
               opacity={0.38 + world.cloudCover * 0.42 - index * 0.018}
               roughness={1}
               transparent

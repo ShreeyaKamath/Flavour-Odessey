@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Journal tree placeholder">
+  <rect x="226" y="250" width="60" height="188" rx="22" fill="#76543c"/>
+  <circle cx="204" cy="202" r="94" fill="#4d965b"/>
+  <circle cx="308" cy="198" r="110" fill="#68ad65"/>
+  <circle cx="254" cy="112" r="82" fill="#87c96f"/>
+  <path d="M202 310h108v82H202z" fill="#fff7e8"/>
+  <path d="M256 310v82" stroke="#f4dcaa" stroke-width="8"/>
+  <path d="M220 338h24M268 338h24M220 364h24M268 364h24" stroke="#76543c" stroke-width="8" stroke-linecap="round"/>
+</svg>
