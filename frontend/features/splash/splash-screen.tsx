@@ -1,4 +1,5 @@
 import { AppIconPlaceholder } from "@/components/branding/app-icon-placeholder";
+import { SplashLogo } from "@/components/branding/splash-logo";
 import { VersionBadge } from "@/components/branding/version-badge";
 import { FloatingPanel } from "@/components/ui/floating-panel";
 import { LinkButton } from "@/components/ui/link-button";
@@ -21,6 +22,9 @@ export function SplashScreen() {
       showVisual
       title="Flavor Odyssey"
     >
+      <div className="mb-5">
+        <SplashLogo />
+      </div>
       <FloatingPanel className="flex flex-wrap items-center gap-3">
         <AppIconPlaceholder />
         <div>

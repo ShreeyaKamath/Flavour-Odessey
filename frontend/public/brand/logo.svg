@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Flavor Odyssey logo placeholder</title>
+  <desc id="desc">A replaceable placeholder logo with the letters F and O on a parchment badge.</desc>
+  <defs>
+    <linearGradient id="parchment" x1="70" x2="442" y1="70" y2="442" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff8da"/>
+      <stop offset="0.5" stop-color="#f4dcaa"/>
+      <stop offset="1" stop-color="#76cdbc"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="126" x2="386" y1="346" y2="414" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#955438"/>
+      <stop offset="1" stop-color="#278b80"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="#faf7f1"/>
+  <circle cx="256" cy="238" r="178" fill="url(#parchment)" stroke="#dabd8a" stroke-width="16"/>
+  <path d="M128 354h256l-36 52H164z" fill="url(#ribbon)"/>
+  <path d="M158 186c20-42 58-70 98-70s78 28 98 70c-38-22-71-31-98-31s-60 9-98 31z" fill="#fff8da" opacity=".78"/>
+  <text x="256" y="292" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="132" font-weight="700" fill="#4d3426">FO</text>
+  <text x="256" y="385" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4" fill="#fff8da">FLAVOR ODYSSEY</text>
+</svg>

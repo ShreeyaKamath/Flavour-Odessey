@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Flavor Odyssey splash logo placeholder</title>
+  <desc id="desc">A wide replaceable splash logo for the portfolio-ready game entry screen.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="960" y1="0" y2="360">
+      <stop stop-color="#fff8da"/>
+      <stop offset=".62" stop-color="#76cdbc"/>
+      <stop offset="1" stop-color="#278b80"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="360" rx="48" fill="url(#sky)"/>
+  <circle cx="166" cy="178" r="96" fill="#faf7f1" stroke="#dabd8a" stroke-width="10"/>
+  <text x="166" y="206" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#4d3426">FO</text>
+  <text x="312" y="158" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" fill="#4d3426">Flavor Odyssey</text>
+  <text x="318" y="218" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="3" fill="#4d3426">JOY MEADOW PORTFOLIO BUILD</text>
+  <path d="M314 250h430" stroke="#955438" stroke-width="8" stroke-linecap="round"/>
+</svg>

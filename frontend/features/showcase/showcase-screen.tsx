@@ -40,7 +40,7 @@ export function ShowcaseScreen() {
     >
       <div className="space-y-8">
         <section className="flex flex-wrap items-center gap-4" aria-labelledby="showcase-branding">
-          <LogoPlaceholder />
+          <LogoPlaceholder priority />
           <div>
             <h2
               className="font-display text-2xl font-semibold text-foreground"
