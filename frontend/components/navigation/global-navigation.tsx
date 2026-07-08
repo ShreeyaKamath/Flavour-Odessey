@@ -16,6 +16,8 @@ const navigationItems: NavigationItem[] = [
   { href: "/journal", label: "Journal" },
   { href: "/recipes", label: "Recipes" },
   { href: "/settings", label: "Settings" },
+  { href: "/showcase", label: "Showcase" },
+  { href: "/about", label: "About" },
   { href: "/auth/login", label: "Login" },
   { href: "/auth/register", label: "Register" }
 ];

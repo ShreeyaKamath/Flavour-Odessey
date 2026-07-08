@@ -6,7 +6,8 @@ const tabs = [
   { href: "/inventory", label: "Satchel" },
   { href: "/recipes", label: "Cookbook" },
   { href: "/journal", label: "Journal" },
-  { href: "/settings", label: "Crystals" }
+  { href: "/settings", label: "Crystals" },
+  { href: "/showcase", label: "Showcase" }
 ] as const;
 
 /** Provides bookmark-style navigation tabs for storybook screens. */
