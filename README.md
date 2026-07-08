@@ -2,7 +2,7 @@
 
 # Flavor Odyssey
 
-**A cozy fantasy engineering showcase about restoring emotions through magical ice cream.**
+**A cozy fantasy engineering showcase about restoring emotions through magical ice cream world.**
 
 [![Frontend](https://img.shields.io/badge/frontend-Next.js%20%2B%20TypeScript-0f766e)](#technology-stack)
 [![Backend](https://img.shields.io/badge/backend-FastAPI-2563eb)](#technology-stack)
