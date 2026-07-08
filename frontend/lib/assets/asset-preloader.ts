@@ -9,6 +9,8 @@ type ImageHandle = {
   url: string;
 };
 
+const preloadFallbackTimeoutMs = process.env.NODE_ENV === "test" ? 25 : 5000;
+
 /** Preloads image-compatible assets and keeps placeholder-only assets cheap. */
 export class AssetPreloader {
   private readonly cache = new AssetCache<ImageHandle>();
@@ -51,7 +53,33 @@ export class AssetPreloader {
 
     return new Promise((resolve) => {
       const image = new Image();
+      let settled = false;
+      const resolveWithPlaceholder = () => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        const fallbackUrl = this.assets.placeholderUrl(assetId);
+        this.cache.set(assetId, {
+          assetId,
+          placeholder: true,
+          url: fallbackUrl
+        });
+        resolve({
+          assetId,
+          fromCache: false,
+          placeholder: true,
+          url: fallbackUrl
+        });
+      };
+      const timeout = setTimeout(resolveWithPlaceholder, preloadFallbackTimeoutMs);
+
       image.onload = () => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        clearTimeout(timeout);
         this.cache.set(assetId, {
           assetId,
           element: image,
@@ -66,18 +94,8 @@ export class AssetPreloader {
         });
       };
       image.onerror = () => {
-        const fallbackUrl = this.assets.placeholderUrl(assetId);
-        this.cache.set(assetId, {
-          assetId,
-          placeholder: true,
-          url: fallbackUrl
-        });
-        resolve({
-          assetId,
-          fromCache: false,
-          placeholder: true,
-          url: fallbackUrl
-        });
+        clearTimeout(timeout);
+        resolveWithPlaceholder();
       };
       image.src = resolution.url;
     });

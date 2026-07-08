@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { assetManager } from "@/lib/assets";
 import { audioIds } from "@/lib/audio/manifest";
 import { resolveTimeOfDay } from "@/lib/world/joy-meadow-config";
 import { createSeededRandom, generateFieldPositions } from "@/lib/world/scene-utils";
@@ -36,5 +37,29 @@ describe("Joy Meadow environment foundations", () => {
     const secondRandom = createSeededRandom(42);
     expect(firstRandom()).toBe(secondRandom());
     expect(generateFieldPositions(4, 12, 8, 6)).toEqual(generateFieldPositions(4, 12, 8, 6));
+  });
+
+  it("resolves Joy Meadow visual assets through the manifest", () => {
+    const joyMeadowAssets = [
+      "environment.sky",
+      "environment.meadow_background",
+      "environment.cloud",
+      "environment.tree",
+      "environment.flower",
+      "environment.river",
+      "environment.bridge",
+      "environment.windmill",
+      "environment.npc_house",
+      "environment.recipe_shrine",
+      "environment.journal_tree"
+    ];
+
+    expect(joyMeadowAssets.map((assetId) => assetManager.resolve(assetId).url)).toEqual(
+      expect.arrayContaining([
+        "/assets/environment/joy-meadow/sky.svg",
+        "/assets/environment/joy-meadow/meadow-background.svg",
+        "/assets/environment/joy-meadow/windmill.svg"
+      ])
+    );
   });
 });

@@ -10,6 +10,7 @@ import { MeadowFlora } from "@/components/world/meadow-flora";
 import { ParallaxManager } from "@/components/world/parallax-manager";
 import { ParticleManager } from "@/components/world/particle-manager";
 import { SkyRenderer } from "@/components/world/sky-renderer";
+import { useAssetTexture } from "@/components/world/use-asset-texture";
 import { WeatherRenderer } from "@/components/world/weather-renderer";
 import { environmentCounts, joyMeadowPalette } from "@/lib/world/joy-meadow-config";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
@@ -31,12 +32,15 @@ function MeadowTerrain({
   reducedMotion: boolean;
   world: LivingWorldSnapshot;
 }) {
+  const { texture: meadowTexture } = useAssetTexture("environment.meadow_background");
+
   return (
     <>
       <mesh receiveShadow position={[0, -0.28, -1]}>
         <cylinderGeometry args={[8.5, 8.8, 0.55, 48]} />
         <meshStandardMaterial
           color={world.condition === "rain" ? joyMeadowPalette.grassDark : joyMeadowPalette.grass}
+          map={meadowTexture ?? undefined}
           roughness={0.96}
         />
       </mesh>
@@ -46,6 +50,7 @@ function MeadowTerrain({
             <sphereGeometry args={[2.4, 18, 12]} />
             <meshStandardMaterial
               color={index % 2 ? joyMeadowPalette.hill : joyMeadowPalette.hillFar}
+              map={meadowTexture ?? undefined}
               roughness={1}
             />
           </mesh>
