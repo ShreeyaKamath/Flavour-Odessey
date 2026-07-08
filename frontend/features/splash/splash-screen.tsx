@@ -1,3 +1,5 @@
+import { AppIconPlaceholder } from "@/components/branding/app-icon-placeholder";
+import { VersionBadge } from "@/components/branding/version-badge";
 import { FloatingPanel } from "@/components/ui/floating-panel";
 import { LinkButton } from "@/components/ui/link-button";
 import { ScreenShell } from "@/features/screens/screen-shell";
@@ -6,16 +8,28 @@ import { ScreenShell } from "@/features/screens/screen-shell";
 export function SplashScreen() {
   return (
     <ScreenShell
-      actions={<LinkButton href="/menu">Enter foundation</LinkButton>}
-      description="A frontend shell for the future cozy adventure, with providers, design tokens, routing, and accessibility already in place."
-      eyebrow="Frontend foundation"
+      actions={
+        <>
+          <LinkButton href="/menu">Open storybook</LinkButton>
+          <LinkButton href="/showcase" variant="secondary">
+            View showcase
+          </LinkButton>
+        </>
+      }
+      description="A portfolio-ready cozy fantasy MVP with Joy Meadow gameplay, AI-ready story systems, cinematic UI, production fallbacks, and release documentation."
+      eyebrow="Version 1.0 portfolio MVP"
       showVisual
       title="Flavor Odyssey"
     >
-      <FloatingPanel>
-        <p className="text-sm text-muted-foreground">
-          Phase 3 placeholder. No gameplay systems are active.
-        </p>
+      <FloatingPanel className="flex flex-wrap items-center gap-3">
+        <AppIconPlaceholder />
+        <div>
+          <p className="text-sm font-semibold text-foreground">GitHub showcase build</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Open `/showcase` for architecture, screenshots, credits, and system information.
+          </p>
+        </div>
+        <VersionBadge />
       </FloatingPanel>
     </ScreenShell>
   );
