@@ -16,8 +16,14 @@ export const projectBranding = {
     github: "https://github.com/ShreeyaKamath/Flavour-Odessey",
     project: "Flavor Odyssey"
   },
+  assets: {
+    appIcon: "/brand/app-icon.svg",
+    favicon: "/brand/favicon.svg",
+    logo: "/brand/logo.svg",
+    openGraphPreview: "/brand/og-preview.svg",
+    splashLogo: "/brand/splash-logo.svg"
+  },
   logo: {
-    initials: "FO",
     label: "Flavor Odyssey logo placeholder"
   },
   typography: {

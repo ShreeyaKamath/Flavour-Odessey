@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Flavor Odyssey Open Graph preview placeholder</title>
+  <desc id="desc">A replaceable social preview card for Flavor Odyssey.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1200" y1="0" y2="630">
+      <stop stop-color="#faf7f1"/>
+      <stop offset=".52" stop-color="#f4dcaa"/>
+      <stop offset="1" stop-color="#76cdbc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="220" cy="315" r="140" fill="#fff8da" stroke="#278b80" stroke-width="18"/>
+  <text x="220" y="360" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="120" font-weight="700" fill="#4d3426">FO</text>
+  <text x="420" y="285" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" fill="#4d3426">Flavor Odyssey</text>
+  <text x="426" y="352" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#5e4e44">Joy Meadow MVP · Portfolio Showcase</text>
+  <text x="426" y="412" font-family="Segoe UI, Arial, sans-serif" font-size="28" fill="#5e4e44">Cozy fantasy engineering project with AI-ready systems.</text>
+</svg>
