@@ -46,22 +46,3 @@ uploads/
 
 # Documentation excluded from repository pushes
 *.md
-!/README.md
-!/CHANGELOG.md
-!/CODE_OF_CONDUCT.md
-!/CONTRIBUTING.md
-!/SECURITY.md
-!docs/Architecture.md
-!docs/Game_Architecture.md
-!docs/AI_Architecture.md
-!docs/Deployment.md
-!docs/Testing.md
-!docs/Contributing.md
-!docs/Code_Style.md
-!docs/Release_Notes.md
-!docs/Known_Limitations.md
-!docs/Future_Roadmap.md
-!.github/ISSUE_TEMPLATE/*.md
-!.github/pull_request_template.md
-!.github/LABELS.md
-!.github/RELEASE_CHECKLIST.md
