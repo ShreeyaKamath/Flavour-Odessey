@@ -121,9 +121,29 @@ describe("NpcVillage", () => {
     expect(screen.getByRole("heading", { name: "Meadow voices" })).toBeInTheDocument();
     expect(screen.getAllByText(/Weather routine: Runs indoors/).length).toBeGreaterThan(0);
     expect(screen.getByText("Weather: Rain, Afternoon, Joy Meadow spring")).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Meadow Keeper portrait/ })).toBeInTheDocument();
+    const portrait = screen.getByRole("img", { name: /Meadow Keeper portrait/ });
+
+    expect(portrait).toBeInTheDocument();
+    expect(portrait.querySelector('img[src*="meadow-keeper-portrait.svg"]')).toBeInTheDocument();
     expect(screen.getAllByText("friendly neighbor · Friendship 1").length).toBeGreaterThan(0);
     expect(await screen.findByText("The meadow is listening.")).toBeInTheDocument();
+  });
+
+  it("falls back to initials and emotion icon when a manifest portrait is missing", () => {
+    render(
+      <NpcVillage
+        chatPending={false}
+        giftPending={false}
+        npcs={[npc({ portrait: "portrait.missing_meadow_keeper" })]}
+        onGift={vi.fn()}
+        onSendMessage={vi.fn()}
+      />
+    );
+
+    const portrait = screen.getByRole("img", { name: /Meadow Keeper portrait/ });
+
+    expect(portrait.querySelector("img")).not.toBeInTheDocument();
+    expect(portrait).toHaveTextContent("MK");
   });
 
   it("submits conversation choices for the selected NPC", async () => {

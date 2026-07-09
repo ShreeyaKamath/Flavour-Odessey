@@ -34,6 +34,13 @@ describe("production art asset pipeline", () => {
     expect(ids).toEqual(expect.arrayContaining(["character.lumi_celebrating"]));
     expect(ids).toEqual(expect.arrayContaining(["character.lumi_glow"]));
     expect(ids).toEqual(expect.arrayContaining(["character.lumi_trail"]));
+    expect(ids).toEqual(expect.arrayContaining(["portrait.npc_meadow_keeper"]));
+    expect(ids).toEqual(expect.arrayContaining(["portrait.npc_baker"]));
+    expect(ids).toEqual(expect.arrayContaining(["portrait.npc_gardener"]));
+    expect(ids).toEqual(expect.arrayContaining(["portrait.npc_child_explorer"]));
+    expect(ids).toEqual(expect.arrayContaining(["portrait.npc_traveling_merchant"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.npc_baker_idle"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.npc_baker_walk"]));
     expect(ids).toEqual(expect.arrayContaining(["character.player"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.golden_vanilla_bloom"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.chocolate_drizzle"]));
@@ -48,10 +55,11 @@ describe("production art asset pipeline", () => {
     const tree = assets.resolve("environment.tree");
     const sky = assets.resolve("environment.sky");
 
-    expect(tree.placeholder).toBe(true);
-    expect(tree.url).toContain("data:image/svg+xml");
     expect(assets.resolve("character.lumi_excited").url).toBe(
       "/assets/characters/lumi/lumi-excited.svg"
+    );
+    expect(assets.resolve("portrait.npc_meadow_keeper").url).toBe(
+      "/assets/characters/npcs/meadow-keeper-portrait.svg"
     );
     expect(tree.placeholder).toBe(false);
     expect(tree.url).toBe("/assets/environment/joy-meadow/tree.svg");

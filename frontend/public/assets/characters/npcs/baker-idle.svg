@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Baker idle sprite placeholder">
+  <path d="M54 46c-8-28 18-44 42-28 24-16 50 0 42 28z" fill="#fff7e8"/>
+  <circle cx="96" cy="66" r="32" fill="#ffd45c"/>
+  <path d="M48 220c10-82 30-124 48-124s38 42 48 124z" fill="#e98586"/>
+</svg>

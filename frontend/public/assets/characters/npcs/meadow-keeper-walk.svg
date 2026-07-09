@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Meadow Keeper walk sprite placeholder">
+  <circle cx="96" cy="56" r="34" fill="#ffd45c"/>
+  <path d="M48 206c12-78 30-116 48-116s38 38 48 116z" fill="#4d965b"/>
+  <path d="M80 210l-24 28M112 210l24 28" stroke="#76543c" stroke-width="16" stroke-linecap="round"/>
+</svg>

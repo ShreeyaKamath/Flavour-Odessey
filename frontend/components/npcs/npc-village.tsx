@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -146,6 +147,13 @@ function NpcCard({
   const emotion = new EmotionController(npc);
   const schedule = new ScheduleManager(npc);
   const animation = new NPCAnimationController(npc);
+  const portraitAsset = portrait.resolvePortrait();
+  const [failedAssetUrls, setFailedAssetUrls] = useState<Set<string>>(() => new Set());
+  const showPortraitAsset = Boolean(portraitAsset && !failedAssetUrls.has(portraitAsset.url));
+
+  function markAssetFailed(url: string) {
+    setFailedAssetUrls((current) => new Set(current).add(url));
+  }
 
   return (
     <motion.button
@@ -170,11 +178,28 @@ function NpcCard({
             "grid h-16 w-16 shrink-0 place-items-center rounded-full border border-border bg-muted font-display text-lg font-semibold text-foreground shadow-glow",
             animation.stateClass()
           )}
+          data-asset-id={portrait.portraitAssetId()}
           data-render-source="asset_manifest"
-          data-visual-element="meadow_keeper"
+          data-visual-element={portrait.portraitAssetId()}
           role="img"
         >
-          {portrait.initials()}
+          {showPortraitAsset && portraitAsset ? (
+            <span aria-hidden="true" className="relative h-14 w-14 overflow-hidden rounded-full">
+              <Image
+                alt=""
+                fill
+                onError={() => markAssetFailed(portraitAsset.url)}
+                sizes="3.5rem"
+                src={portraitAsset.url}
+                unoptimized
+              />
+            </span>
+          ) : (
+            <span className="flex flex-col items-center leading-none" aria-hidden="true">
+              <span className="text-base">{portrait.fallbackGlyph()}</span>
+              <span className="mt-1 text-xs">{portrait.initials()}</span>
+            </span>
+          )}
         </div>
         <div className="min-w-0">
           <p className="font-semibold text-foreground">{npc.name}</p>

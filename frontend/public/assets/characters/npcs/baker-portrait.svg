@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Baker portrait placeholder">
+  <rect width="256" height="256" rx="56" fill="#fff0c2"/>
+  <path d="M76 86c-10-36 22-56 52-36 30-20 62 0 52 36z" fill="#fff7e8"/>
+  <circle cx="128" cy="112" r="46" fill="#ffd45c"/>
+  <path d="M60 224c20-48 48-72 68-72s48 24 68 72z" fill="#e98586"/>
+  <circle cx="112" cy="111" r="7" fill="#3a3328"/>
+  <circle cx="144" cy="111" r="7" fill="#3a3328"/>
+  <path d="M108 134c14 12 26 12 40 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+</svg>

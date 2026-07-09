@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Traveling Merchant walk sprite placeholder">
+  <circle cx="96" cy="66" r="32" fill="#ffd45c"/>
+  <path d="M58 50h76l-16-28H74z" fill="#a9784e"/>
+  <path d="M50 206c10-74 28-110 46-110s36 36 46 110z" fill="#76543c"/>
+  <path d="M78 210l-24 28M112 210l24 28" stroke="#a9784e" stroke-width="16" stroke-linecap="round"/>
+</svg>

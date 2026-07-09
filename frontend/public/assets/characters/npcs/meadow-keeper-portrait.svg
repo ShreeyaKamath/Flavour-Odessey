@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Meadow Keeper portrait placeholder">
+  <rect width="256" height="256" rx="56" fill="#f4dcaa"/>
+  <circle cx="128" cy="98" r="48" fill="#ffd45c"/>
+  <path d="M58 224c16-54 49-82 70-82s54 28 70 82z" fill="#4d965b"/>
+  <path d="M82 92c24-38 68-44 94-6-8-44-84-58-94 6z" fill="#76543c"/>
+  <circle cx="110" cy="101" r="7" fill="#3a3328"/>
+  <circle cx="146" cy="101" r="7" fill="#3a3328"/>
+  <path d="M112 124c12 9 24 9 36 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+</svg>

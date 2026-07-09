@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Traveling Merchant portrait placeholder">
+  <rect width="256" height="256" rx="56" fill="#e8dcc6"/>
+  <circle cx="128" cy="112" r="45" fill="#ffd45c"/>
+  <path d="M78 88h100l-20-38h-60z" fill="#a9784e"/>
+  <path d="M58 224c20-52 50-76 70-76s50 24 70 76z" fill="#76543c"/>
+  <circle cx="112" cy="112" r="7" fill="#3a3328"/>
+  <circle cx="144" cy="112" r="7" fill="#3a3328"/>
+  <path d="M112 136c12 8 24 8 36 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+  <path d="M176 144l24 24" stroke="#ffd96a" stroke-width="10" stroke-linecap="round"/>
+</svg>

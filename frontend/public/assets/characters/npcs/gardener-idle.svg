@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Gardener idle sprite placeholder">
+  <circle cx="96" cy="62" r="32" fill="#ffd45c"/>
+  <path d="M58 48c20-24 56-24 76 0z" fill="#4d965b"/>
+  <path d="M48 220c10-82 30-124 48-124s38 42 48 124z" fill="#68ad65"/>
+</svg>

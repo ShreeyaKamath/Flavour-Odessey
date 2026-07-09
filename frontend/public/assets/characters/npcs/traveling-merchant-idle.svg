@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Traveling Merchant idle sprite placeholder">
+  <circle cx="96" cy="66" r="32" fill="#ffd45c"/>
+  <path d="M58 50h76l-16-28H74z" fill="#a9784e"/>
+  <path d="M46 220c12-82 30-124 50-124s38 42 50 124z" fill="#76543c"/>
+</svg>

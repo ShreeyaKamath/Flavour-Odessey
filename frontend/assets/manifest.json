@@ -348,13 +348,235 @@
       "id": "character.npc_meadow_keeper",
       "category": "characters",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/characters/npcs/meadow-keeper-idle.svg",
       "tags": ["npc", "joy_meadow", "portrait", "idle"],
       "placeholder": { "label": "Meadow Keeper", "primary": "#ffd45c", "secondary": "#4d965b" },
       "lod": {
         "near": "character.npc_meadow_keeper",
         "medium": "character.npc_meadow_keeper",
         "far": "character.npc_meadow_keeper"
+      }
+    },
+    {
+      "id": "character.npc_meadow_keeper_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/meadow-keeper-idle.svg",
+      "tags": ["npc", "joy_meadow", "meadow_keeper", "idle"],
+      "placeholder": {
+        "label": "Meadow Keeper Idle",
+        "primary": "#ffd45c",
+        "secondary": "#4d965b"
+      },
+      "lod": {
+        "near": "character.npc_meadow_keeper_idle",
+        "medium": "character.npc_meadow_keeper_idle",
+        "far": "character.npc_meadow_keeper_idle"
+      }
+    },
+    {
+      "id": "character.npc_meadow_keeper_walk",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/meadow-keeper-walk.svg",
+      "tags": ["npc", "joy_meadow", "meadow_keeper", "walk"],
+      "placeholder": {
+        "label": "Meadow Keeper Walk",
+        "primary": "#ffd45c",
+        "secondary": "#4d965b"
+      },
+      "lod": {
+        "near": "character.npc_meadow_keeper_walk",
+        "medium": "character.npc_meadow_keeper_walk",
+        "far": "character.npc_meadow_keeper_walk"
+      }
+    },
+    {
+      "id": "character.npc_baker",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/baker-idle.svg",
+      "tags": ["npc", "joy_meadow", "baker", "idle"],
+      "placeholder": { "label": "Baker", "primary": "#fff0c2", "secondary": "#e98586" },
+      "lod": {
+        "near": "character.npc_baker",
+        "medium": "character.npc_baker",
+        "far": "character.npc_baker"
+      }
+    },
+    {
+      "id": "character.npc_baker_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/baker-idle.svg",
+      "tags": ["npc", "joy_meadow", "baker", "idle"],
+      "placeholder": { "label": "Baker Idle", "primary": "#fff0c2", "secondary": "#e98586" },
+      "lod": {
+        "near": "character.npc_baker_idle",
+        "medium": "character.npc_baker_idle",
+        "far": "character.npc_baker_idle"
+      }
+    },
+    {
+      "id": "character.npc_baker_walk",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/baker-walk.svg",
+      "tags": ["npc", "joy_meadow", "baker", "walk"],
+      "placeholder": { "label": "Baker Walk", "primary": "#fff0c2", "secondary": "#e98586" },
+      "lod": {
+        "near": "character.npc_baker_walk",
+        "medium": "character.npc_baker_walk",
+        "far": "character.npc_baker_walk"
+      }
+    },
+    {
+      "id": "character.npc_gardener",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/gardener-idle.svg",
+      "tags": ["npc", "joy_meadow", "gardener", "idle"],
+      "placeholder": { "label": "Gardener", "primary": "#68ad65", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "character.npc_gardener",
+        "medium": "character.npc_gardener",
+        "far": "character.npc_gardener"
+      }
+    },
+    {
+      "id": "character.npc_gardener_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/gardener-idle.svg",
+      "tags": ["npc", "joy_meadow", "gardener", "idle"],
+      "placeholder": {
+        "label": "Gardener Idle",
+        "primary": "#68ad65",
+        "secondary": "#d8ffff"
+      },
+      "lod": {
+        "near": "character.npc_gardener_idle",
+        "medium": "character.npc_gardener_idle",
+        "far": "character.npc_gardener_idle"
+      }
+    },
+    {
+      "id": "character.npc_gardener_walk",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/gardener-walk.svg",
+      "tags": ["npc", "joy_meadow", "gardener", "walk"],
+      "placeholder": {
+        "label": "Gardener Walk",
+        "primary": "#68ad65",
+        "secondary": "#d8ffff"
+      },
+      "lod": {
+        "near": "character.npc_gardener_walk",
+        "medium": "character.npc_gardener_walk",
+        "far": "character.npc_gardener_walk"
+      }
+    },
+    {
+      "id": "character.npc_child_explorer",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/child-explorer-idle.svg",
+      "tags": ["npc", "joy_meadow", "child_explorer", "idle"],
+      "placeholder": {
+        "label": "Child Explorer",
+        "primary": "#f38ca7",
+        "secondary": "#b7d8ff"
+      },
+      "lod": {
+        "near": "character.npc_child_explorer",
+        "medium": "character.npc_child_explorer",
+        "far": "character.npc_child_explorer"
+      }
+    },
+    {
+      "id": "character.npc_child_explorer_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/child-explorer-idle.svg",
+      "tags": ["npc", "joy_meadow", "child_explorer", "idle"],
+      "placeholder": {
+        "label": "Child Explorer Idle",
+        "primary": "#f38ca7",
+        "secondary": "#b7d8ff"
+      },
+      "lod": {
+        "near": "character.npc_child_explorer_idle",
+        "medium": "character.npc_child_explorer_idle",
+        "far": "character.npc_child_explorer_idle"
+      }
+    },
+    {
+      "id": "character.npc_child_explorer_walk",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/child-explorer-walk.svg",
+      "tags": ["npc", "joy_meadow", "child_explorer", "walk"],
+      "placeholder": {
+        "label": "Child Explorer Walk",
+        "primary": "#f38ca7",
+        "secondary": "#b7d8ff"
+      },
+      "lod": {
+        "near": "character.npc_child_explorer_walk",
+        "medium": "character.npc_child_explorer_walk",
+        "far": "character.npc_child_explorer_walk"
+      }
+    },
+    {
+      "id": "character.npc_traveling_merchant",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/traveling-merchant-idle.svg",
+      "tags": ["npc", "joy_meadow", "traveling_merchant", "idle"],
+      "placeholder": {
+        "label": "Traveling Merchant",
+        "primary": "#a9784e",
+        "secondary": "#e8dcc6"
+      },
+      "lod": {
+        "near": "character.npc_traveling_merchant",
+        "medium": "character.npc_traveling_merchant",
+        "far": "character.npc_traveling_merchant"
+      }
+    },
+    {
+      "id": "character.npc_traveling_merchant_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/traveling-merchant-idle.svg",
+      "tags": ["npc", "joy_meadow", "traveling_merchant", "idle"],
+      "placeholder": {
+        "label": "Traveling Merchant Idle",
+        "primary": "#a9784e",
+        "secondary": "#e8dcc6"
+      },
+      "lod": {
+        "near": "character.npc_traveling_merchant_idle",
+        "medium": "character.npc_traveling_merchant_idle",
+        "far": "character.npc_traveling_merchant_idle"
+      }
+    },
+    {
+      "id": "character.npc_traveling_merchant_walk",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/npcs/traveling-merchant-walk.svg",
+      "tags": ["npc", "joy_meadow", "traveling_merchant", "walk"],
+      "placeholder": {
+        "label": "Traveling Merchant Walk",
+        "primary": "#a9784e",
+        "secondary": "#e8dcc6"
+      },
+      "lod": {
+        "near": "character.npc_traveling_merchant_walk",
+        "medium": "character.npc_traveling_merchant_walk",
+        "far": "character.npc_traveling_merchant_walk"
       }
     },
     {
@@ -374,6 +596,87 @@
       "tags": ["lumi", "expression", "portrait"],
       "placeholder": { "label": "Lumi Portrait", "primary": "#fff28b", "secondary": "#a9f1d4" },
       "lod": { "near": "portrait.lumi", "medium": "portrait.lumi", "far": "portrait.lumi" }
+    },
+    {
+      "id": "portrait.npc_meadow_keeper",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": "/assets/characters/npcs/meadow-keeper-portrait.svg",
+      "tags": ["npc", "joy_meadow", "meadow_keeper", "portrait"],
+      "placeholder": {
+        "label": "Meadow Keeper Portrait",
+        "primary": "#ffd45c",
+        "secondary": "#4d965b"
+      },
+      "lod": {
+        "near": "portrait.npc_meadow_keeper",
+        "medium": "portrait.npc_meadow_keeper",
+        "far": "portrait.npc_meadow_keeper"
+      }
+    },
+    {
+      "id": "portrait.npc_baker",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": "/assets/characters/npcs/baker-portrait.svg",
+      "tags": ["npc", "joy_meadow", "baker", "portrait"],
+      "placeholder": { "label": "Baker Portrait", "primary": "#fff0c2", "secondary": "#e98586" },
+      "lod": {
+        "near": "portrait.npc_baker",
+        "medium": "portrait.npc_baker",
+        "far": "portrait.npc_baker"
+      }
+    },
+    {
+      "id": "portrait.npc_gardener",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": "/assets/characters/npcs/gardener-portrait.svg",
+      "tags": ["npc", "joy_meadow", "gardener", "portrait"],
+      "placeholder": {
+        "label": "Gardener Portrait",
+        "primary": "#68ad65",
+        "secondary": "#d8ffff"
+      },
+      "lod": {
+        "near": "portrait.npc_gardener",
+        "medium": "portrait.npc_gardener",
+        "far": "portrait.npc_gardener"
+      }
+    },
+    {
+      "id": "portrait.npc_child_explorer",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": "/assets/characters/npcs/child-explorer-portrait.svg",
+      "tags": ["npc", "joy_meadow", "child_explorer", "portrait"],
+      "placeholder": {
+        "label": "Child Explorer Portrait",
+        "primary": "#f38ca7",
+        "secondary": "#b7d8ff"
+      },
+      "lod": {
+        "near": "portrait.npc_child_explorer",
+        "medium": "portrait.npc_child_explorer",
+        "far": "portrait.npc_child_explorer"
+      }
+    },
+    {
+      "id": "portrait.npc_traveling_merchant",
+      "category": "portraits",
+      "kind": "portrait",
+      "src": "/assets/characters/npcs/traveling-merchant-portrait.svg",
+      "tags": ["npc", "joy_meadow", "traveling_merchant", "portrait"],
+      "placeholder": {
+        "label": "Traveling Merchant Portrait",
+        "primary": "#a9784e",
+        "secondary": "#e8dcc6"
+      },
+      "lod": {
+        "near": "portrait.npc_traveling_merchant",
+        "medium": "portrait.npc_traveling_merchant",
+        "far": "portrait.npc_traveling_merchant"
+      }
     },
     {
       "id": "ice_cream.golden_vanilla_bloom",
