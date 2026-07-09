@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Lumi glow placeholder">
+  <defs>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop stop-color="#fff4ae" stop-opacity=".9"/>
+      <stop offset=".42" stop-color="#fff28b" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#a9f1d4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="128" cy="128" r="128" fill="url(#glow)"/>
+</svg>

@@ -126,11 +126,11 @@ describe("Lumi companion", () => {
       />
     );
 
-    expect(screen.getByLabelText("Lumi companion, excited")).toBeInTheDocument();
-    expect(screen.getByLabelText("Lumi companion, excited")).toHaveAttribute(
-      "data-weather",
-      "rain"
-    );
+    const companion = screen.getByLabelText("Lumi companion, excited");
+
+    expect(companion).toBeInTheDocument();
+    expect(companion).toHaveAttribute("data-weather", "rain");
+    expect(companion.querySelector('img[src*="lumi-excited.svg"]')).toBeInTheDocument();
     expect(screen.getByText("That ingredient lit up!")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Ask Lumi for contextual guidance" }));
     expect(onAsk).toHaveBeenCalledOnce();

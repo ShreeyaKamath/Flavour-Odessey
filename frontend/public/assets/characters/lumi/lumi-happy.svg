@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Lumi happy placeholder">
+  <defs>
+    <radialGradient id="body" cx=".5" cy=".4" r=".56">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".58" stop-color="#fff28b"/>
+      <stop offset="1" stop-color="#87d8bb"/>
+    </radialGradient>
+  </defs>
+  <circle cx="128" cy="126" r="64" fill="#fff4ae" opacity=".32"/>
+  <path d="M36 134c24-20 50-21 78-2" fill="none" stroke="#d9fff4" stroke-width="22" stroke-linecap="round" opacity=".86"/>
+  <path d="M142 132c28-19 54-18 78 2" fill="none" stroke="#d9fff4" stroke-width="22" stroke-linecap="round" opacity=".86"/>
+  <circle cx="128" cy="122" r="56" fill="url(#body)"/>
+  <path d="M98 112c6 8 14 8 20 0M138 112c6 8 14 8 20 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+  <path d="M106 142c14 14 30 14 44 0" fill="none" stroke="#3a3328" stroke-width="8" stroke-linecap="round"/>
+</svg>

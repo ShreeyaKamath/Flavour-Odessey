@@ -91,6 +91,58 @@ export const visualBindings = {
     layer: "character",
     preload: true
   },
+  lumi_celebrating: {
+    assetId: "character.lumi_celebrating",
+    id: "lumi_celebrating",
+    layer: "character",
+    preload: true
+  },
+  lumi_curious: {
+    assetId: "character.lumi_curious",
+    id: "lumi_curious",
+    layer: "character",
+    preload: true
+  },
+  lumi_excited: {
+    assetId: "character.lumi_excited",
+    id: "lumi_excited",
+    layer: "character",
+    preload: true
+  },
+  lumi_glow: {
+    assetId: "character.lumi_glow",
+    id: "lumi_glow",
+    layer: "effect",
+    preload: true
+  },
+  lumi_happy: {
+    assetId: "character.lumi_happy",
+    id: "lumi_happy",
+    layer: "character",
+    preload: true
+  },
+  lumi_idle: {
+    assetId: "character.lumi_idle",
+    id: "lumi_idle",
+    layer: "character",
+    preload: true
+  },
+  lumi_sleepy: {
+    assetId: "character.lumi_sleepy",
+    id: "lumi_sleepy",
+    layer: "character",
+    preload: true
+  },
+  lumi_trail: {
+    assetId: "character.lumi_trail",
+    id: "lumi_trail",
+    layer: "effect",
+    preload: true
+  },
+  lumi_worried: {
+    assetId: "character.lumi_worried",
+    id: "lumi_worried",
+    layer: "character",
   meadow_background: {
     assetId: "environment.meadow_background",
     id: "meadow_background",

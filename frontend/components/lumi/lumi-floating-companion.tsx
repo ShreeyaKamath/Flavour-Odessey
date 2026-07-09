@@ -1,12 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { audioEvents } from "@/lib/audio/audio-events";
 import { LumiAnimationController } from "@/lib/lumi/lumi-animation-controller";
+import { lumiAssetIds, resolveLumiAsset, resolveLumiEmotionAsset } from "@/lib/lumi/lumi-assets";
 import { LumiEmotionController } from "@/lib/lumi/lumi-emotion-controller";
 import type { LumiEvent, LumiState } from "@/lib/lumi/lumi-types";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
@@ -33,8 +35,16 @@ export function LumiFloatingCompanion({
   const animation = useMemo(() => new LumiAnimationController(), []);
   const [focus, setFocus] = useState({ x: 0, y: 0 });
   const [paused, setPaused] = useState(false);
+  const [failedAssets, setFailedAssets] = useState<Set<string>>(() => new Set());
   const bodyVariants = animation.body(state.emotion, state.mode, reducedMotion || paused);
   const bubbleVariants = animation.bubble(reducedMotion || paused);
+  const spriteAsset = resolveLumiEmotionAsset(state.emotion);
+  const glowAsset = resolveLumiAsset(lumiAssetIds.glow);
+  const trailAsset = resolveLumiAsset(lumiAssetIds.trail);
+
+  function markAssetFailed(url: string) {
+    setFailedAssets((current) => new Set(current).add(url));
+  }
 
   useEffect(() => {
     if (reducedMotion) {
@@ -122,16 +132,61 @@ export function LumiFloatingCompanion({
             className="absolute -top-4 h-8 w-14 rounded-t-full bg-accent/70"
           />
         ) : null}
-        <span
-          aria-hidden="true"
-          className={cn(
-            "absolute h-10 w-10 rounded-full bg-accent/20",
-            emotion.isBright() ? "scale-125" : "scale-100"
-          )}
-        />
-        <span aria-hidden="true" className="relative">
-          L
-        </span>
+        {!failedAssets.has(trailAsset.url) ? (
+          <span aria-hidden="true" className="absolute -left-14 top-6 h-10 w-20 opacity-70">
+            <Image
+              alt=""
+              fill
+              onError={() => markAssetFailed(trailAsset.url)}
+              sizes="5rem"
+              src={trailAsset.url}
+              unoptimized
+            />
+          </span>
+        ) : null}
+        {!failedAssets.has(glowAsset.url) ? (
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute h-16 w-16",
+              emotion.isBright() ? "scale-125 opacity-95" : "scale-100 opacity-75"
+            )}
+          >
+            <Image
+              alt=""
+              fill
+              onError={() => markAssetFailed(glowAsset.url)}
+              sizes="4rem"
+              src={glowAsset.url}
+              unoptimized
+            />
+          </span>
+        ) : (
+          <span
+            aria-hidden="true"
+            className={cn(
+              "absolute h-10 w-10 rounded-full bg-accent/20",
+              emotion.isBright() ? "scale-125" : "scale-100"
+            )}
+          />
+        )}
+        {!failedAssets.has(spriteAsset.url) ? (
+          <span aria-hidden="true" className="relative h-14 w-14">
+            <Image
+              alt=""
+              fill
+              onError={() => markAssetFailed(spriteAsset.url)}
+              priority={state.emotion === "happy"}
+              sizes="3.5rem"
+              src={spriteAsset.url}
+              unoptimized
+            />
+          </span>
+        ) : (
+          <span aria-hidden="true" className="relative">
+            L
+          </span>
+        )}
         <span
           aria-hidden="true"
           className="absolute left-4 top-6 h-2 w-2 rounded-full bg-foreground"

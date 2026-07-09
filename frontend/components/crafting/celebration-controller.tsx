@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group, Mesh } from "three";
 
+import { useThreeAssetTexture } from "@/hooks/use-three-asset-texture";
 import {
   craftingMotion,
   craftingPalette,
@@ -26,6 +27,12 @@ export function CelebrationController({
   const leftWing = useRef<Mesh>(null);
   const rightWing = useRef<Mesh>(null);
   const glow = useRef<Mesh>(null);
+  const celebrating = phase === "celebrating";
+  const { texture: glowTexture } = useThreeAssetTexture("character.lumi_glow");
+  const { texture: spriteTexture } = useThreeAssetTexture(
+    celebrating ? "character.lumi_celebrating" : "character.lumi_idle"
+  );
+  const { texture: trailTexture } = useThreeAssetTexture("character.lumi_trail");
 
   useFrame(({ clock }) => {
     if (!lumi.current || paused || reducedMotion) {
@@ -33,7 +40,6 @@ export function CelebrationController({
     }
 
     const elapsed = clock.getElapsedTime();
-    const celebrating = phase === "celebrating";
     const orbiting = ["materializing", "celebrating"].includes(phase);
     const angle = elapsed * craftingMotion.lumiOrbitSpeed;
     lumi.current.position.x = orbiting ? Math.cos(angle) * craftingMotion.lumiOrbitRadius : -2.15;
@@ -66,6 +72,7 @@ export function CelebrationController({
           color={craftingPalette.lumi}
           emissive={craftingPalette.lumi}
           emissiveIntensity={phase === "celebrating" ? 3.2 : 1.8}
+          map={spriteTexture ?? glowTexture ?? undefined}
           roughness={0.3}
         />
       </mesh>
@@ -75,6 +82,7 @@ export function CelebrationController({
           color={craftingPalette.lumiWing}
           emissive={craftingPalette.lumiWing}
           emissiveIntensity={1.1}
+          map={trailTexture ?? undefined}
           transparent
           opacity={0.72}
         />
@@ -85,6 +93,7 @@ export function CelebrationController({
           color={craftingPalette.lumiWing}
           emissive={craftingPalette.lumiWing}
           emissiveIntensity={1.1}
+          map={trailTexture ?? undefined}
           transparent
           opacity={0.72}
         />
