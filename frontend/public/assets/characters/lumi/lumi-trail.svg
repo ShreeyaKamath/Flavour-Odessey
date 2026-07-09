@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 192" role="img" aria-label="Lumi trail placeholder">
+  <defs>
+    <linearGradient id="trail" x1="0" x2="1">
+      <stop stop-color="#a9f1d4" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#fff28b" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#fff4ae" stop-opacity=".8"/>
+    </linearGradient>
+  </defs>
+  <path d="M12 102c98-62 184-72 258-30 78 44 148 37 230-20" fill="none" stroke="url(#trail)" stroke-width="48" stroke-linecap="round"/>
+  <circle cx="124" cy="70" r="9" fill="#fff4ae" opacity=".8"/>
+  <circle cx="206" cy="124" r="7" fill="#d9fff4" opacity=".7"/>
+  <circle cx="346" cy="88" r="8" fill="#fff4ae" opacity=".75"/>
+</svg>

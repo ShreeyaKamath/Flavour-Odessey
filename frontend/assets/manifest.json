@@ -196,10 +196,131 @@
       "id": "character.lumi",
       "category": "characters",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/characters/lumi/lumi-idle.svg",
       "tags": ["lumi", "companion", "emotion_overlay"],
       "placeholder": { "label": "Lumi", "primary": "#fff28b", "secondary": "#a9f1d4" },
       "lod": { "near": "character.lumi", "medium": "character.lumi", "far": "character.lumi" }
+    },
+    {
+      "id": "character.lumi_idle",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-idle.svg",
+      "tags": ["lumi", "companion", "idle"],
+      "placeholder": { "label": "Lumi Idle", "primary": "#fff28b", "secondary": "#a9f1d4" },
+      "lod": {
+        "near": "character.lumi_idle",
+        "medium": "character.lumi_idle",
+        "far": "character.lumi_idle"
+      }
+    },
+    {
+      "id": "character.lumi_happy",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-happy.svg",
+      "tags": ["lumi", "companion", "emotion", "happy"],
+      "placeholder": { "label": "Lumi Happy", "primary": "#fff28b", "secondary": "#87d8bb" },
+      "lod": {
+        "near": "character.lumi_happy",
+        "medium": "character.lumi_happy",
+        "far": "character.lumi_happy"
+      }
+    },
+    {
+      "id": "character.lumi_curious",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-curious.svg",
+      "tags": ["lumi", "companion", "emotion", "curious"],
+      "placeholder": { "label": "Lumi Curious", "primary": "#fff28b", "secondary": "#b7d8ff" },
+      "lod": {
+        "near": "character.lumi_curious",
+        "medium": "character.lumi_curious",
+        "far": "character.lumi_curious"
+      }
+    },
+    {
+      "id": "character.lumi_excited",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-excited.svg",
+      "tags": ["lumi", "companion", "emotion", "excited"],
+      "placeholder": { "label": "Lumi Excited", "primary": "#fff28b", "secondary": "#ffd96a" },
+      "lod": {
+        "near": "character.lumi_excited",
+        "medium": "character.lumi_excited",
+        "far": "character.lumi_excited"
+      }
+    },
+    {
+      "id": "character.lumi_sleepy",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-sleepy.svg",
+      "tags": ["lumi", "companion", "emotion", "sleepy"],
+      "placeholder": { "label": "Lumi Sleepy", "primary": "#fff28b", "secondary": "#b7d8ff" },
+      "lod": {
+        "near": "character.lumi_sleepy",
+        "medium": "character.lumi_sleepy",
+        "far": "character.lumi_sleepy"
+      }
+    },
+    {
+      "id": "character.lumi_worried",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-worried.svg",
+      "tags": ["lumi", "companion", "emotion", "worried"],
+      "placeholder": { "label": "Lumi Worried", "primary": "#fff28b", "secondary": "#d8ffff" },
+      "lod": {
+        "near": "character.lumi_worried",
+        "medium": "character.lumi_worried",
+        "far": "character.lumi_worried"
+      }
+    },
+    {
+      "id": "character.lumi_celebrating",
+      "category": "characters",
+      "kind": "sprite",
+      "src": "/assets/characters/lumi/lumi-celebrating.svg",
+      "tags": ["lumi", "companion", "emotion", "celebrating"],
+      "placeholder": {
+        "label": "Lumi Celebrating",
+        "primary": "#fff28b",
+        "secondary": "#ffd96a"
+      },
+      "lod": {
+        "near": "character.lumi_celebrating",
+        "medium": "character.lumi_celebrating",
+        "far": "character.lumi_celebrating"
+      }
+    },
+    {
+      "id": "character.lumi_glow",
+      "category": "characters",
+      "kind": "effect",
+      "src": "/assets/characters/lumi/lumi-glow.svg",
+      "tags": ["lumi", "companion", "glow", "bloom_ready"],
+      "placeholder": { "label": "Lumi Glow", "primary": "#fff4ae", "secondary": "#a9f1d4" },
+      "lod": {
+        "near": "character.lumi_glow",
+        "medium": "character.lumi_glow",
+        "far": "character.lumi_glow"
+      }
+    },
+    {
+      "id": "character.lumi_trail",
+      "category": "characters",
+      "kind": "effect",
+      "src": "/assets/characters/lumi/lumi-trail.svg",
+      "tags": ["lumi", "companion", "trail", "motion"],
+      "placeholder": { "label": "Lumi Trail", "primary": "#a9f1d4", "secondary": "#fff4ae" },
+      "lod": {
+        "near": "character.lumi_trail",
+        "medium": "character.lumi_trail",
+        "far": "character.lumi_trail"
+      }
     },
     {
       "id": "character.npc_meadow_keeper",

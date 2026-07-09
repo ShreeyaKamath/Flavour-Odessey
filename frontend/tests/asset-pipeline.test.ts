@@ -25,6 +25,15 @@ describe("production art asset pipeline", () => {
     expect(ids).toEqual(expect.arrayContaining(["environment.windmill"]));
     expect(ids).toEqual(expect.arrayContaining(["environment.recipe_shrine"]));
     expect(ids).toEqual(expect.arrayContaining(["character.lumi"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_idle"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_happy"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_curious"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_excited"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_sleepy"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_worried"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_celebrating"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_glow"]));
+    expect(ids).toEqual(expect.arrayContaining(["character.lumi_trail"]));
     expect(ids).toEqual(expect.arrayContaining(["character.player"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.golden_vanilla_bloom"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.chocolate_drizzle"]));
@@ -40,6 +49,9 @@ describe("production art asset pipeline", () => {
 
     expect(tree.placeholder).toBe(true);
     expect(tree.url).toContain("data:image/svg+xml");
+    expect(assets.resolve("character.lumi_excited").url).toBe(
+      "/assets/characters/lumi/lumi-excited.svg"
+    );
     expect(assets.byCategory("environment").length).toBeGreaterThan(10);
   });
 
