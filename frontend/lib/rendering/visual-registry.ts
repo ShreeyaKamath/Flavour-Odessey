@@ -143,6 +143,10 @@ export const visualBindings = {
     assetId: "character.lumi_worried",
     id: "lumi_worried",
     layer: "character",
+  meadow_background: {
+    assetId: "environment.meadow_background",
+    id: "meadow_background",
+    layer: "background",
     preload: true
   },
   meadow_keeper: {
@@ -234,6 +238,12 @@ export const visualBindings = {
     id: "steam",
     layer: "effect",
     preload: false
+  },
+  sky: {
+    assetId: "environment.sky",
+    id: "sky",
+    layer: "background",
+    preload: true
   },
   tree: {
     assetId: "environment.tree",

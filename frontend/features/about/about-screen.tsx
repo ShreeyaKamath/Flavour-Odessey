@@ -30,7 +30,7 @@ export function AboutScreen() {
     >
       <div className="space-y-6">
         <div className="flex flex-wrap items-center gap-4">
-          <LogoPlaceholder />
+          <LogoPlaceholder priority />
           <div>
             <h2 className="font-display text-2xl font-semibold text-foreground">Flavor Odyssey</h2>
             <p className="mt-1 text-sm text-muted-foreground">

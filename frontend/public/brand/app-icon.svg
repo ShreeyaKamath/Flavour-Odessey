@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Flavor Odyssey app icon placeholder</title>
+  <desc id="desc">A replaceable app icon showing a magical scoop and the letters FO.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="38%" r="64%">
+      <stop stop-color="#fff8da"/>
+      <stop offset=".58" stop-color="#76cdbc"/>
+      <stop offset="1" stop-color="#955438"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#278b80"/>
+  <circle cx="256" cy="220" r="150" fill="url(#glow)" stroke="#fff8da" stroke-width="14"/>
+  <path d="M198 336h116l-58 100z" fill="#f4dcaa" stroke="#4d3426" stroke-width="10" stroke-linejoin="round"/>
+  <text x="256" y="266" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="104" font-weight="700" fill="#4d3426">FO</text>
+</svg>

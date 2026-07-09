@@ -43,15 +43,20 @@ describe("production art asset pipeline", () => {
     expect(ids).toEqual(expect.arrayContaining(["effect.water_ripple"]));
   });
 
-  it("resolves placeholder-safe assets until final artwork is supplied", () => {
+  it("resolves replaceable local assets with generated fallback placeholders", () => {
     const assets = new AssetManager();
     const tree = assets.resolve("environment.tree");
+    const sky = assets.resolve("environment.sky");
 
     expect(tree.placeholder).toBe(true);
     expect(tree.url).toContain("data:image/svg+xml");
     expect(assets.resolve("character.lumi_excited").url).toBe(
       "/assets/characters/lumi/lumi-excited.svg"
     );
+    expect(tree.placeholder).toBe(false);
+    expect(tree.url).toBe("/assets/environment/joy-meadow/tree.svg");
+    expect(sky.url).toBe("/assets/environment/joy-meadow/sky.svg");
+    expect(assets.placeholderUrl("environment.tree")).toContain("data:image/svg+xml");
     expect(assets.byCategory("environment").length).toBeGreaterThan(10);
   });
 
@@ -106,6 +111,6 @@ describe("production art asset pipeline", () => {
 
     expect(visual.lod).toBe("far");
     expect(visual.binding.assetId).toBe("environment.windmill");
-    expect(preloaded.every((asset) => asset.placeholder)).toBe(true);
+    expect(preloaded.every((asset) => asset.url.length > 0)).toBe(true);
   });
 });

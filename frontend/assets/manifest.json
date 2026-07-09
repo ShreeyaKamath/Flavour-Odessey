@@ -10,10 +10,32 @@
   ],
   "assets": [
     {
+      "id": "environment.sky",
+      "category": "environment",
+      "kind": "texture",
+      "src": "/assets/environment/joy-meadow/sky.svg",
+      "tags": ["joy_meadow", "sky", "background", "weather"],
+      "placeholder": { "label": "Sky", "primary": "#8fd6ff", "secondary": "#fff4c7" },
+      "lod": { "near": "environment.sky", "medium": "environment.sky", "far": "environment.sky" }
+    },
+    {
+      "id": "environment.meadow_background",
+      "category": "environment",
+      "kind": "texture",
+      "src": "/assets/environment/joy-meadow/meadow-background.svg",
+      "tags": ["joy_meadow", "meadow", "background", "parallax"],
+      "placeholder": { "label": "Meadow", "primary": "#79c86a", "secondary": "#f4dcaa" },
+      "lod": {
+        "near": "environment.meadow_background",
+        "medium": "environment.meadow_background",
+        "far": "environment.meadow_background"
+      }
+    },
+    {
       "id": "environment.tree",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/tree.svg",
       "tags": ["joy_meadow", "tree", "lod"],
       "placeholder": { "label": "Tree", "primary": "#4d965b", "secondary": "#76543c" },
       "lod": { "near": "environment.tree", "medium": "environment.tree", "far": "environment.tree" }
@@ -22,7 +44,7 @@
       "id": "environment.grass",
       "category": "environment",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/meadow-background.svg",
       "tags": ["joy_meadow", "grass", "wind"],
       "placeholder": { "label": "Grass", "primary": "#68ad65", "secondary": "#3f8755" },
       "lod": {
@@ -35,7 +57,7 @@
       "id": "environment.flower",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/flower.svg",
       "tags": ["joy_meadow", "flower", "wind"],
       "placeholder": { "label": "Flower", "primary": "#f38ca7", "secondary": "#ffd45c" },
       "lod": {
@@ -48,7 +70,7 @@
       "id": "environment.cloud",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/cloud.svg",
       "tags": ["joy_meadow", "cloud", "parallax"],
       "placeholder": { "label": "Cloud", "primary": "#fff7e8", "secondary": "#d8ffff" },
       "lod": {
@@ -61,7 +83,7 @@
       "id": "environment.water",
       "category": "environment",
       "kind": "material",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/river.svg",
       "tags": ["joy_meadow", "water", "reflection"],
       "placeholder": { "label": "Water", "primary": "#65c5cf", "secondary": "#d8ffff" },
       "lod": {
@@ -74,7 +96,7 @@
       "id": "environment.bridge",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/bridge.svg",
       "tags": ["joy_meadow", "landmark", "bridge"],
       "placeholder": { "label": "Bridge", "primary": "#a9784e", "secondary": "#f4dcaa" },
       "lod": {
@@ -87,7 +109,7 @@
       "id": "environment.windmill",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/windmill.svg",
       "tags": ["joy_meadow", "landmark", "windmill"],
       "placeholder": { "label": "Windmill", "primary": "#f7dca2", "secondary": "#e98586" },
       "lod": {
@@ -100,7 +122,7 @@
       "id": "environment.river",
       "category": "environment",
       "kind": "material",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/river.svg",
       "tags": ["joy_meadow", "river", "water"],
       "placeholder": { "label": "River", "primary": "#65c5cf", "secondary": "#d8ffff" },
       "lod": {
@@ -113,7 +135,7 @@
       "id": "environment.recipe_shrine",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/recipe-shrine.svg",
       "tags": ["joy_meadow", "landmark", "recipe_shrine"],
       "placeholder": { "label": "Recipe Shrine", "primary": "#f4dcaa", "secondary": "#ffd96a" },
       "lod": {
@@ -126,7 +148,7 @@
       "id": "environment.journal_tree",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/journal-tree.svg",
       "tags": ["joy_meadow", "landmark", "journal_tree"],
       "placeholder": { "label": "Journal Tree", "primary": "#4d965b", "secondary": "#ffd96a" },
       "lod": {
@@ -139,7 +161,7 @@
       "id": "environment.berry_bush",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/tree.svg",
       "tags": ["joy_meadow", "berry_bush", "plant"],
       "placeholder": { "label": "Berry Bush", "primary": "#4d965b", "secondary": "#c54f73" },
       "lod": {
@@ -152,7 +174,7 @@
       "id": "environment.npc_house",
       "category": "environment",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/environment/joy-meadow/meadow-keeper-house.svg",
       "tags": ["joy_meadow", "npc_house", "structure"],
       "placeholder": { "label": "NPC House", "primary": "#fff0c2", "secondary": "#e98586" },
       "lod": {

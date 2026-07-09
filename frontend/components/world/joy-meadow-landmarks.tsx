@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group } from "three";
 
+import { useAssetTexture } from "@/components/world/use-asset-texture";
 import {
   environmentMotion,
   joyMeadowLandmarks,
@@ -25,6 +26,7 @@ function landmarkPosition(id: LandmarkId): [number, number, number] {
 
 function Windmill({ paused, reducedMotion }: Omit<JoyMeadowLandmarksProps, "restored">) {
   const blades = useRef<Group>(null);
+  const { texture: windmillTexture } = useAssetTexture("environment.windmill");
 
   useFrame((_, delta) => {
     if (!blades.current || paused || reducedMotion) {
@@ -37,11 +39,19 @@ function Windmill({ paused, reducedMotion }: Omit<JoyMeadowLandmarksProps, "rest
     <group position={landmarkPosition("windmill")}>
       <mesh castShadow position={[0, 1.05, 0]}>
         <cylinderGeometry args={[0.48, 0.7, 2.1, 10]} />
-        <meshStandardMaterial color={joyMeadowPalette.windmill} roughness={0.88} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.windmill}
+          map={windmillTexture ?? undefined}
+          roughness={0.88}
+        />
       </mesh>
       <mesh castShadow position={[0, 2.25, 0]}>
         <coneGeometry args={[0.76, 0.72, 10]} />
-        <meshStandardMaterial color={joyMeadowPalette.cottageRoof} roughness={0.8} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.cottageRoof}
+          map={windmillTexture ?? undefined}
+          roughness={0.8}
+        />
       </mesh>
       <mesh position={[0, 1.05, 0.62]} ref={blades}>
         <sphereGeometry args={[0.14, 10, 10]} />
@@ -66,12 +76,18 @@ function Windmill({ paused, reducedMotion }: Omit<JoyMeadowLandmarksProps, "rest
 }
 
 function SmallBridge() {
+  const { texture: bridgeTexture } = useAssetTexture("environment.bridge");
+
   return (
     <group position={landmarkPosition("small_bridge")}>
       {[-0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9].map((x) => (
         <mesh castShadow key={x} position={[x, 0, 0]}>
           <boxGeometry args={[0.26, 0.12, 1.85]} />
-          <meshStandardMaterial color={joyMeadowPalette.bridge} roughness={0.92} />
+          <meshStandardMaterial
+            color={joyMeadowPalette.bridge}
+            map={bridgeTexture ?? undefined}
+            roughness={0.92}
+          />
         </mesh>
       ))}
       {[-1.08, 1.08].map((x) => (
@@ -91,11 +107,17 @@ function SmallBridge() {
 }
 
 function IceCreamTree() {
+  const { texture: treeTexture } = useAssetTexture("environment.tree");
+
   return (
     <group position={landmarkPosition("ice_cream_tree")}>
       <mesh castShadow position={[0, 1, 0]}>
         <cylinderGeometry args={[0.23, 0.38, 2, 8]} />
-        <meshStandardMaterial color={joyMeadowPalette.bark} roughness={0.95} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.bark}
+          map={treeTexture ?? undefined}
+          roughness={0.95}
+        />
       </mesh>
       <mesh castShadow position={[-0.45, 2.05, 0]} scale={1.1}>
         <sphereGeometry args={[0.68, 18, 14]} />
@@ -114,15 +136,25 @@ function IceCreamTree() {
 }
 
 function MeadowKeeperHouse() {
+  const { texture: houseTexture } = useAssetTexture("environment.npc_house");
+
   return (
     <group position={landmarkPosition("meadow_keeper_house")}>
       <mesh castShadow position={[0, 0.72, 0]}>
         <boxGeometry args={[1.75, 1.45, 1.5]} />
-        <meshStandardMaterial color={joyMeadowPalette.cottage} roughness={0.9} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.cottage}
+          map={houseTexture ?? undefined}
+          roughness={0.9}
+        />
       </mesh>
       <mesh castShadow position={[0, 1.7, 0]} rotation={[0, Math.PI / 4, 0]}>
         <coneGeometry args={[1.45, 1.05, 4]} />
-        <meshStandardMaterial color={joyMeadowPalette.cottageRoof} roughness={0.85} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.cottageRoof}
+          map={houseTexture ?? undefined}
+          roughness={0.85}
+        />
       </mesh>
       <mesh position={[0, 0.55, 0.77]}>
         <boxGeometry args={[0.46, 0.86, 0.05]} />
@@ -143,11 +175,17 @@ function MeadowKeeperHouse() {
 }
 
 function RecipeShrine({ restored }: { restored: boolean }) {
+  const { texture: shrineTexture } = useAssetTexture("environment.recipe_shrine");
+
   return (
     <group position={landmarkPosition("recipe_shrine")}>
       <mesh receiveShadow position={[0, 0.12, 0]}>
         <cylinderGeometry args={[0.95, 1.1, 0.24, 10]} />
-        <meshStandardMaterial color={joyMeadowPalette.shrine} roughness={0.78} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.shrine}
+          map={shrineTexture ?? undefined}
+          roughness={0.78}
+        />
       </mesh>
       {[-0.58, 0.58].map((x) => (
         <mesh castShadow key={x} position={[x, 0.78, 0]}>
@@ -179,6 +217,7 @@ function RecipeShrine({ restored }: { restored: boolean }) {
 
 function JournalTree({ paused, reducedMotion }: Omit<JoyMeadowLandmarksProps, "restored">) {
   const canopy = useRef<Group>(null);
+  const { texture: journalTreeTexture } = useAssetTexture("environment.journal_tree");
 
   useFrame(({ clock }) => {
     if (!canopy.current || paused || reducedMotion) {
@@ -192,12 +231,20 @@ function JournalTree({ paused, reducedMotion }: Omit<JoyMeadowLandmarksProps, "r
     <group position={landmarkPosition("journal_tree")}>
       <mesh castShadow position={[0, 1.25, 0]}>
         <cylinderGeometry args={[0.28, 0.5, 2.5, 9]} />
-        <meshStandardMaterial color={joyMeadowPalette.bark} roughness={0.98} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.bark}
+          map={journalTreeTexture ?? undefined}
+          roughness={0.98}
+        />
       </mesh>
       <group position={[0, 2.35, 0]} ref={canopy}>
         <mesh castShadow>
           <dodecahedronGeometry args={[1.15, 1]} />
-          <meshStandardMaterial color={joyMeadowPalette.leaf} roughness={0.88} />
+          <meshStandardMaterial
+            color={joyMeadowPalette.leaf}
+            map={journalTreeTexture ?? undefined}
+            roughness={0.88}
+          />
         </mesh>
         <mesh position={[0.7, -0.05, 0.1]} scale={0.72}>
           <dodecahedronGeometry args={[1, 1]} />

@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group, Mesh, MeshStandardMaterial } from "three";
 
+import { useAssetTexture } from "@/components/world/use-asset-texture";
 import { environmentMotion, joyMeadowPalette } from "@/lib/world/joy-meadow-config";
 import type { LivingWorldSnapshot } from "@/lib/world/weather-system";
 
@@ -17,6 +18,7 @@ type AnimatedWaterProps = {
 export function AnimatedWater({ paused, reducedMotion, world }: AnimatedWaterProps) {
   const river = useRef<Mesh>(null);
   const highlights = useRef<Group>(null);
+  const { texture: riverTexture } = useAssetTexture("environment.river");
 
   useFrame(({ clock }, delta) => {
     if (paused || reducedMotion) {
@@ -48,6 +50,7 @@ export function AnimatedWater({ paused, reducedMotion, world }: AnimatedWaterPro
         <planeGeometry args={[2.35, 15, 8, 24]} />
         <meshStandardMaterial
           color={joyMeadowPalette.river}
+          map={riverTexture ?? undefined}
           metalness={0.08}
           opacity={0.74 + world.waterReflection * 0.12}
           roughness={0.2}

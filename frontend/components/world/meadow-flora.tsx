@@ -2,8 +2,9 @@
 
 import { useFrame } from "@react-three/fiber";
 import { useLayoutEffect, useMemo, useRef } from "react";
-import { Group, InstancedMesh, Object3D } from "three";
+import { Group, InstancedMesh, Object3D, type Texture } from "three";
 
+import { useAssetTexture } from "@/components/world/use-asset-texture";
 import {
   environmentCounts,
   environmentMotion,
@@ -44,6 +45,7 @@ function useFieldInstances(
 
 function GrassField({ paused, reducedMotion, world }: Omit<MeadowFloraProps, "restored">) {
   const grass = useRef<InstancedMesh>(null);
+  const { texture: grassTexture } = useAssetTexture("environment.grass");
   const positions = useMemo(() => generateFieldPositions(environmentCounts.grass, 103, 14, 13), []);
   useFieldInstances(grass, positions, 0.18);
 
@@ -60,16 +62,22 @@ function GrassField({ paused, reducedMotion, world }: Omit<MeadowFloraProps, "re
   return (
     <instancedMesh args={[undefined, undefined, positions.length]} receiveShadow ref={grass}>
       <coneGeometry args={[0.035, 0.38, 3]} />
-      <meshStandardMaterial color={joyMeadowPalette.grassDark} roughness={0.9} />
+      <meshStandardMaterial
+        color={joyMeadowPalette.grassDark}
+        map={grassTexture ?? undefined}
+        roughness={0.9}
+      />
     </instancedMesh>
   );
 }
 
 function FlowerPatch({
   color,
+  flowerTexture,
   positions
 }: {
   color: string;
+  flowerTexture: Texture | null;
   positions: ReturnType<typeof generateFieldPositions>;
 }) {
   const blooms = useRef<InstancedMesh>(null);
@@ -78,7 +86,7 @@ function FlowerPatch({
   return (
     <instancedMesh args={[undefined, undefined, positions.length]} castShadow ref={blooms}>
       <dodecahedronGeometry args={[0.095, 0]} />
-      <meshStandardMaterial color={color} roughness={0.72} />
+      <meshStandardMaterial color={color} map={flowerTexture ?? undefined} roughness={0.72} />
     </instancedMesh>
   );
 }
@@ -86,6 +94,7 @@ function FlowerPatch({
 function FlowerField({ paused, reducedMotion, restored, world }: MeadowFloraProps) {
   const flowers = useRef<Group>(null);
   const stems = useRef<InstancedMesh>(null);
+  const { texture: flowerTexture } = useAssetTexture("environment.flower");
   const positions = useMemo(
     () => generateFieldPositions(restored ? environmentCounts.flowers : 36, 211, 13, 11),
     [restored]
@@ -119,44 +128,80 @@ function FlowerField({ paused, reducedMotion, restored, world }: MeadowFloraProp
         <cylinderGeometry args={[0.018, 0.026, 0.4, 5]} />
         <meshStandardMaterial color={joyMeadowPalette.grassDark} roughness={0.9} />
       </instancedMesh>
-      <FlowerPatch color={joyMeadowPalette.flowerGold} positions={groups[0]} />
-      <FlowerPatch color={joyMeadowPalette.flowerPink} positions={groups[1]} />
-      <FlowerPatch color={joyMeadowPalette.flowerWhite} positions={groups[2]} />
+      <FlowerPatch
+        color={joyMeadowPalette.flowerGold}
+        flowerTexture={flowerTexture}
+        positions={groups[0]}
+      />
+      <FlowerPatch
+        color={joyMeadowPalette.flowerPink}
+        flowerTexture={flowerTexture}
+        positions={groups[1]}
+      />
+      <FlowerPatch
+        color={joyMeadowPalette.flowerWhite}
+        flowerTexture={flowerTexture}
+        positions={groups[2]}
+      />
     </group>
   );
 }
 
 function StoryTree({
   position,
-  scale = 1
+  scale = 1,
+  treeTexture
 }: {
   position: readonly [number, number, number];
   scale?: number;
+  treeTexture: Texture | null;
 }) {
   return (
     <group position={position} scale={scale}>
       <mesh castShadow position={[0, 0.8, 0]}>
         <cylinderGeometry args={[0.17, 0.28, 1.6, 7]} />
-        <meshStandardMaterial color={joyMeadowPalette.bark} roughness={1} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.bark}
+          map={treeTexture ?? undefined}
+          roughness={1}
+        />
       </mesh>
       <mesh castShadow position={[0, 1.75, 0]}>
         <dodecahedronGeometry args={[0.78, 1]} />
-        <meshStandardMaterial color={joyMeadowPalette.leaf} roughness={0.86} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.leaf}
+          map={treeTexture ?? undefined}
+          roughness={0.86}
+        />
       </mesh>
       <mesh castShadow position={[0.45, 1.65, 0.05]} scale={0.72}>
         <dodecahedronGeometry args={[0.68, 1]} />
-        <meshStandardMaterial color={joyMeadowPalette.leafLight} roughness={0.86} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.leafLight}
+          map={treeTexture ?? undefined}
+          roughness={0.86}
+        />
       </mesh>
     </group>
   );
 }
 
-function BerryBush({ position }: { position: readonly [number, number, number] }) {
+function BerryBush({
+  bushTexture,
+  position
+}: {
+  bushTexture: Texture | null;
+  position: readonly [number, number, number];
+}) {
   return (
     <group position={position}>
       <mesh castShadow position={[0, 0.32, 0]}>
         <dodecahedronGeometry args={[0.42, 1]} />
-        <meshStandardMaterial color={joyMeadowPalette.leaf} roughness={0.9} />
+        <meshStandardMaterial
+          color={joyMeadowPalette.leaf}
+          map={bushTexture ?? undefined}
+          roughness={0.9}
+        />
       </mesh>
       {(
         [
@@ -177,6 +222,8 @@ function BerryBush({ position }: { position: readonly [number, number, number] }
 /** Renders instanced grass, wind-swept flowers, trees, and berry bushes. */
 export function MeadowFlora(props: MeadowFloraProps) {
   const trees = useRef<Group>(null);
+  const { texture: bushTexture } = useAssetTexture("environment.berry_bush");
+  const { texture: treeTexture } = useAssetTexture("environment.tree");
 
   useFrame(({ clock }) => {
     if (!trees.current || props.paused || props.reducedMotion) {
@@ -199,11 +246,12 @@ export function MeadowFlora(props: MeadowFloraProps) {
             key={position.join("-")}
             position={position}
             scale={0.85 + (index % 3) * 0.08}
+            treeTexture={treeTexture}
           />
         ))}
       </group>
       {joyMeadowBushPositions.map((position) => (
-        <BerryBush key={position.join("-")} position={position} />
+        <BerryBush bushTexture={bushTexture} key={position.join("-")} position={position} />
       ))}
     </>
   );

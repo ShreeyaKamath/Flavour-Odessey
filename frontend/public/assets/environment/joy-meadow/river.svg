@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 1024" role="img" aria-label="Joy Meadow river placeholder">
+  <defs>
+    <linearGradient id="river" x1="0" x2="1">
+      <stop stop-color="#65c5cf"/>
+      <stop offset=".5" stop-color="#a9f1d4"/>
+      <stop offset="1" stop-color="#4fb4c2"/>
+    </linearGradient>
+  </defs>
+  <path d="M246 0c-92 146 62 206-30 344-88 131-72 205 28 324 110 130-8 204-20 356h288V0z" fill="url(#river)"/>
+  <path d="M318 90c-65 135 38 206-30 306-60 88-26 170 58 238" fill="none" stroke="#d8ffff" stroke-width="26" stroke-linecap="round" opacity=".62"/>
+  <path d="M238 554c84 118-4 188-22 306" fill="none" stroke="#d8ffff" stroke-width="20" stroke-linecap="round" opacity=".45"/>
+</svg>
