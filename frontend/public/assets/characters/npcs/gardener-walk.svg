@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Gardener walk sprite placeholder">
+  <circle cx="96" cy="62" r="32" fill="#ffd45c"/>
+  <path d="M58 48c20-24 56-24 76 0z" fill="#4d965b"/>
+  <path d="M50 206c10-74 28-110 46-110s36 36 46 110z" fill="#68ad65"/>
+  <path d="M78 210l-24 28M112 210l24 28" stroke="#76543c" stroke-width="16" stroke-linecap="round"/>
+</svg>

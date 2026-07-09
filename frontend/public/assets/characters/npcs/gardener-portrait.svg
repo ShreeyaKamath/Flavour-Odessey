@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Gardener portrait placeholder">
+  <rect width="256" height="256" rx="56" fill="#d8ffff"/>
+  <circle cx="128" cy="106" r="46" fill="#ffd45c"/>
+  <path d="M78 88c24-32 76-34 100 0-22-10-78-8-100 0z" fill="#4d965b"/>
+  <path d="M58 224c18-52 50-76 70-76s52 24 70 76z" fill="#68ad65"/>
+  <circle cx="112" cy="108" r="7" fill="#3a3328"/>
+  <circle cx="144" cy="108" r="7" fill="#3a3328"/>
+  <path d="M112 132c11 8 21 8 32 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+  <path d="M172 58c18-18 38-15 48 10-22 4-38 0-48-10z" fill="#87d8bb"/>
+</svg>

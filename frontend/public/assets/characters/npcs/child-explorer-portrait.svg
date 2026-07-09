@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Child Explorer portrait placeholder">
+  <rect width="256" height="256" rx="56" fill="#b7d8ff"/>
+  <circle cx="128" cy="112" r="42" fill="#ffd45c"/>
+  <path d="M78 92c20-38 80-38 100 0-26-14-74-14-100 0z" fill="#76543c"/>
+  <path d="M62 224c16-46 48-70 66-70s50 24 66 70z" fill="#f38ca7"/>
+  <circle cx="112" cy="112" r="8" fill="#3a3328"/>
+  <circle cx="146" cy="112" r="8" fill="#3a3328"/>
+  <path d="M106 136c16 14 30 14 46 0" fill="none" stroke="#3a3328" stroke-width="7" stroke-linecap="round"/>
+  <path d="M72 70h112" stroke="#ffd96a" stroke-width="14" stroke-linecap="round"/>
+</svg>

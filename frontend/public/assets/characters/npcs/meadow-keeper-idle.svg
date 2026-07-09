@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 256" role="img" aria-label="Meadow Keeper idle sprite placeholder">
+  <circle cx="96" cy="56" r="34" fill="#ffd45c"/>
+  <path d="M46 220c8-86 30-130 50-130s42 44 50 130z" fill="#4d965b"/>
+  <path d="M64 50c20-28 48-28 64 0" fill="none" stroke="#76543c" stroke-width="18" stroke-linecap="round"/>
+</svg>

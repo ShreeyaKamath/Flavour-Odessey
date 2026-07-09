@@ -143,6 +143,8 @@ export const visualBindings = {
     assetId: "character.lumi_worried",
     id: "lumi_worried",
     layer: "character",
+    preload: true
+  },
   meadow_background: {
     assetId: "environment.meadow_background",
     id: "meadow_background",
@@ -161,11 +163,125 @@ export const visualBindings = {
     layer: "effect",
     preload: false
   },
+  npc_baker: {
+    assetId: "character.npc_baker",
+    id: "npc_baker",
+    layer: "character",
+    preload: true
+  },
+  npc_baker_idle: {
+    assetId: "character.npc_baker_idle",
+    id: "npc_baker_idle",
+    layer: "character",
+    preload: false
+  },
+  npc_baker_portrait: {
+    assetId: "portrait.npc_baker",
+    id: "npc_baker_portrait",
+    layer: "character",
+    preload: true
+  },
+  npc_baker_walk: {
+    assetId: "character.npc_baker_walk",
+    id: "npc_baker_walk",
+    layer: "character",
+    preload: false
+  },
+  npc_child_explorer: {
+    assetId: "character.npc_child_explorer",
+    id: "npc_child_explorer",
+    layer: "character",
+    preload: true
+  },
+  npc_child_explorer_idle: {
+    assetId: "character.npc_child_explorer_idle",
+    id: "npc_child_explorer_idle",
+    layer: "character",
+    preload: false
+  },
+  npc_child_explorer_portrait: {
+    assetId: "portrait.npc_child_explorer",
+    id: "npc_child_explorer_portrait",
+    layer: "character",
+    preload: true
+  },
+  npc_child_explorer_walk: {
+    assetId: "character.npc_child_explorer_walk",
+    id: "npc_child_explorer_walk",
+    layer: "character",
+    preload: false
+  },
+  npc_gardener: {
+    assetId: "character.npc_gardener",
+    id: "npc_gardener",
+    layer: "character",
+    preload: true
+  },
+  npc_gardener_idle: {
+    assetId: "character.npc_gardener_idle",
+    id: "npc_gardener_idle",
+    layer: "character",
+    preload: false
+  },
+  npc_gardener_portrait: {
+    assetId: "portrait.npc_gardener",
+    id: "npc_gardener_portrait",
+    layer: "character",
+    preload: true
+  },
+  npc_gardener_walk: {
+    assetId: "character.npc_gardener_walk",
+    id: "npc_gardener_walk",
+    layer: "character",
+    preload: false
+  },
   npc_house: {
     assetId: "environment.npc_house",
     id: "npc_house",
     layer: "environment",
     preload: true
+  },
+  npc_meadow_keeper_idle: {
+    assetId: "character.npc_meadow_keeper_idle",
+    id: "npc_meadow_keeper_idle",
+    layer: "character",
+    preload: false
+  },
+  npc_meadow_keeper_portrait: {
+    assetId: "portrait.npc_meadow_keeper",
+    id: "npc_meadow_keeper_portrait",
+    layer: "character",
+    preload: true
+  },
+  npc_meadow_keeper_walk: {
+    assetId: "character.npc_meadow_keeper_walk",
+    id: "npc_meadow_keeper_walk",
+    layer: "character",
+    preload: false
+  },
+  npc_traveling_merchant: {
+    assetId: "character.npc_traveling_merchant",
+    id: "npc_traveling_merchant",
+    layer: "character",
+    preload: true
+  },
+  npc_traveling_merchant_idle: {
+    assetId: "character.npc_traveling_merchant_idle",
+    id: "npc_traveling_merchant_idle",
+    layer: "character",
+    preload: false
+  },
+  npc_traveling_merchant_portrait: {
+    assetId: "portrait.npc_traveling_merchant",
+    id: "npc_traveling_merchant_portrait",
+    layer: "character",
+    preload: true
+  },
+  npc_traveling_merchant_walk: {
+    assetId: "character.npc_traveling_merchant_walk",
+    id: "npc_traveling_merchant_walk",
+    layer: "character",
+    preload: false
   },
   parchment_panel: {
     assetId: "ui.parchment_texture",
