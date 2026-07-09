@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Gold border texture placeholder">
+  <defs>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#fff2a8" />
+      <stop offset=".42" stop-color="#d89b3d" />
+      <stop offset="1" stop-color="#8c5b22" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="none" stroke="url(#gold)" stroke-width="34" />
+  <rect x="54" y="54" width="404" height="404" fill="none" stroke="#fff6c7" stroke-opacity=".52" stroke-width="8" />
+  <g fill="#fff4b7" opacity=".7">
+    <circle cx="64" cy="64" r="18" />
+    <circle cx="448" cy="64" r="18" />
+    <circle cx="64" cy="448" r="18" />
+    <circle cx="448" cy="448" r="18" />
+  </g>
+</svg>

@@ -734,16 +734,25 @@
       "id": "ui.book_texture",
       "category": "ui",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/ui/storybook/parchment-texture.svg",
       "tags": ["storybook", "book", "texture"],
       "placeholder": { "label": "Book", "primary": "#f4dcaa", "secondary": "#76543c" },
       "lod": { "near": "ui.book_texture", "medium": "ui.book_texture", "far": "ui.book_texture" }
     },
     {
+      "id": "ui.page_edge",
+      "category": "ui",
+      "kind": "texture",
+      "src": "/assets/ui/storybook/page-edge-texture.svg",
+      "tags": ["storybook", "page_edge", "book", "texture"],
+      "placeholder": { "label": "Page Edge", "primary": "#f4dcaa", "secondary": "#d99d42" },
+      "lod": { "near": "ui.page_edge", "medium": "ui.page_edge", "far": "ui.page_edge" }
+    },
+    {
       "id": "ui.ribbon_texture",
       "category": "ui",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/ui/storybook/ribbon-texture.svg",
       "tags": ["bookmark", "ribbon", "texture"],
       "placeholder": { "label": "Ribbon", "primary": "#c54f73", "secondary": "#ffd96a" },
       "lod": {
@@ -756,7 +765,7 @@
       "id": "ui.crystal_texture",
       "category": "ui",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/ui/storybook/crystal-texture.svg",
       "tags": ["settings", "crystal", "texture"],
       "placeholder": { "label": "Crystal", "primary": "#a9f1d4", "secondary": "#b7d8ff" },
       "lod": {
@@ -769,7 +778,7 @@
       "id": "ui.wood_texture",
       "category": "ui",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/ui/storybook/wood-panel-texture.svg",
       "tags": ["quest_board", "wood", "texture"],
       "placeholder": { "label": "Wood", "primary": "#76543c", "secondary": "#a9784e" },
       "lod": { "near": "ui.wood_texture", "medium": "ui.wood_texture", "far": "ui.wood_texture" }
@@ -778,7 +787,7 @@
       "id": "ui.parchment_texture",
       "category": "ui",
       "kind": "texture",
-      "src": null,
+      "src": "/assets/ui/storybook/parchment-texture.svg",
       "tags": ["parchment", "panel", "texture"],
       "placeholder": { "label": "Parchment", "primary": "#f4dcaa", "secondary": "#fff8da" },
       "lod": {
@@ -791,7 +800,7 @@
       "id": "ui.fantasy_border",
       "category": "ui",
       "kind": "sprite",
-      "src": null,
+      "src": "/assets/ui/storybook/gold-border-texture.svg",
       "tags": ["border", "storybook", "button"],
       "placeholder": { "label": "Border", "primary": "#ffd96a", "secondary": "#76543c" },
       "lod": {
@@ -801,10 +810,41 @@
       }
     },
     {
+      "id": "ui.gold_border",
+      "category": "ui",
+      "kind": "texture",
+      "src": "/assets/ui/storybook/gold-border-texture.svg",
+      "tags": ["gold", "border", "storybook", "texture"],
+      "placeholder": { "label": "Gold Border", "primary": "#ffd96a", "secondary": "#76543c" },
+      "lod": { "near": "ui.gold_border", "medium": "ui.gold_border", "far": "ui.gold_border" }
+    },
+    {
+      "id": "ui.bookmark_texture",
+      "category": "ui",
+      "kind": "texture",
+      "src": "/assets/ui/storybook/bookmark-texture.svg",
+      "tags": ["bookmark", "ribbon", "save", "texture"],
+      "placeholder": { "label": "Bookmark", "primary": "#c54f73", "secondary": "#ffd96a" },
+      "lod": {
+        "near": "ui.bookmark_texture",
+        "medium": "ui.bookmark_texture",
+        "far": "ui.bookmark_texture"
+      }
+    },
+    {
+      "id": "ui.ink_sparkle",
+      "category": "ui",
+      "kind": "texture",
+      "src": "/assets/ui/storybook/ink-sparkle-texture.svg",
+      "tags": ["ink", "sparkle", "storybook", "texture"],
+      "placeholder": { "label": "Ink Sparkle", "primary": "#ffd96a", "secondary": "#4d3426" },
+      "lod": { "near": "ui.ink_sparkle", "medium": "ui.ink_sparkle", "far": "ui.ink_sparkle" }
+    },
+    {
       "id": "icon.bookmark",
       "category": "icons",
       "kind": "icon",
-      "src": null,
+      "src": "/assets/ui/storybook/bookmark-texture.svg",
       "tags": ["bookmark", "save"],
       "placeholder": { "label": "Bookmark", "primary": "#c54f73", "secondary": "#ffd96a" },
       "lod": { "near": "icon.bookmark", "medium": "icon.bookmark", "far": "icon.bookmark" }

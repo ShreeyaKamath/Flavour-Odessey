@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Wood panel texture placeholder">
+  <defs>
+    <linearGradient id="wood" x1="0" x2="1">
+      <stop stop-color="#6b4328" />
+      <stop offset=".5" stop-color="#9f6c3d" />
+      <stop offset="1" stop-color="#57351f" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#wood)" />
+  <g fill="none" stroke="#f0c987" stroke-linecap="round" stroke-opacity=".2">
+    <path d="M28 68c80 35 122-35 202 0s121-33 250 0" stroke-width="10" />
+    <path d="M30 176c105-44 173 39 262 0 69-30 112 18 188 0" stroke-width="8" />
+    <path d="M28 318c92 34 151-22 235 0 84 23 120-36 221 0" stroke-width="9" />
+    <path d="M28 438c71-24 138 23 214 0 105-32 139 33 242 0" stroke-width="7" />
+  </g>
+  <circle cx="354" cy="230" r="48" fill="none" stroke="#3d2618" stroke-opacity=".28" stroke-width="10" />
+</svg>

@@ -101,7 +101,13 @@ body {
 
 .storybook-parchment {
   background:
-    var(--asset-parchment, linear-gradient(transparent, transparent)),
+    var(--storybook-page-edge-texture, linear-gradient(transparent, transparent)) right center /
+      4.5rem 100% no-repeat,
+    var(
+        --storybook-parchment-texture,
+        var(--asset-parchment, linear-gradient(transparent, transparent))
+      )
+      center / 18rem 18rem repeat,
     radial-gradient(circle at 16% 12%, rgb(var(--storybook-gold) / 0.22), transparent 12rem),
     radial-gradient(circle at 82% 20%, rgb(var(--storybook-crystal) / 0.16), transparent 13rem),
     linear-gradient(
@@ -109,11 +115,16 @@ body {
       rgb(var(--storybook-parchment)),
       rgb(var(--storybook-parchment-deep) / 0.72)
     );
-  background-blend-mode: soft-light, normal, normal, normal;
+  background-blend-mode: multiply, soft-light, normal, normal, normal;
 }
 
 .storybook-border {
   border: 0.125rem solid rgb(var(--color-border));
+  border-image: var(
+      --storybook-gold-border-texture,
+      linear-gradient(rgb(var(--color-border)), rgb(var(--color-border)))
+    )
+    34 / 0.125rem / 0 round;
   box-shadow:
     inset 0 0 0 0.125rem rgb(var(--color-surface-raised) / 0.34),
     0 1.25rem 3.5rem rgb(var(--storybook-ink) / 0.16);
@@ -121,17 +132,27 @@ body {
 
 .storybook-ink {
   color: rgb(var(--storybook-ink));
+  background-image:
+    var(--storybook-ink-sparkle-texture, linear-gradient(transparent, transparent)),
+    linear-gradient(currentColor, currentColor);
+  background-clip: text;
+  background-size:
+    8rem 8rem,
+    auto;
   text-shadow: 0 0 1rem rgb(var(--storybook-gold) / 0.2);
 }
 
 .storybook-dust {
   background-image:
+    var(--storybook-ink-sparkle-texture, linear-gradient(transparent, transparent)),
     radial-gradient(circle, rgb(var(--storybook-gold) / 0.32) 0 0.08rem, transparent 0.09rem),
     radial-gradient(circle, rgb(var(--storybook-crystal) / 0.22) 0 0.06rem, transparent 0.07rem);
   background-position:
+    center,
     0 0,
     1.25rem 1.75rem;
   background-size:
+    9rem 9rem,
     2.75rem 2.75rem,
     3.5rem 3.5rem;
 }

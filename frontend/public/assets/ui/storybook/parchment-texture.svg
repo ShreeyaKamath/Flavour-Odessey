@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Parchment texture placeholder">
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#fff5d9" />
+      <stop offset="1" stop-color="#e8c982" />
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence baseFrequency="0.85" numOctaves="3" seed="11" type="fractalNoise" />
+      <feColorMatrix values="0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.24 0 0 0 .18 0" />
+    </filter>
+  </defs>
+  <rect width="512" height="512" fill="url(#paper)" />
+  <rect width="512" height="512" filter="url(#grain)" opacity="0.55" />
+  <path d="M40 58c94 18 161-12 245 4 77 15 119-4 186 13" fill="none" stroke="#b9854d" stroke-linecap="round" stroke-opacity=".18" stroke-width="6" />
+  <path d="M34 418c115-24 164 23 251 2 68-16 120 12 191-8" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-opacity=".26" stroke-width="8" />
+</svg>

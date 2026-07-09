@@ -76,7 +76,18 @@ export type MaterialDescriptor = {
 };
 
 export type ThemeAssetRole =
-  "bookmark" | "book" | "border" | "button" | "crystal" | "parchment" | "ribbon" | "tabs" | "wood";
+  | "bookmark"
+  | "book"
+  | "border"
+  | "button"
+  | "crystal"
+  | "goldBorder"
+  | "inkSparkle"
+  | "pageEdge"
+  | "parchment"
+  | "ribbon"
+  | "tabs"
+  | "wood";
 
 export type ThemeAssetBinding = Record<ThemeAssetRole, string>;
 
