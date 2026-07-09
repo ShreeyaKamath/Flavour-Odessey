@@ -20,6 +20,11 @@ export function CrystalSettingsPanel({ children, className, title }: CrystalSett
       )}
       data-visual-element="crystal_panel"
       onMouseEnter={() => audioEvents.publish("CrystalSelected")}
+      style={{
+        backgroundImage:
+          "var(--storybook-crystal-texture), radial-gradient(circle at top right, rgb(var(--storybook-crystal) / 0.24), transparent 14rem), linear-gradient(135deg, rgb(var(--storybook-parchment)), rgb(var(--color-surface) / 0.86))",
+        backgroundSize: "18rem 18rem, auto, auto"
+      }}
     >
       <h2 className="storybook-ink font-display text-2xl font-semibold">{title}</h2>
       <div className="mt-4">{children}</div>

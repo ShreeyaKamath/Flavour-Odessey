@@ -47,6 +47,13 @@ describe("production art asset pipeline", () => {
     expect(ids).toEqual(expect.arrayContaining(["effect.snow"]));
     expect(ids).toEqual(expect.arrayContaining(["effect.steam"]));
     expect(ids).toEqual(expect.arrayContaining(["ui.parchment_texture"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.page_edge"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.ribbon_texture"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.bookmark_texture"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.crystal_texture"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.wood_texture"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.gold_border"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.ink_sparkle"]));
     expect(ids).toEqual(expect.arrayContaining(["effect.water_ripple"]));
   });
 
@@ -54,6 +61,7 @@ describe("production art asset pipeline", () => {
     const assets = new AssetManager();
     const tree = assets.resolve("environment.tree");
     const sky = assets.resolve("environment.sky");
+    const parchment = assets.resolve("ui.parchment_texture");
 
     expect(assets.resolve("character.lumi_excited").url).toBe(
       "/assets/characters/lumi/lumi-excited.svg"
@@ -64,6 +72,8 @@ describe("production art asset pipeline", () => {
     expect(tree.placeholder).toBe(false);
     expect(tree.url).toBe("/assets/environment/joy-meadow/tree.svg");
     expect(sky.url).toBe("/assets/environment/joy-meadow/sky.svg");
+    expect(parchment.placeholder).toBe(false);
+    expect(parchment.url).toBe("/assets/ui/storybook/parchment-texture.svg");
     expect(assets.placeholderUrl("environment.tree")).toContain("data:image/svg+xml");
     expect(assets.byCategory("environment").length).toBeGreaterThan(10);
   });
@@ -85,7 +95,11 @@ describe("production art asset pipeline", () => {
     const animation = new AnimationAtlasLoader().load("lumi_idle");
 
     expect(theme.assetId("parchment")).toBe("ui.parchment_texture");
-    expect(theme.cssVars()["--asset-book"]).toContain("data:image/svg+xml");
+    expect(theme.assetId("pageEdge")).toBe("ui.page_edge");
+    expect(theme.cssVars()["--asset-book"]).toContain("/assets/ui/storybook/parchment-texture.svg");
+    expect(theme.cssVars()["--storybook-page-edge-texture"]).toContain(
+      "/assets/ui/storybook/page-edge-texture.svg"
+    );
     expect(materials.get("golden_vanilla_bloom")).toMatchObject({
       assetId: "ice_cream.golden_vanilla_bloom",
       bloomLayer: true
@@ -103,7 +117,11 @@ describe("production art asset pipeline", () => {
     const imagePlan = createImageOptimizationPlan("ui.parchment_texture");
 
     expect(imagePlan).toHaveLength(12);
-    expect(imagePlan.every((candidate) => candidate.placeholder)).toBe(true);
+    expect(imagePlan.every((candidate) => candidate.src.length > 0)).toBe(true);
+    expect(imagePlan[0]).toMatchObject({
+      placeholder: false,
+      src: "/assets/ui/storybook/parchment-texture.svg"
+    });
     expect(resolveLodTier(4)).toBe("near");
     expect(resolveLodTier(18)).toBe("medium");
     expect(resolveLodTier(40)).toBe("far");

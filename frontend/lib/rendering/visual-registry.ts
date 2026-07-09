@@ -8,7 +8,7 @@ export const visualBindings = {
     preload: false
   },
   bookmark: {
-    assetId: "icon.bookmark",
+    assetId: "ui.bookmark_texture",
     id: "bookmark",
     layer: "ui",
     preload: true
@@ -20,7 +20,7 @@ export const visualBindings = {
     preload: true
   },
   button_border: {
-    assetId: "ui.fantasy_border",
+    assetId: "ui.gold_border",
     id: "button_border",
     layer: "ui",
     preload: true
@@ -37,6 +37,12 @@ export const visualBindings = {
     layer: "ui",
     preload: true
   },
+  crystal_texture: {
+    assetId: "ui.crystal_texture",
+    id: "crystal_texture",
+    layer: "ui",
+    preload: true
+  },
   dust: {
     assetId: "effect.dust",
     id: "dust",
@@ -44,7 +50,7 @@ export const visualBindings = {
     preload: false
   },
   fantasy_border: {
-    assetId: "ui.fantasy_border",
+    assetId: "ui.gold_border",
     id: "fantasy_border",
     layer: "ui",
     preload: true
@@ -67,6 +73,12 @@ export const visualBindings = {
     layer: "effect",
     preload: true
   },
+  gold_border: {
+    assetId: "ui.gold_border",
+    id: "gold_border",
+    layer: "ui",
+    preload: true
+  },
   golden_vanilla_bloom: {
     assetId: "ice_cream.golden_vanilla_bloom",
     id: "golden_vanilla_bloom",
@@ -77,6 +89,12 @@ export const visualBindings = {
     assetId: "environment.grass",
     id: "grass",
     layer: "environment",
+    preload: false
+  },
+  ink_sparkle: {
+    assetId: "ui.ink_sparkle",
+    id: "ink_sparkle",
+    layer: "ui",
     preload: false
   },
   journal_tree: {
@@ -283,9 +301,21 @@ export const visualBindings = {
     layer: "character",
     preload: false
   },
+  page_edge: {
+    assetId: "ui.page_edge",
+    id: "page_edge",
+    layer: "ui",
+    preload: true
+  },
   parchment_panel: {
     assetId: "ui.parchment_texture",
     id: "parchment_panel",
+    layer: "ui",
+    preload: true
+  },
+  parchment_texture: {
+    assetId: "ui.parchment_texture",
+    id: "parchment_texture",
     layer: "ui",
     preload: true
   },
@@ -316,6 +346,12 @@ export const visualBindings = {
   ribbon: {
     assetId: "ui.ribbon_texture",
     id: "ribbon",
+    layer: "ui",
+    preload: true
+  },
+  ribbon_texture: {
+    assetId: "ui.ribbon_texture",
+    id: "ribbon_texture",
     layer: "ui",
     preload: true
   },

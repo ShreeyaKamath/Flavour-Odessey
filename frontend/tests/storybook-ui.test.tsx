@@ -13,7 +13,7 @@ vi.mock("next/navigation", () => ({
 
 describe("storybook UI", () => {
   it("renders the storybook shell with bookmark navigation", () => {
-    render(
+    const { container } = render(
       <StorybookShell
         description="A parchment test spread."
         eyebrow="Storybook"
@@ -23,11 +23,16 @@ describe("storybook UI", () => {
       </StorybookShell>
     );
 
+    const shell = container.querySelector('[data-visual-element="storybook_shell"]');
+
     expect(
       screen.getByRole("heading", { level: 1, name: "Journal of Memories" })
     ).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "Storybook navigation" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Cookbook" })).toHaveAttribute("href", "/recipes");
+    expect(shell).toHaveStyle({
+      "--storybook-parchment-texture": 'url("/assets/ui/storybook/parchment-texture.svg")'
+    });
   });
 
   it("publishes magical tooltip and bookmark audio events", async () => {

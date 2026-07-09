@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Crystal texture placeholder">
+  <defs>
+    <linearGradient id="crystal" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#d7fff9" />
+      <stop offset=".48" stop-color="#86dbd6" />
+      <stop offset="1" stop-color="#5b8ebc" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#effffc" />
+  <path d="M256 24 468 184 398 464H114L44 184z" fill="url(#crystal)" opacity=".74" />
+  <path d="M256 24v440M44 184h424M114 464 256 184l142 280" fill="none" stroke="#ffffff" stroke-opacity=".48" stroke-width="8" />
+  <path d="M122 130c63 24 103 25 164 3" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-opacity=".55" stroke-width="14" />
+</svg>

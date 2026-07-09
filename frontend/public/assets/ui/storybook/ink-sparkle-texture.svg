@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Ink sparkle texture placeholder">
+  <rect width="512" height="512" fill="none" />
+  <g fill="#d99d42" opacity=".75">
+    <path d="M80 54 94 88l34 14-34 14-14 34-14-34-34-14 34-14z" />
+    <path d="M402 92l10 24 24 10-24 10-10 24-10-24-24-10 24-10z" />
+    <path d="M164 326l12 28 28 12-28 12-12 28-12-28-28-12 28-12z" />
+    <path d="M384 350l16 38 38 16-38 16-16 38-16-38-38-16 38-16z" />
+  </g>
+  <g fill="#4d3426" opacity=".2">
+    <circle cx="238" cy="108" r="10" />
+    <circle cx="306" cy="252" r="7" />
+    <circle cx="102" cy="426" r="6" />
+  </g>
+</svg>

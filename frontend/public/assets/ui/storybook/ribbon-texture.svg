@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" role="img" aria-label="Ribbon texture placeholder">
+  <defs>
+    <linearGradient id="ribbon" x1="0" x2="1">
+      <stop stop-color="#8e3540" />
+      <stop offset=".5" stop-color="#c65a63" />
+      <stop offset="1" stop-color="#782b35" />
+    </linearGradient>
+  </defs>
+  <path d="M28 0h200v512l-100-70-100 70z" fill="url(#ribbon)" />
+  <path d="M68 0v438" stroke="#ffe2a8" stroke-opacity=".28" stroke-width="8" />
+  <path d="M188 0v438" stroke="#4d1f26" stroke-opacity=".22" stroke-width="8" />
+</svg>

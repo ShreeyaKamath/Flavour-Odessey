@@ -16,6 +16,11 @@ export function TreeQuestBoard({ children }: TreeQuestBoardProps) {
       className="bg-[linear-gradient(135deg,rgb(var(--storybook-parchment-deep)/0.86),rgb(var(--storybook-parchment)/0.7))]"
       data-visual-element="wood_panel"
       onMouseEnter={() => audioEvents.publish("PageFlipped")}
+      style={{
+        backgroundImage:
+          "var(--storybook-wood-texture), linear-gradient(135deg, rgb(var(--storybook-parchment-deep) / 0.86), rgb(var(--storybook-parchment) / 0.7))",
+        backgroundSize: "18rem 18rem, auto"
+      }}
     >
       <div className="mb-4 flex items-center gap-3">
         <span aria-hidden="true" className="h-7 w-7 rounded-full bg-primary/25" />

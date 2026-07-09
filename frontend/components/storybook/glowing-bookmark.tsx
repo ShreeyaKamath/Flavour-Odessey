@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 
 import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { themeManager } from "@/lib/assets/theme-manager";
 import { audioEvents } from "@/lib/audio/audio-events";
 import { cn } from "@/utils/cn";
 
@@ -27,6 +28,12 @@ export function GlowingBookmark({ className, label, sublabel }: GlowingBookmarkP
       data-render-source="asset_manifest"
       data-visual-element="bookmark"
       onMouseEnter={() => audioEvents.publish("BookmarkSaved")}
+      style={{
+        ...themeManager.cssVars(),
+        backgroundImage:
+          "var(--storybook-bookmark-texture), linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--storybook-ribbon)))",
+        backgroundSize: "cover, auto"
+      }}
       transition={{ duration: 3.2, repeat: Number.POSITIVE_INFINITY }}
     >
       <p className="text-sm font-semibold">{label}</p>

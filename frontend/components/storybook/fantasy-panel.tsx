@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 
 import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { interactionMotion, panelReveal } from "@/lib/animation/motion-tokens";
+import { themeManager } from "@/lib/assets/theme-manager";
 import { cn } from "@/utils/cn";
 
 type FantasyPanelProps = HTMLMotionProps<"article"> & {
@@ -15,6 +16,10 @@ type FantasyPanelProps = HTMLMotionProps<"article"> & {
 /** Renders a reusable parchment fantasy panel with accessible motion behavior. */
 export function FantasyPanel({ children, className, framed = true, ...props }: FantasyPanelProps) {
   const reducedMotion = useMotionPreference();
+  const style = {
+    ...themeManager.cssVars(),
+    ...props.style
+  };
 
   return (
     <motion.article
@@ -32,6 +37,7 @@ export function FantasyPanel({ children, className, framed = true, ...props }: F
       variants={reducedMotion ? undefined : panelReveal}
       whileHover={reducedMotion ? undefined : interactionMotion.hover}
       {...props}
+      style={style}
     >
       <div className="relative">{children}</div>
     </motion.article>
