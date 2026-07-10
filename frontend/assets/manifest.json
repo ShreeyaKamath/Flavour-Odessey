@@ -679,6 +679,40 @@
       }
     },
     {
+      "id": "ingredient.vanilla_orchid",
+      "category": "ingredients",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["ingredient", "vanilla_orchid", "flower", "joy_meadow", "crafting"],
+      "placeholder": {
+        "label": "Vanilla Orchid",
+        "primary": "#fff1d4",
+        "secondary": "#f3c6ea"
+      },
+      "lod": {
+        "near": "ingredient.vanilla_orchid",
+        "medium": "ingredient.vanilla_orchid",
+        "far": "ingredient.vanilla_orchid"
+      }
+    },
+    {
+      "id": "ingredient.honey_bloom",
+      "category": "ingredients",
+      "kind": "sprite",
+      "src": null,
+      "tags": ["ingredient", "honey_bloom", "flower", "nectar", "joy_meadow", "crafting"],
+      "placeholder": {
+        "label": "Honey Bloom",
+        "primary": "#f2b84b",
+        "secondary": "#8be2c7"
+      },
+      "lod": {
+        "near": "ingredient.honey_bloom",
+        "medium": "ingredient.honey_bloom",
+        "far": "ingredient.honey_bloom"
+      }
+    },
+    {
       "id": "ice_cream.golden_vanilla_bloom",
       "category": "ice_cream",
       "kind": "material",
@@ -696,6 +730,23 @@
       }
     },
     {
+      "id": "ice_cream.scoop_base",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["scoop_base", "vanilla", "ice_cream", "future_shader"],
+      "placeholder": {
+        "label": "Scoop Base",
+        "primary": "#ffd878",
+        "secondary": "#fff1d4"
+      },
+      "lod": {
+        "near": "ice_cream.scoop_base",
+        "medium": "ice_cream.scoop_base",
+        "far": "ice_cream.scoop_base"
+      }
+    },
+    {
       "id": "ice_cream.sprinkles",
       "category": "ice_cream",
       "kind": "material",
@@ -706,6 +757,19 @@
         "near": "ice_cream.sprinkles",
         "medium": "ice_cream.sprinkles",
         "far": "ice_cream.sprinkles"
+      }
+    },
+    {
+      "id": "ice_cream.drizzle",
+      "category": "ice_cream",
+      "kind": "material",
+      "src": null,
+      "tags": ["drizzle", "topping", "future_shader"],
+      "placeholder": { "label": "Drizzle", "primary": "#76543c", "secondary": "#a9784e" },
+      "lod": {
+        "near": "ice_cream.drizzle",
+        "medium": "ice_cream.drizzle",
+        "far": "ice_cream.drizzle"
       }
     },
     {
@@ -729,6 +793,15 @@
       "tags": ["fruit", "topping", "future_shader"],
       "placeholder": { "label": "Fruit", "primary": "#c54f73", "secondary": "#87d8bb" },
       "lod": { "near": "ice_cream.fruit", "medium": "ice_cream.fruit", "far": "ice_cream.fruit" }
+    },
+    {
+      "id": "ui.recipe_card",
+      "category": "ui",
+      "kind": "texture",
+      "src": null,
+      "tags": ["recipe_card", "storybook", "crafting", "reveal"],
+      "placeholder": { "label": "Recipe Card", "primary": "#fff5d9", "secondary": "#f38ca7" },
+      "lod": { "near": "ui.recipe_card", "medium": "ui.recipe_card", "far": "ui.recipe_card" }
     },
     {
       "id": "ui.book_texture",

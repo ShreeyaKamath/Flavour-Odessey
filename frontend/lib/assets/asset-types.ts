@@ -1,5 +1,12 @@
 export type AssetCategory =
-  "characters" | "effects" | "environment" | "ice_cream" | "icons" | "portraits" | "ui";
+  | "characters"
+  | "effects"
+  | "environment"
+  | "ice_cream"
+  | "icons"
+  | "ingredients"
+  | "portraits"
+  | "ui";
 
 export type AssetKind = "effect" | "icon" | "material" | "portrait" | "sprite" | "texture";
 

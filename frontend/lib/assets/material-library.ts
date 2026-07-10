@@ -30,6 +30,15 @@ const materials = {
     roughness: 0.34,
     textureId: "ice_cream.chocolate_drizzle"
   },
+  ice_cream_drizzle: {
+    assetId: "ice_cream.drizzle",
+    color: "#76543c",
+    metalness: 0.02,
+    name: "Drizzle",
+    opacity: 1,
+    roughness: 0.34,
+    textureId: "ice_cream.drizzle"
+  },
   ice_cream_fruit: {
     assetId: "ice_cream.fruit",
     color: "#c54f73",
@@ -66,6 +75,17 @@ const materials = {
     opacity: 1,
     roughness: 0.62,
     textureId: "ice_cream.sprinkles"
+  },
+  ice_cream_scoop_base: {
+    assetId: "ice_cream.scoop_base",
+    bloomLayer: true,
+    color: "#ffd878",
+    emissive: "#f4ae42",
+    metalness: 0.04,
+    name: "Scoop Base",
+    opacity: 1,
+    roughness: 0.48,
+    textureId: "ice_cream.scoop_base"
   },
   ice_cream_steam: {
     assetId: "effect.steam",

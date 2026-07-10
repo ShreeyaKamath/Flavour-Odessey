@@ -42,8 +42,14 @@ describe("production art asset pipeline", () => {
     expect(ids).toEqual(expect.arrayContaining(["character.npc_baker_idle"]));
     expect(ids).toEqual(expect.arrayContaining(["character.npc_baker_walk"]));
     expect(ids).toEqual(expect.arrayContaining(["character.player"]));
+    expect(ids).toEqual(expect.arrayContaining(["ingredient.vanilla_orchid"]));
+    expect(ids).toEqual(expect.arrayContaining(["ingredient.honey_bloom"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.golden_vanilla_bloom"]));
+    expect(ids).toEqual(expect.arrayContaining(["ice_cream.scoop_base"]));
+    expect(ids).toEqual(expect.arrayContaining(["ice_cream.sprinkles"]));
+    expect(ids).toEqual(expect.arrayContaining(["ice_cream.drizzle"]));
     expect(ids).toEqual(expect.arrayContaining(["ice_cream.chocolate_drizzle"]));
+    expect(ids).toEqual(expect.arrayContaining(["ui.recipe_card"]));
     expect(ids).toEqual(expect.arrayContaining(["effect.snow"]));
     expect(ids).toEqual(expect.arrayContaining(["effect.steam"]));
     expect(ids).toEqual(expect.arrayContaining(["ui.parchment_texture"]));
@@ -103,6 +109,13 @@ describe("production art asset pipeline", () => {
     expect(materials.get("golden_vanilla_bloom")).toMatchObject({
       assetId: "ice_cream.golden_vanilla_bloom",
       bloomLayer: true
+    });
+    expect(materials.get("ice_cream_scoop_base")).toMatchObject({
+      assetId: "ice_cream.scoop_base",
+      bloomLayer: true
+    });
+    expect(materials.get("ice_cream_drizzle")).toMatchObject({
+      assetId: "ice_cream.drizzle"
     });
     expect(materials.get("ice_cream_steam")).toMatchObject({
       assetId: "effect.steam",
