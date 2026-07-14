@@ -9,12 +9,14 @@ export type AudioMixerSettings = Record<AudioMixerChannel, number> & {
 export type AudioManifestAsset = {
   bus: AudioBus;
   default_volume: number;
+  fallback_source?: string;
   loop: boolean;
   source: string;
 };
 
 export type AudioManifestSource = {
   generated: boolean;
+  label?: string;
   mime_type: string;
   src: string;
 };
@@ -30,7 +32,11 @@ export type AudioElementLike = {
   loop: boolean;
   preload: string;
   volume: number;
-  addEventListener?: (event: "ended", listener: () => void, options?: { once?: boolean }) => void;
+  addEventListener?: (
+    event: "ended" | "error",
+    listener: () => void,
+    options?: { once?: boolean }
+  ) => void;
   pause: () => void;
   play: () => Promise<void> | void;
 };
