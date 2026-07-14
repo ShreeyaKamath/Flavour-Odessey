@@ -57,6 +57,75 @@ describe("AudioManager", () => {
     expect(manager.playAsset("missing_audio", "sfx")).toBe(false);
   });
 
+  it("registers replaceable production audio slots with silent fallbacks", () => {
+    const requestedAssets = [
+      audioIds.joy_meadow_music,
+      audioIds.golden_hour_theme,
+      audioIds.night_theme,
+      audioIds.weather_birds,
+      audioIds.weather_wind,
+      audioIds.weather_rain,
+      audioIds.joy_meadow_ambience,
+      audioIds.weather_night,
+      audioIds.ui_click,
+      audioIds.page_flip,
+      audioIds.craft_success,
+      audioIds.lumi_hint,
+      audioIds.quest_complete,
+      audioIds.restoration_joy
+    ];
+
+    expect(audioManifest.sources.silent_placeholder.generated).toBe(true);
+    expect(audioManifest.sources.music_joy_meadow_theme.src).toBe(
+      "/audio/music/joy-meadow-theme.ogg"
+    );
+    expect(audioManifest.sources.ambient_river.src).toBe("/audio/ambience/river.ogg");
+    expect(audioManifest.sources.sfx_restore_joy.src).toBe("/audio/sfx/restore-joy.ogg");
+    expect(requestedAssets.every((audioId) => audioManifest.assets[audioId].fallback_source)).toBe(
+      true
+    );
+  });
+
+  it("falls back to silent placeholder when a real audio file cannot play", async () => {
+    const sources: string[] = [];
+    let call = 0;
+    const manager = new AudioManager(audioManifest, (source) => {
+      sources.push(source);
+      call += 1;
+      return createAudioElement(
+        call === 2 ? () => Promise.reject(new Error("Missing file")) : undefined
+      );
+    });
+
+    await manager.unlock();
+    expect(manager.sfx.play(audioIds.ui_click)).toBe(true);
+    await Promise.resolve();
+
+    expect(sources).toEqual([
+      audioManifest.sources.silent_placeholder.src,
+      audioManifest.sources.sfx_button_click.src,
+      audioManifest.sources.silent_placeholder.src
+    ]);
+  });
+
+  it("uses the silent source to unlock even when production sources are listed first", async () => {
+    const sources: string[] = [];
+    const reorderedManifest = {
+      ...audioManifest,
+      sources: {
+        sfx_button_click: audioManifest.sources.sfx_button_click,
+        ...audioManifest.sources
+      }
+    };
+    const manager = new AudioManager(reorderedManifest, (source) => {
+      sources.push(source);
+      return createAudioElement();
+    });
+
+    await expect(manager.unlock()).resolves.toBe(true);
+    expect(sources).toEqual([audioManifest.sources.silent_placeholder.src]);
+  });
+
   it("stops playback when audio is disabled completely", async () => {
     const effect = createAudioElement();
     let call = 0;

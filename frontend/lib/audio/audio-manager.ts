@@ -22,7 +22,11 @@ function createBrowserAudio(source: string): AudioElementLike | null {
   if (typeof Audio === "undefined") {
     return null;
   }
-  return new Audio(source);
+  try {
+    return new Audio(source);
+  } catch {
+    return null;
+  }
 }
 
 /** Coordinates manifest lookup, autoplay unlock, buses, and active playback. */
@@ -55,7 +59,8 @@ export class AudioManager implements AudioPlaybackEngine {
       return false;
     }
 
-    const source = Object.values(this.manifest.sources)[0];
+    const source =
+      this.manifest.sources.silent_placeholder ?? Object.values(this.manifest.sources)[0];
     const probe = source ? this.createAudio(source.src) : null;
     if (!probe) {
       return false;
@@ -128,9 +133,20 @@ export class AudioManager implements AudioPlaybackEngine {
     this.unlocked = false;
   }
 
-  private startPlayback(asset: AudioManifestAsset) {
-    const source = this.manifest.sources[asset.source];
+  private fallbackSourceKey(asset: AudioManifestAsset) {
+    return asset.fallback_source ?? "silent_placeholder";
+  }
+
+  private startPlayback(
+    asset: AudioManifestAsset,
+    sourceKey = asset.source,
+    fallbackAttempted = false
+  ): boolean {
+    const source = this.manifest.sources[sourceKey];
     if (!source) {
+      if (!fallbackAttempted) {
+        return this.startPlayback(asset, this.fallbackSourceKey(asset), true);
+      }
       return false;
     }
 
@@ -140,6 +156,9 @@ export class AudioManager implements AudioPlaybackEngine {
 
     const element = this.createAudio(source.src);
     if (!element) {
+      if (!fallbackAttempted) {
+        return this.startPlayback(asset, this.fallbackSourceKey(asset), true);
+      }
       return false;
     }
 
@@ -152,15 +171,33 @@ export class AudioManager implements AudioPlaybackEngine {
       this.loopElements.set(asset.bus, element);
     }
     element.addEventListener?.("ended", () => this.releaseElement(element), { once: true });
+    element.addEventListener?.(
+      "error",
+      () => {
+        this.releaseElement(element);
+        if (!fallbackAttempted) {
+          this.startPlayback(asset, this.fallbackSourceKey(asset), true);
+        }
+      },
+      { once: true }
+    );
 
     try {
       const playback = element.play();
       if (playback instanceof Promise) {
-        void playback.catch(() => this.releaseElement(element));
+        void playback.catch(() => {
+          this.releaseElement(element);
+          if (!fallbackAttempted) {
+            this.startPlayback(asset, this.fallbackSourceKey(asset), true);
+          }
+        });
       }
       return true;
     } catch {
       this.releaseElement(element);
+      if (!fallbackAttempted) {
+        return this.startPlayback(asset, this.fallbackSourceKey(asset), true);
+      }
       return false;
     }
   }

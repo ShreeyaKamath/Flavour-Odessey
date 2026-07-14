@@ -5,6 +5,90 @@
       "generated": true,
       "mime_type": "audio/wav",
       "src": "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA="
+    },
+    "music_joy_meadow_theme": {
+      "generated": false,
+      "label": "Joy Meadow Theme",
+      "mime_type": "audio/ogg",
+      "src": "/audio/music/joy-meadow-theme.ogg"
+    },
+    "music_golden_hour_theme": {
+      "generated": false,
+      "label": "Golden Hour Theme",
+      "mime_type": "audio/ogg",
+      "src": "/audio/music/golden-hour-theme.ogg"
+    },
+    "music_night_theme": {
+      "generated": false,
+      "label": "Night Theme",
+      "mime_type": "audio/ogg",
+      "src": "/audio/music/night-theme.ogg"
+    },
+    "ambient_birds": {
+      "generated": false,
+      "label": "Birds",
+      "mime_type": "audio/ogg",
+      "src": "/audio/ambience/birds.ogg"
+    },
+    "ambient_wind": {
+      "generated": false,
+      "label": "Wind",
+      "mime_type": "audio/ogg",
+      "src": "/audio/ambience/wind.ogg"
+    },
+    "ambient_rain": {
+      "generated": false,
+      "label": "Rain",
+      "mime_type": "audio/ogg",
+      "src": "/audio/ambience/rain.ogg"
+    },
+    "ambient_river": {
+      "generated": false,
+      "label": "River",
+      "mime_type": "audio/ogg",
+      "src": "/audio/ambience/river.ogg"
+    },
+    "ambient_night": {
+      "generated": false,
+      "label": "Night Ambience",
+      "mime_type": "audio/ogg",
+      "src": "/audio/ambience/night.ogg"
+    },
+    "sfx_button_click": {
+      "generated": false,
+      "label": "Button Click",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/button-click.ogg"
+    },
+    "sfx_page_flip": {
+      "generated": false,
+      "label": "Page Flip",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/page-flip.ogg"
+    },
+    "sfx_craft_success": {
+      "generated": false,
+      "label": "Craft Success",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/craft-success.ogg"
+    },
+    "sfx_lumi_hint": {
+      "generated": false,
+      "label": "Lumi Hint",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/lumi-hint.ogg"
+    },
+    "sfx_quest_complete": {
+      "generated": false,
+      "label": "Quest Complete",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/quest-complete.ogg"
+    },
+    "sfx_restore_joy": {
+      "generated": false,
+      "label": "Restore Joy",
+      "mime_type": "audio/ogg",
+      "src": "/audio/sfx/restore-joy.ogg"
     }
   },
   "assets": {
@@ -17,8 +101,9 @@
     "ui_click": {
       "bus": "sfx",
       "default_volume": 0.45,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_button_click"
     },
     "ingredient_collect": {
       "bus": "sfx",
@@ -41,8 +126,9 @@
     "craft_success": {
       "bus": "sfx",
       "default_volume": 0.75,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_craft_success"
     },
     "crafting_sparkle": {
       "bus": "sfx",
@@ -71,8 +157,9 @@
     "lumi_hint": {
       "bus": "sfx",
       "default_volume": 0.45,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_lumi_hint"
     },
     "lumi_excited": {
       "bus": "sfx",
@@ -95,14 +182,16 @@
     "recipe_page_flip": {
       "bus": "sfx",
       "default_volume": 0.5,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_page_flip"
     },
     "page_flip": {
       "bus": "sfx",
       "default_volume": 0.5,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_page_flip"
     },
     "book_open": {
       "bus": "sfx",
@@ -143,14 +232,16 @@
     "restoration_joy": {
       "bus": "sfx",
       "default_volume": 0.8,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_restore_joy"
     },
     "quest_complete": {
       "bus": "sfx",
       "default_volume": 0.75,
+      "fallback_source": "silent_placeholder",
       "loop": false,
-      "source": "silent_placeholder"
+      "source": "sfx_quest_complete"
     },
     "journal_reveal": {
       "bus": "sfx",
@@ -209,20 +300,23 @@
     "weather_birds": {
       "bus": "ambient",
       "default_volume": 0.58,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_birds"
     },
     "weather_wind": {
       "bus": "ambient",
       "default_volume": 0.5,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_wind"
     },
     "weather_rain": {
       "bus": "ambient",
       "default_volume": 0.62,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_rain"
     },
     "weather_mist": {
       "bus": "ambient",
@@ -233,26 +327,44 @@
     "weather_night": {
       "bus": "ambient",
       "default_volume": 0.52,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_night"
     },
     "weather_golden_hour": {
       "bus": "ambient",
       "default_volume": 0.56,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_wind"
     },
     "joy_meadow_music": {
       "bus": "music",
       "default_volume": 0.55,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "music_joy_meadow_theme"
     },
     "joy_meadow_ambience": {
       "bus": "ambient",
       "default_volume": 0.7,
+      "fallback_source": "silent_placeholder",
       "loop": true,
-      "source": "silent_placeholder"
+      "source": "ambient_river"
+    },
+    "golden_hour_theme": {
+      "bus": "music",
+      "default_volume": 0.5,
+      "fallback_source": "silent_placeholder",
+      "loop": true,
+      "source": "music_golden_hour_theme"
+    },
+    "night_theme": {
+      "bus": "music",
+      "default_volume": 0.48,
+      "fallback_source": "silent_placeholder",
+      "loop": true,
+      "source": "music_night_theme"
     }
   }
 }
